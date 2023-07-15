@@ -1,8 +1,18 @@
+
 plugins {
     id 'idea'
     id 'java'
     id 'maven-publish'
     id 'org.spongepowered.gradle.vanilla'
+    id 'com.matyrobbrt.mc.registrationutils' version '1.20-1.1.0'
+}
+registrationUtils {
+    group 'opalsmile.fnc.reg'
+    projects {
+        Common { type 'common'; project ':common' }
+        Fabric { type 'fabric'; project ':fabric' }
+        Forge { type 'forge'; project ':forge' }
+    }
 }
 base {
     archivesName = "${mod_name}-common-${minecraft_version}"
