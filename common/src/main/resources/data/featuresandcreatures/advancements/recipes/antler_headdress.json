@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fnc:antler_headdress"
+    ]
+  },
+  "criteria": {
+    "has_antler": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fnc:antler"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fnc:antler_headdress"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_antler",
+      "has_the_recipe"
+    ]
+  ]
+}

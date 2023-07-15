@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "fnc:dawn_crystal"
+    }
+  },
+  "result": {
+    "item": "fnc:dawn_block"
+  }
+}

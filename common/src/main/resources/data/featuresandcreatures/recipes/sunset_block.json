@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "fnc:sunset_crystal"
+    }
+  },
+  "result": {
+    "item": "fnc:sunset_block"
+  }
+}

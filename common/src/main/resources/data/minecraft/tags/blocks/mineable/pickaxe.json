@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "fnc:stone_dawn_ore",
+    "fnc:dawn_ore",
+    "fnc:deepslate_dawn_ore",
+    "fnc:dawn_block",
+    "fnc:stone_midnight_ore",
+    "fnc:midnight_ore",
+    "fnc:deepslate_midnight_ore",
+    "fnc:midnight_block",
+    "fnc:stone_sunset_ore",
+    "fnc:sunset_ore",
+    "fnc:deepslate_sunset_ore",
+    "fnc:sunset_block"
+  ]
+}

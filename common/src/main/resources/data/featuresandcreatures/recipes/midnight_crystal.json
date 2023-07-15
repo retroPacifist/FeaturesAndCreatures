@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fnc:midnight_block"
+    }
+  ],
+  "result": {
+    "item": "fnc:midnight_crystal",
+    "count": 4
+  }
+}

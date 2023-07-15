@@ -1,0 +1,6 @@
+{
+  "parent": "fnc:item/dowsing_rod",
+  "textures": {
+    "layer0": "fnc:item/dowsing_rod_active"
+  }
+}

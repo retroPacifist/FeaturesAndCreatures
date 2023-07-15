@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fnc:lunar_headdress"
+    ]
+  },
+  "criteria": {
+    "has_headdress": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fnc:antler_headdress"
+          }
+        ]
+      }
+    },
+    "has_midnight_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fnc:midnight_crystal"
+          }
+        ]
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "fnc:lunar_headdress"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_headdress",
+      "has_midnight_crystal",
+      "has_the_recipe"
+    ]
+  ]
+}

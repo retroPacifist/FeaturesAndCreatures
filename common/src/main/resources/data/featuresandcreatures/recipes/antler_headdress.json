@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A A",
+    "BCB",
+    "C C"
+  ],
+  "key": {
+    "A": {
+      "item": "fnc:antler"
+    },
+    "B": {
+      "item": "minecraft:leather"
+    },
+    "C": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "fnc:antler_headdress"
+  }
+}

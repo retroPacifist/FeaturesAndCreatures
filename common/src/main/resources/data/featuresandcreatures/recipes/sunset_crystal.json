@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fnc:sunset_block"
+    }
+  ],
+  "result": {
+    "item": "fnc:sunset_crystal",
+    "count": 4
+  }
+}

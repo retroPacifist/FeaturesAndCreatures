@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fnc:midnight_dowser"
+    ]
+  },
+  "criteria": {
+    "has_rod": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fnc:dowsing_rod"
+          }
+        ]
+      }
+    },
+    "has_midnight_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fnc:midnight_crystal"
+          }
+        ]
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "fnc:midnight_dowser"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rod",
+      "has_midnight_crystal",
+      "has_the_recipe"
+    ]
+  ]
+}

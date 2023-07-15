@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "fnc:spear"
+  },
+  "addition": {
+    "item": "fnc:dawn_crystal"
+  },
+  "result": {
+    "item": "fnc:dawn_spear"
+  }
+}

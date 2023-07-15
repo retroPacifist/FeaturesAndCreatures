@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fnc:dawn_block"
+    }
+  ],
+  "result": {
+    "item": "fnc:dawn_crystal",
+    "count": 4
+  }
+}

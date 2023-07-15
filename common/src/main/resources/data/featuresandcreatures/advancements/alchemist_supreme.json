@@ -1,0 +1,20 @@
+{
+  "parent": "fnc:root",
+  "display": {
+    "icon": {
+      "item": "fnc:mega_potion"
+    },
+    "title": "Alchemist Supreme",
+    "frame": "challenge",
+    "description": "Trade with a Jockey.",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "fnc:jockey_trade",
+      "conditions": {}
+      }
+    }
+  }

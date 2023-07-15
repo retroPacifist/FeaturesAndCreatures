@@ -1,0 +1,67 @@
+{
+  "advancement": "minecraft:husbandry/bred_all_animals",
+  "modifiers": [
+    {
+      "type": "indexed_requirements",
+      "config": {
+        "mode": "modify",
+        "index": 0,
+        "criteria": {
+          "fnc:jackalope": {
+            "trigger": "minecraft:bred_animals",
+            "conditions": {
+              "child": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "predicate": {
+                    "type": "fnc:jackalope"
+                  },
+                  "entity": "this"
+                }
+              ]
+            }
+          },
+          "fnc:sabertooth": {
+            "trigger": "minecraft:bred_animals",
+            "conditions": {
+              "child": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "predicate": {
+                    "type": "fnc:sabertooth"
+                  },
+                  "entity": "this"
+                }
+              ]
+            }
+          },
+          "fnc:boar": {
+            "trigger": "minecraft:bred_animals",
+            "conditions": {
+              "child": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "predicate": {
+                    "type": "fnc:boar"
+                  },
+                  "entity": "this"
+                }
+              ]
+            }
+          }
+        },
+        "requirements": [
+          [
+            "fnc:jackalope"
+          ],
+          [
+            "fnc:sabertooth"
+          ],
+          [
+            "fnc:boar"
+          ]
+        ]
+      }
+    }
+  ]
+}
