@@ -16,12 +16,12 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleMod"
+            "com.opalsmile.fnc.FnCFabric"
         ]
     },
     "mixins": [
-        "examplemod.mixins.json",
-        "examplemod.fabric.mixins.json"
+        "fnc.mixins.json",
+        "fnc.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=0.14",
