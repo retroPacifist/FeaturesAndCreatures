@@ -2,6 +2,8 @@ package com.opalsmile.fnc.core;
 
 import com.opalsmile.fnc.Constants;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

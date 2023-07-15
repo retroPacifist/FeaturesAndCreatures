@@ -5,5 +5,7 @@ public class FnCRegistry {
     public static void loadClasses() {
         FnCBlocks.init();
         FnCItems.init();
+        FnCSounds.init();
+        FnCEntities.init();
     }
 }

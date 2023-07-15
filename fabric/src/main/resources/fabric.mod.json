@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
             "com.opalsmile.fnc.FnCFabric"
+        ],
+        "client": [
+            "com.opalsmile.fnc.FnCFabricClient"
         ]
     },
     "mixins": [
