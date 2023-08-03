@@ -3,15 +3,16 @@
     "id": "fnc",
     "version": "${version}",
     "name": "${mod_name}",
-    "description": "This is an example description! Tell everyone what your mod is about!",
+    "description": "${description}",
     "authors": [
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "${mod_url}",
+        "issues": "https://github.com/YaBoiChips/FeaturesAndCreatures/issues",
+        "sources": "https://github.com/YaBoiChips/FeaturesAndCreatures"
     },
-    "license": "CC0-1.0",
+    "license": "CC-2.0",
     "icon": "assets/fnc/icon.png",
     "environment": "*",
     "entrypoints": {
