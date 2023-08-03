@@ -34,7 +34,7 @@ public class JackalopeRenderer extends GeoEntityRenderer<Jackalope> {
     }
 
     @Override
-    public boolean shouldRender(Jackalope $$0, Frustum $$1, double $$2, double $$3, double $$4) {
+    public boolean shouldRender(Jackalope jackalope, Frustum frustum, double x, double y, double z) {
         return true;
     }
 }
