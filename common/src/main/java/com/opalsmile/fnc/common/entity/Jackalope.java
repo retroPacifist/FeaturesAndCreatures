@@ -1,4 +1,4 @@
-package com.opalsmile.fnc.common.entity.jackalope;
+package com.opalsmile.fnc.common.entity;
 
 import com.opalsmile.fnc.core.FnCEntities;
 import com.opalsmile.fnc.core.FnCSounds;

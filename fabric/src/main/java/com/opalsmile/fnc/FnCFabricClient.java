@@ -1,12 +1,15 @@
 package com.opalsmile.fnc;
 
-import com.opalsmile.fnc.client.FnCEntityRenderers;
-import com.opalsmile.fnc.mixin.client.access.AccessEntityRenderers;
+import com.opalsmile.fnc.client.renderer.JackalopeRenderer;
+import com.opalsmile.fnc.client.renderer.JockeyRenderer;
+import com.opalsmile.fnc.core.FnCEntities;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class FnCFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        FnCEntityRenderers.register(AccessEntityRenderers::register);
+        EntityRendererRegistry.register(FnCEntities.JACKALOPE.get(), JackalopeRenderer::new);
+        EntityRendererRegistry.register(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
     }
 }

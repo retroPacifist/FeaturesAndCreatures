@@ -1,29 +1,33 @@
-package com.opalsmile.fnc.common.entity.jackalope;
+package com.opalsmile.fnc.client.model;
 
-import com.opalsmile.fnc.Constants;
+import com.opalsmile.fnc.FnCConstants;
+import com.opalsmile.fnc.common.entity.Jackalope;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.DataTicket;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
 
 public class JackalopeModel extends GeoModel<Jackalope> {
 
+    public static final ResourceLocation TEXTURE = FnCConstants.resourceLocation("textures/entity/jackalope.png");
+    public static final ResourceLocation SADDLED = FnCConstants.resourceLocation( "textures/entity/jackalope_saddle.png");
+
+    public static final ResourceLocation MODEL = FnCConstants.resourceLocation("geo/jackalope.geo.json");
+    public static final ResourceLocation ANIMATION = FnCConstants.resourceLocation("animations/jackalope.animation.json");
+
     @Override
     public ResourceLocation getModelResource(Jackalope object) {
-        return new ResourceLocation(Constants.MOD_ID, "geo/jackalope.geo.json");
+        return MODEL;
     }
 
     @Override
     public ResourceLocation getTextureResource(Jackalope object) {
-        return object.isSaddled() ? JackalopeRenderer.SADDLED : JackalopeRenderer.TEXTURE;
+        return object.isSaddled() ? SADDLED : TEXTURE;
     }
 
     @Override
     public ResourceLocation getAnimationResource(Jackalope animatable) {
-        return new ResourceLocation(Constants.MOD_ID, "animations/jackalope.animation.json");
+        return ANIMATION;
     }
 
     @Override

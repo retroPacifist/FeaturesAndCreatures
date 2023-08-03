@@ -1,25 +1,17 @@
-package com.opalsmile.fnc.common.entity.jackalope;
+package com.opalsmile.fnc.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.opalsmile.fnc.Constants;
+import com.opalsmile.fnc.FnCConstants;
+import com.opalsmile.fnc.client.model.JackalopeModel;
+import com.opalsmile.fnc.common.entity.Jackalope;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class JackalopeRenderer extends GeoEntityRenderer<Jackalope> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/entity/jackalope.png");
-    public static final ResourceLocation SADDLED = new ResourceLocation(Constants.MOD_ID, "textures/entity/jackalope_saddle.png");
-
 
     public JackalopeRenderer(EntityRendererProvider.Context dispatcher) {
         super(dispatcher, new JackalopeModel());
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(Jackalope instance) {
-        return instance.isSaddled() ? SADDLED : TEXTURE;
     }
 
     @Override
@@ -33,8 +25,4 @@ public class JackalopeRenderer extends GeoEntityRenderer<Jackalope> {
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
     }
 
-    @Override
-    public boolean shouldRender(Jackalope jackalope, Frustum frustum, double x, double y, double z) {
-        return true;
-    }
 }
