@@ -1,9 +1,7 @@
 package com.opalsmile.fnc.core;
 
-import com.opalsmile.fnc.Constants;
+import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -14,7 +12,7 @@ import java.util.function.Supplier;
 
 public class FnCItems {
 
-    public static final RegistrationProvider<Item> REGISTER = RegistrationProvider.get(Registries.ITEM, Constants.MOD_ID);
+    public static final RegistrationProvider<Item> REGISTER = RegistrationProvider.get(Registries.ITEM, FnCConstants.MOD_ID);
 
     public static final RegistryObject<Item> ANTLER = REGISTER.register("antler", createItem());
     public static final RegistryObject<Item> SABERTOOTH_FANG = REGISTER.register("sabertooth_fang", createItem());

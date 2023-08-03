@@ -1,7 +1,6 @@
 package com.opalsmile.fnc.core;
 
-import com.opalsmile.fnc.Constants;
-import net.minecraft.core.Registry;
+import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -10,7 +9,7 @@ import opalsmile.fnc.reg.RegistryObject;
 
 
 public class FnCSounds {
-    public static final RegistrationProvider<SoundEvent> REGISTRAR = RegistrationProvider.get(Registries.SOUND_EVENT, Constants.MOD_ID);
+    public static final RegistrationProvider<SoundEvent> REGISTRAR = RegistrationProvider.get(Registries.SOUND_EVENT, FnCConstants.MOD_ID);
 
     public static RegistryObject<SoundEvent> BOAR_HURT = createSound("entity.boar.hurt");
     public static RegistryObject<SoundEvent> BOAR_AMBIENT = createSound("entity.boar.ambient");
@@ -19,9 +18,12 @@ public class FnCSounds {
     public static RegistryObject<SoundEvent> BOAR_SADDLE = createSound("entity.boar.saddle");
     public static RegistryObject<SoundEvent> BOAR_STEP = createSound("entity.boar.step");
 
+    public static RegistryObject<SoundEvent> JOCKEY_AMBIENT = createSound("entity.jockey.ambient");
     public static RegistryObject<SoundEvent> JOCKEY_HURT = createSound("entity.jockey.hurt");
     public static RegistryObject<SoundEvent> JOCKEY_DEATH = createSound("entity.jockey.death");
     public static RegistryObject<SoundEvent> JOCKEY_ATTACK = createSound("entity.jockey.attack");
+    public static RegistryObject<SoundEvent> JOCKEY_YES = createSound("entity.jockey.yes");
+    public static RegistryObject<SoundEvent> JOCKEY_NO = createSound("entity.jockey.no");
 
     public static RegistryObject<SoundEvent> JACKALOPE_HURT = createSound("entity.jackalope.hurt");
     public static RegistryObject<SoundEvent> JACKALOPE_AMBIENT = createSound("entity.jackalope.ambient");
@@ -50,7 +52,7 @@ public class FnCSounds {
     public static RegistryObject<SoundEvent> createSound(String location) {
         return REGISTRAR.register(
                 location.replace('.', '_'),
-                () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(Constants.MOD_ID, location), 1)
+                () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(FnCConstants.MOD_ID, location), 1)
         );
     }
 

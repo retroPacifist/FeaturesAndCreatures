@@ -1,7 +1,8 @@
 package com.opalsmile.fnc.core;
 
-import com.opalsmile.fnc.Constants;
-import com.opalsmile.fnc.common.entity.jackalope.Jackalope;
+import com.opalsmile.fnc.FnCConstants;
+import com.opalsmile.fnc.common.entity.Jackalope;
+import com.opalsmile.fnc.common.entity.Jockey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -10,9 +11,9 @@ import opalsmile.fnc.reg.RegistrationProvider;
 import opalsmile.fnc.reg.RegistryObject;
 
 public class FnCEntities {
-    public static final RegistrationProvider<EntityType<?>> REGISTRAR = RegistrationProvider.get(Registries.ENTITY_TYPE, Constants.MOD_ID);
+    public static final RegistrationProvider<EntityType<?>> REGISTRAR = RegistrationProvider.get(Registries.ENTITY_TYPE, FnCConstants.MOD_ID);
 
-//    public static final RegistryObject<EntityType<Jockey>> JOCKEY = createEntity("jockey", EntityType.Builder.of(Jockey::new, MobCategory.CREATURE).sized(0.25f, 1f));
+    public static final RegistryObject<EntityType<Jockey>> JOCKEY = createEntity("jockey", EntityType.Builder.of(Jockey::new, MobCategory.CREATURE).sized(0.25f, 1f));
 //    public static final RegistryObject<EntityType<Boar>> BOAR = createEntity("boar", EntityType.Builder.of(Boar::new, MobCategory.CREATURE).sized(0.9F, 0.9F));
     public static final RegistryObject<EntityType<Jackalope>> JACKALOPE = createEntity("jackalope", EntityType.Builder.of(Jackalope::new, MobCategory.CREATURE).sized(1F, 0.8F));
 //    public static final RegistryObject<EntityType<Sabertooth>> SABERTOOTH = createEntity("sabertooth", EntityType.Builder.of(Sabertooth::new, MobCategory.CREATURE).sized(1.2F, 1.3F));

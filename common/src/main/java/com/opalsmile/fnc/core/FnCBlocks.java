@@ -1,6 +1,6 @@
 package com.opalsmile.fnc.core;
 
-import com.opalsmile.fnc.Constants;
+import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -11,7 +11,7 @@ import opalsmile.fnc.reg.RegistrationProvider;
 import java.util.function.Supplier;
 
 public class FnCBlocks {
-    public static final RegistrationProvider<Block> REGISTER = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
+    public static final RegistrationProvider<Block> REGISTER = RegistrationProvider.get(Registries.BLOCK, FnCConstants.MOD_ID);
 
 //    public final BlockRegistryObject<Block> STONE_DAWN_ORE = createBlock("stone_dawn_ore", createOre(FeaturesCreaturesOre.Duration.DAWN));
 //    public final BlockRegistryObject<Block> STONE_SUNSET_ORE = createBlock("stone_sunset_ore", createOre(FeaturesCreaturesOre.Duration.SUNSET));
