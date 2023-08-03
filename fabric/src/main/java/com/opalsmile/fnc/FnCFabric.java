@@ -11,10 +11,8 @@ public class FnCFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        FnCRegistry.loadClasses();
-        registerEntityAttributes();
-        Constants.LOG.info("Hello Fabric world!");
-        FnC.init();
+        FnCRegistry.initialise();
+        FnCFabric.registerEntityAttributes();
     }
 
     public static void registerEntityAttributes() {

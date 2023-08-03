@@ -6,6 +6,7 @@ import com.opalsmile.fnc.core.FnCEntities;
 import com.opalsmile.fnc.core.FnCRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -15,9 +16,8 @@ import static com.opalsmile.fnc.core.FnCEntities.JACKALOPE;
 public class FnCForge {
 
     public FnCForge() {
-        final var modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        FnCRegistry.loadClasses();
-        FnC.init();
+        FnCRegistry.initialise();
+        final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::createEntityAttributes);
         modBus.addListener(this::registerRenderers);
     }
