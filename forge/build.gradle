@@ -4,7 +4,6 @@ buildscript {
     }
 }
 
-
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -23,6 +22,8 @@ mixin {
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
+
+    copyIdeResources.set(true)
 
     // Automatically enable forge AccessTransformers if the file exists
     // This location is hardcoded in Forge and can not be changed.
@@ -91,8 +92,11 @@ tasks.withType(JavaCompile).configureEach {
     source(project(":common").sourceSets.main.allSource)
 }
 tasks.withType(Javadoc).configureEach {
+    //Enable when I can take a look at find the issue that's causing common to crash in dev
+    it.enabled = false
     source(project(":common").sourceSets.main.allJava)
 }
+
 tasks.named("sourcesJar", Jar) {
     from(project(":common").sourceSets.main.allSource)
 }
