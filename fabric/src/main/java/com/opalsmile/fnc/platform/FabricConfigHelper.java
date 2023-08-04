@@ -23,11 +23,12 @@ public class FabricConfigHelper implements IConfigHelper {
      */
     @Override
     public boolean namedJockeyDespawn(){
-        return false;
+        return true;
     }
 
     /**
      * Serialized as a List<String> mapped with ResourceLocation::new and Registry#get
+     * Contains Purity by default
      *
      * @return A list of mob effects that are blacklisted from appearing in the Jockey's shop
      */

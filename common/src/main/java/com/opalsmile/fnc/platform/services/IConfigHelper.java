@@ -6,7 +6,10 @@ import java.util.Set;
 
 public interface IConfigHelper {
 
-    int JOCKEY_DEFAULT_COOLDOWN = 3 * 20 * 60 * 20;
+    //Spawning cooldown : 3 hours
+    int JOCKEY_DEFAULT_COOLDOWN = 3 * 60 * 60 * 20;
+
+    //Alive time: 1 hour or 3 in game days
     int JOCKEY_DEFAULT_ALIVE_TIME = 3 * 20 * 60 * 20;
 
     /**
@@ -17,6 +20,7 @@ public interface IConfigHelper {
 
     /**
      * Whether named jockeys should still despawn.
+     * Default: true
      * @return Whether named jockeys should despawn.
      */
 
@@ -24,6 +28,7 @@ public interface IConfigHelper {
 
     /**
      * Serialized as a List<String> mapped with ResourceLocation::new and Registry#get
+     * Contains Purity by default
      *
      * @return A list of mob effects that are blacklisted from appearing in the Jockey's shop
      */
