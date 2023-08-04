@@ -2,7 +2,9 @@ package com.opalsmile.fnc.registries;
 
 import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import opalsmile.fnc.reg.RegistrationProvider;
@@ -14,6 +16,8 @@ public class FnCItems {
 
     public static final RegistrationProvider<Item> REGISTER = RegistrationProvider.get(Registries.ITEM,
             FnCConstants.MOD_ID);
+
+    public static final RegistrationProvider<CreativeModeTab> TAB_REGISTER = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, FnCConstants.MOD_ID);
 
     public static final RegistryObject<Item> ANTLER = REGISTER.register("antler", createItem());
     public static final RegistryObject<Item> SABERTOOTH_FANG = REGISTER.register("sabertooth_fang", createItem());
@@ -54,8 +58,8 @@ public class FnCItems {
     // Hidden
     public static final RegistryObject<Item> MEGA_POTION = REGISTER.register("mega_potion",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> BFS_ATTACK_ITEM = REGISTER.register("bfs_attack_item",
-            () -> new Item(new Item.Properties()));
+    //public static final RegistryObject<Item> BFS_ATTACK_ITEM = REGISTER.register("bfs_attack_item",
+            //() -> new Item(new Item.Properties()));
 
     private static Supplier<Item> createItem(){
         return () -> new Item(new Item.Properties());
@@ -64,6 +68,24 @@ public class FnCItems {
     private static Supplier<Item> createBlockItem(RegistryObject<Block> object){
         return () -> new BlockItem(object.get(), new Item.Properties());
     }
+
+    public static final RegistryObject<CreativeModeTab> TAB = TAB_REGISTER.register("creative_tab", () ->
+            CreativeModeTab
+                    .builder(null, -1)
+                    .icon(() -> MEGA_POTION.get().getDefaultInstance())
+                    .title(Component.translatable("creativetab.fnc"))
+                    .displayItems((parameters, output) -> {
+                        output.accept(MIDNIGHT_CRYSTAL.get());
+                        output.accept(MIDNIGHT_BLOCK.get());
+                        output.accept(SUNSET_CRYSTAL.get());
+                        output.accept(SUNSET_BLOCK.get());
+                        output.accept(DAWN_CRYSTAL.get());
+                        output.accept(DAWN_BLOCK.get());
+                        output.accept(SABERTOOTH_FANG.get());
+                        output.accept(ANTLER.get());
+                    })
+                    .build());
+
 
     public static void init(){
     }
