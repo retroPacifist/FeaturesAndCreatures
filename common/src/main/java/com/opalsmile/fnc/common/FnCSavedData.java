@@ -14,22 +14,19 @@ public class FnCSavedData extends SavedData {
 
     //Used to keep track of the one jockey instance per overworld
 
+    public static final String FNC_SAVED_CLAIM_DATA_ID = FnCConstants.MOD_ID + "_fnc_saved_claim_data";
     private BlockPos spawnPosition;
     private UUID jockeyUUID;
-
     private long jockeyCooldown;
-
     private boolean jockeySpawned;
 
-    public static final String FNC_SAVED_CLAIM_DATA_ID = FnCConstants.MOD_ID + "_fnc_saved_claim_data";
-
-    public static FnCSavedData get(ServerLevel level) {
+    public static FnCSavedData get(ServerLevel level){
         return level.getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FNC_SAVED_CLAIM_DATA_ID);
     }
 
-    public static FnCSavedData load(final CompoundTag tag) {
+    public static FnCSavedData load(final CompoundTag tag){
         FnCSavedData savedData = new FnCSavedData();
-        if (tag.getBoolean("jockey_spawned")) {
+        if(tag.getBoolean("jockey_spawned")) {
             savedData.jockeySpawned = true;
             savedData.jockeyUUID = tag.getUUID("jockey_uuid");
             savedData.spawnPosition = NbtUtils.readBlockPos(tag.getCompound("jockey_position"));
@@ -41,7 +38,7 @@ public class FnCSavedData extends SavedData {
     @Override
     public CompoundTag save(CompoundTag compoundTag){
         compoundTag.putBoolean("jockey_spawned", this.jockeySpawned);
-        if (jockeySpawned) {
+        if(jockeySpawned) {
             compoundTag.putUUID("jockey_uuid", jockeyUUID);
             compoundTag.put("jockey_position", NbtUtils.writeBlockPos(spawnPosition));
         }
@@ -65,7 +62,7 @@ public class FnCSavedData extends SavedData {
         this.jockeyUUID = jockeyUUID;
     }
 
-    public boolean hasJockeySpawned() {
+    public boolean hasJockeySpawned(){
         return jockeySpawned;
     }
 

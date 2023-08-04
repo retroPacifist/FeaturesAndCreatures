@@ -21,7 +21,7 @@ public class AntlerHeaddressTrigger extends SimpleCriterionTrigger<AntlerHeaddre
         return new Instance(predicate, itemPredicate);
     }
 
-    public void trigger(ServerPlayer player, ItemStack stack) {
+    public void trigger(ServerPlayer player, ItemStack stack){
         this.trigger(player, instance -> instance.test(stack));
     }
 
@@ -41,7 +41,7 @@ public class AntlerHeaddressTrigger extends SimpleCriterionTrigger<AntlerHeaddre
             return jsonObject;
         }
 
-        public boolean test(ItemStack stack) {
+        public boolean test(ItemStack stack){
             return itemPredicate.matches(stack);
         }
     }

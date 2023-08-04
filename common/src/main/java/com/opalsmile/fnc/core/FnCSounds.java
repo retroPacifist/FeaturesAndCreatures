@@ -9,7 +9,8 @@ import opalsmile.fnc.reg.RegistryObject;
 
 
 public class FnCSounds {
-    public static final RegistrationProvider<SoundEvent> REGISTRAR = RegistrationProvider.get(Registries.SOUND_EVENT, FnCConstants.MOD_ID);
+    public static final RegistrationProvider<SoundEvent> REGISTRAR = RegistrationProvider.get(Registries.SOUND_EVENT,
+            FnCConstants.MOD_ID);
 
     public static RegistryObject<SoundEvent> BOAR_HURT = createSound("entity.boar.hurt");
     public static RegistryObject<SoundEvent> BOAR_AMBIENT = createSound("entity.boar.ambient");
@@ -41,22 +42,22 @@ public class FnCSounds {
     public static RegistryObject<SoundEvent> SPEAR_ATTACK = createSound("entity.spear.attack");
     public static RegistryObject<SoundEvent> SPEAR_MISS = createSound("entity.spear.miss");
 
-    public static RegistryObject<SoundEvent> ANTLER_HEADDRESS_ATTACK_STRONG = createSound("entity.antler_headdress.attack_strong");
+    public static RegistryObject<SoundEvent> ANTLER_HEADDRESS_ATTACK_STRONG = createSound(
+            "entity.antler_headdress.attack_strong");
     public static RegistryObject<SoundEvent> ANTLER_HEADDRESS_CHARGE = createSound("entity.antler_headdress.charge");
-    public static RegistryObject<SoundEvent> ANTLER_HEADDRESS_FINISHED_CHARGING = createSound("entity.antler_headdress.finished_charging");
+    public static RegistryObject<SoundEvent> ANTLER_HEADDRESS_FINISHED_CHARGING = createSound(
+            "entity.antler_headdress.finished_charging");
 
     public static RegistryObject<SoundEvent> ENTITY_DESADDLE = createSound("entity.saddled.desaddle");
 
     public static RegistryObject<SoundEvent> DOWSING_ROD_LOCATES = createSound("item.dowsing_rod.locates");
 
-    public static RegistryObject<SoundEvent> createSound(String location) {
-        return REGISTRAR.register(
-                location.replace('.', '_'),
-                () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(FnCConstants.MOD_ID, location), 1)
-        );
+    public static RegistryObject<SoundEvent> createSound(String location){
+        return REGISTRAR.register(location.replace('.', '_'),
+                () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(FnCConstants.MOD_ID, location), 1));
     }
 
-    public static void init() {
+    public static void init(){
 
     }
 }

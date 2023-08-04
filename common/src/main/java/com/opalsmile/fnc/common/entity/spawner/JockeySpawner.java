@@ -13,23 +13,33 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.CustomSpawner;
 
 public class JockeySpawner implements CustomSpawner {
-    private static final long COOLDOWN = 72000L;
     public static final int MAX_OFFSET = 10;
+    private static final long COOLDOWN = 72000L;
     private int spawnChance;
 
+    private static boolean handleMount(ServerLevel world, Jockey jockey){
+        final Mob mountEntity = Jockey.getMountEntity(world, jockey);
+        if(mountEntity != null) {
+            mountEntity.moveTo(jockey.position());
+            jockey.startRiding(mountEntity);
+            return world.addFreshEntity(mountEntity);
+        }
+        return false;
+    }
+
     @Override
-    public int tick(ServerLevel level, boolean spawnFriendlies, boolean spawnEnemies) {
+    public int tick(ServerLevel level, boolean spawnFriendlies, boolean spawnEnemies){
         double successChance = FnCServices.CONFIG.getJockeySpawnChance();
-        if (successChance <= 0) return 0;
+        if(successChance <= 0) return 0;
 
         FnCSavedData savedData = FnCSavedData.get(level);
 
-        if (savedData.hasJockeySpawned()) {
+        if(savedData.hasJockeySpawned()) {
             return 0;
         }
 
         long jockeySpawnCooldown = savedData.getJockeyCooldown();
-        if (jockeySpawnCooldown <= 0) {
+        if(jockeySpawnCooldown <= 0) {
             return attemptSpawnJockey(level, savedData, successChance);
         }
 
@@ -38,9 +48,9 @@ public class JockeySpawner implements CustomSpawner {
         return 0;
     }
 
-    private int attemptSpawnJockey(ServerLevel world, FnCSavedData savedData, double successChance) {
+    private int attemptSpawnJockey(ServerLevel world, FnCSavedData savedData, double successChance){
         int defaultSpawnChance = (int) (25 * successChance);
-        if (spawnChance == 0) {
+        if(spawnChance == 0) {
             spawnChance = defaultSpawnChance;
         }
 
@@ -48,46 +58,48 @@ public class JockeySpawner implements CustomSpawner {
         int i = spawnChance;
         spawnChance = Mth.clamp(spawnChance + defaultSpawnChance, 0, 75);
 
-        if (world.random.nextInt(100) > i) {
+        if(world.random.nextInt(100) > i) {
             savedData.setJockeyCooldown(COOLDOWN);
             savedData.setDirty();
             return 0;
         }
 
         // Extra check that is never changed, except by the config value
-        if (world.random.nextInt((int) (successChance * 10)) != 0) {
+        if(world.random.nextInt((int) (successChance * 10)) != 0) {
             savedData.setJockeyCooldown(COOLDOWN);
             savedData.setDirty();
             return 0;
         }
 
         ServerPlayer player = world.getRandomPlayer();
-        if (player != null) {
-            BlockPos position = player.blockPosition().offset(world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2), world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2), world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2));
+        if(player != null) {
+            BlockPos position = player.blockPosition().offset(world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2),
+                    world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2),
+                    world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2));
 
             // Prevent suffocating
-            for (BlockPos blockPos : BlockPos.betweenClosed(position.offset(-2, 0, -2), position.offset(2, 3, 2))) {
-                if (!world.isEmptyBlock(blockPos)) {
+            for(BlockPos blockPos : BlockPos.betweenClosed(position.offset(-2, 0, -2), position.offset(2, 3, 2))) {
+                if(!world.isEmptyBlock(blockPos)) {
                     return 0;
                 }
             }
 
             // Floor finder
-            for (BlockPos blockPos : BlockPos.betweenClosed(position.offset(-1, -1, -1), position.offset(1, -1, 1))) {
-                if (world.isEmptyBlock(blockPos) && world.getFluidState(blockPos).isEmpty()) {
+            for(BlockPos blockPos : BlockPos.betweenClosed(position.offset(-1, -1, -1), position.offset(1, -1, 1))) {
+                if(world.isEmptyBlock(blockPos) && world.getFluidState(blockPos).isEmpty()) {
                     return 0;
                 }
             }
 
             Jockey jockey = FnCEntities.JOCKEY.get().create(world);
-            if (jockey == null) {
+            if(jockey == null) {
                 return 0;
             }
 
             jockey.moveTo(position.getX(), position.getY(), position.getZ());
             jockey.finalizeSpawn(world, world.getCurrentDifficultyAt(position), MobSpawnType.NATURAL, null, null);
 
-            if (handleMount(world, jockey) && world.addFreshEntity(jockey)) {
+            if(handleMount(world, jockey) && world.addFreshEntity(jockey)) {
                 savedData.setJockeyUUID(jockey.getUUID());
                 savedData.setJockeyCooldown(-1);
                 savedData.setSpawnPosition(jockey.blockPosition());
@@ -98,16 +110,6 @@ public class JockeySpawner implements CustomSpawner {
             }
         }
         return 0;
-    }
-
-    private static boolean handleMount(ServerLevel world, Jockey jockey) {
-        final Mob mountEntity = Jockey.getMountEntity(world, jockey);
-        if (mountEntity != null) {
-            mountEntity.moveTo(jockey.position());
-            jockey.startRiding(mountEntity);
-            return world.addFreshEntity(mountEntity);
-        }
-        return false;
     }
 
 }

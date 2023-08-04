@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class FnCFabricClient implements ClientModInitializer {
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient(){
         EntityRendererRegistry.register(FnCEntities.JACKALOPE.get(), JackalopeRenderer::new);
         EntityRendererRegistry.register(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
     }

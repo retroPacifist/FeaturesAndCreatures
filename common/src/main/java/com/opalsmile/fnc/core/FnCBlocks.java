@@ -12,7 +12,8 @@ import opalsmile.fnc.reg.RegistryObject;
 import java.util.function.Supplier;
 
 public class FnCBlocks {
-    public static final RegistrationProvider<Block> REGISTER = RegistrationProvider.get(Registries.BLOCK, FnCConstants.MOD_ID);
+    public static final RegistrationProvider<Block> REGISTER = RegistrationProvider.get(Registries.BLOCK,
+            FnCConstants.MOD_ID);
 
 //    public final BlockRegistryObject<Block> STONE_DAWN_ORE = createBlock("stone_dawn_ore", createOre(FeaturesCreaturesOre.Duration.DAWN));
 //    public final BlockRegistryObject<Block> STONE_SUNSET_ORE = createBlock("stone_sunset_ore", createOre(FeaturesCreaturesOre.Duration.SUNSET));
@@ -28,21 +29,22 @@ public class FnCBlocks {
 
     public static final BlockRegistryObject<Block> DAWN_BLOCK = createBlock("dawn_block", FnCBlocks::createBlock);
     public static final BlockRegistryObject<Block> SUNSET_BLOCK = createBlock("sunset_block", FnCBlocks::createBlock);
-    public static final BlockRegistryObject<Block> MIDNIGHT_BLOCK = createBlock("midnight_block", FnCBlocks::createBlock);
+    public static final BlockRegistryObject<Block> MIDNIGHT_BLOCK = createBlock("midnight_block",
+            FnCBlocks::createBlock);
 
 //    private Supplier<Block> createOre(FeaturesCreaturesOre.Duration duration) {
 //        return () -> new FeaturesCreaturesOre(duration, BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE));
 //    }
 
-    private static Block createBlock() {
+    private static Block createBlock(){
         return new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK));
     }
 
-    private static <B extends Block> BlockRegistryObject<B> createBlock(String id, Supplier<? extends B> block) {
+    private static <B extends Block> BlockRegistryObject<B> createBlock(String id, Supplier<? extends B> block){
         final RegistryObject<B> ro = REGISTER.register(id, block);
         return BlockRegistryObject.wrap(ro);
     }
 
-    public static void init() {
+    public static void init(){
     }
 }

@@ -8,7 +8,7 @@ public class FnCTriggers {
     public static final AntlerHeaddressTrigger ANTLER_HEADDRESS = new AntlerHeaddressTrigger();
     public static final JockeyTradeTrigger JOCKEY_TRADE = new JockeyTradeTrigger();
 
-    public static void register() {
+    public static void register(){
         CriteriaTriggers.register(ANTLER_HEADDRESS);
         CriteriaTriggers.register(JOCKEY_TRADE);
     }

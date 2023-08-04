@@ -44,7 +44,8 @@ import javax.annotation.Nullable;
 
 public class Jackalope extends Animal implements GeoEntity {
 
-    private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(Jackalope.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(Jackalope.class,
+            EntityDataSerializers.BOOLEAN);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.GOLDEN_CARROT);
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private int jumpTicks;
@@ -52,30 +53,30 @@ public class Jackalope extends Animal implements GeoEntity {
     private boolean wasOnGround;
     private int jumpDelayTicks;
 
-    public Jackalope(EntityType<? extends Jackalope> type, Level world) {
+    public Jackalope(EntityType<? extends Jackalope> type, Level world){
         super(type, world);
         this.jumpControl = new JumpHelperController(this);
         this.moveControl = new MoveHelperController(this);
         this.setSpeedModifier(0.0D);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.Builder createAttributes(){
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.35F);
     }
 
     @Override
-    public void setBaby(boolean p_82227_1_) {
+    public void setBaby(boolean p_82227_1_){
         super.setBaby(p_82227_1_);
         this.setBoundingBox(new AABB(this.blockPosition()));
     }
 
 
-    protected float getJumpPower() {
-        if (!this.horizontalCollision && (!this.moveControl.hasWanted() || !(this.moveControl.getWantedY() > this.getY() + 0.7D))) {
+    protected float getJumpPower(){
+        if(!this.horizontalCollision && (!this.moveControl.hasWanted() || !(this.moveControl.getWantedY() > this.getY() + 0.7D))) {
             Path path = this.navigation.getPath();
-            if (path != null && !path.isDone()) {
+            if(path != null && !path.isDone()) {
                 Vec3 vector3d = path.getNextEntityPos(this);
-                if (vector3d.y > this.getY() + 0.6D) {
+                if(vector3d.y > this.getY() + 0.6D) {
                     return 0.6F;
                 }
             }
@@ -85,136 +86,139 @@ public class Jackalope extends Animal implements GeoEntity {
         }
     }
 
-    protected void jumpFromGround() {
+    protected void jumpFromGround(){
         super.jumpFromGround();
         double d0 = this.moveControl.getSpeedModifier();
-        if (d0 > 0.0D) {
+        if(d0 > 0.0D) {
             double d1 = this.getDeltaMovement().horizontalDistanceSqr();
-            if (d1 < 0.01D) {
+            if(d1 < 0.01D) {
                 this.moveRelative(0.2F, new Vec3(0.0D, 0.0D, 1.0D));
             }
         }
-        if (!this.level().isClientSide) {
+        if(!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, (byte) 1);
         }
     }
 
-    public void setSpeedModifier(double p_175515_1_) {
+    public void setSpeedModifier(double p_175515_1_){
         this.getNavigation().setSpeedModifier(p_175515_1_);
-        this.moveControl.setWantedPosition(this.moveControl.getWantedX(), this.moveControl.getWantedY(), this.moveControl.getWantedZ(), p_175515_1_);
+        this.moveControl.setWantedPosition(this.moveControl.getWantedX(), this.moveControl.getWantedY(),
+                this.moveControl.getWantedZ(), p_175515_1_);
     }
 
-    public void setJumping(boolean isJumping) {
+    public void setJumping(boolean isJumping){
         super.setJumping(isJumping);
-        if (isJumping) {
-            this.playSound(this.getJumpSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+        if(isJumping) {
+            this.playSound(this.getJumpSound(), this.getSoundVolume(),
+                    ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
         }
     }
 
     @Override
-    protected void dropEquipment() {
+    protected void dropEquipment(){
         super.dropEquipment();
-        if (this.isSaddled())
-            this.spawnAtLocation(Items.SADDLE);
+        if(this.isSaddled()) this.spawnAtLocation(Items.SADDLE);
     }
 
-    public void startJumping() {
+    public void startJumping(){
         this.setJumping(true);
         this.jumpDuration = 10;
         this.jumpTicks = 0;
     }
 
-    public void customServerAiStep() {
-        if (this.jumpDelayTicks > 0) {
+    public void customServerAiStep(){
+        if(this.jumpDelayTicks > 0) {
             --this.jumpDelayTicks;
         }
 
-        if (this.onGround()) {
-            if (!this.wasOnGround) {
+        if(this.onGround()) {
+            if(!this.wasOnGround) {
                 this.setJumping(false);
                 this.checkLandingDelay();
             }
 
             JumpHelperController controller = (JumpHelperController) this.jumpControl;
-            if (!controller.wantJump()) {
-                if (this.moveControl.hasWanted() && this.jumpDelayTicks == 0) {
+            if(!controller.wantJump()) {
+                if(this.moveControl.hasWanted() && this.jumpDelayTicks == 0) {
                     Path path = this.navigation.getPath();
-                    Vec3 vector3d = new Vec3(this.moveControl.getWantedX(), this.moveControl.getWantedY(), this.moveControl.getWantedZ());
-                    if (path != null && !path.isDone()) {
+                    Vec3 vector3d = new Vec3(this.moveControl.getWantedX(), this.moveControl.getWantedY(),
+                            this.moveControl.getWantedZ());
+                    if(path != null && !path.isDone()) {
                         vector3d = path.getNextEntityPos(this);
                     }
 
                     this.facePoint(vector3d.x, vector3d.z);
                     this.startJumping();
                 }
-            } else if (!controller.canJump()) {
+            } else if(!controller.canJump()) {
                 this.enableJumpControl();
             }
         }
         this.wasOnGround = this.onGround();
     }
 
-    public boolean canSpawnSprintParticle() {
+    public boolean canSpawnSprintParticle(){
         return false;
     }
 
-    private void facePoint(double p_175533_1_, double p_175533_3_) {
-        this.setYRot((float) (Mth.atan2(p_175533_3_ - this.getZ(), p_175533_1_ - this.getX()) * (double) (180F / (float) Math.PI)) - 90.0F);
+    private void facePoint(double p_175533_1_, double p_175533_3_){
+        this.setYRot((float) (Mth.atan2(p_175533_3_ - this.getZ(),
+                p_175533_1_ - this.getX()) * (double) (180F / (float) Math.PI)) - 90.0F);
     }
 
-    private void enableJumpControl() {
+    private void enableJumpControl(){
         ((JumpHelperController) this.jumpControl).setCanJump(true);
     }
 
-    private void disableJumpControl() {
+    private void disableJumpControl(){
         ((JumpHelperController) this.jumpControl).setCanJump(false);
     }
 
-    private void setLandingDelay() {
-        if (this.moveControl.getSpeedModifier() < 2.2D) {
+    private void setLandingDelay(){
+        if(this.moveControl.getSpeedModifier() < 2.2D) {
             this.jumpDelayTicks = 10;
         } else {
             this.jumpDelayTicks = 1;
         }
     }
 
-    private void checkLandingDelay() {
+    private void checkLandingDelay(){
         this.setLandingDelay();
         this.disableJumpControl();
     }
 
-    public void aiStep() {
+    public void aiStep(){
         super.aiStep();
-        if (this.jumpTicks != this.jumpDuration) {
+        if(this.jumpTicks != this.jumpDuration) {
             ++this.jumpTicks;
-        } else if (this.jumpDuration != 0) {
+        } else if(this.jumpDuration != 0) {
             this.jumpTicks = 0;
             this.jumpDuration = 0;
             this.setJumping(false);
         }
     }
 
-    protected SoundEvent getJumpSound() {
+    protected SoundEvent getJumpSound(){
         return FnCSounds.JACKALOPE_STEP.get();
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
+    protected SoundEvent getAmbientSound(){
         return FnCSounds.JACKALOPE_AMBIENT.get();
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+    protected SoundEvent getHurtSound(DamageSource p_184601_1_){
         return FnCSounds.JACKALOPE_HURT.get();
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected SoundEvent getDeathSound(){
         return FnCSounds.JACKALOPE_DEATH.get();
     }
 
-    public void handleEntityEvent(byte p_70103_1_) {
-        if (p_70103_1_ == 1) {
+    public void handleEntityEvent(byte p_70103_1_){
+        if(p_70103_1_ == 1) {
             this.spawnSprintParticle();
             this.jumpDuration = 10;
             this.jumpTicks = 0;
@@ -224,26 +228,26 @@ public class Jackalope extends Animal implements GeoEntity {
     }
 
     @Override
-    public boolean isFood(ItemStack stack) {
+    public boolean isFood(ItemStack stack){
         return FOOD_ITEMS.test(stack);
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity){
         Jackalope jackalope = FnCEntities.JACKALOPE.get().create(world);
-        if (jackalope != null) jackalope.setAge(-24000);
+        if(jackalope != null) jackalope.setAge(-24000);
         return jackalope;
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(){
         super.defineSynchedData();
         this.entityData.define(SADDLED, false);
     }
 
     @Override
-    protected void registerGoals() {
+    protected void registerGoals(){
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
@@ -255,60 +259,63 @@ public class Jackalope extends Animal implements GeoEntity {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand){
         super.mobInteract(player, hand);
-        if (player.isHolding(Items.SADDLE)) {
-            player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), FnCSounds.JACKALOPE_SADDLE.get(), SoundSource.AMBIENT, 1, 1);
+        if(player.isHolding(Items.SADDLE)) {
+            player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(),
+                    FnCSounds.JACKALOPE_SADDLE.get(), SoundSource.AMBIENT, 1, 1);
             this.setSaddled(true);
-            if (!player.isCreative()) {
+            if(!player.isCreative()) {
                 player.getItemInHand(hand).shrink(1);
             }
         }
-        if (player.isCrouching() && player.getItemInHand(hand).getItem() != Items.SADDLE && this.isSaddled()) {
+        if(player.isCrouching() && player.getItemInHand(hand).getItem() != Items.SADDLE && this.isSaddled()) {
             this.setSaddled(false);
-            player.level().addFreshEntity(new ItemEntity(player.level(), this.getX(), this.getY() + 0.3f, this.getZ(), Items.SADDLE.getDefaultInstance()));
-            player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), FnCSounds.ENTITY_DESADDLE.get(), SoundSource.AMBIENT, 1, 1);
+            player.level().addFreshEntity(new ItemEntity(player.level(), this.getX(), this.getY() + 0.3f, this.getZ(),
+                    Items.SADDLE.getDefaultInstance()));
+            player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(),
+                    FnCSounds.ENTITY_DESADDLE.get(), SoundSource.AMBIENT, 1, 1);
         }
         return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundNBT) {
+    public void readAdditionalSaveData(CompoundTag compoundNBT){
         super.readAdditionalSaveData(compoundNBT);
         this.setSaddled(compoundNBT.getBoolean("Saddled"));
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundNBT) {
+    public void addAdditionalSaveData(CompoundTag compoundNBT){
         super.addAdditionalSaveData(compoundNBT);
         compoundNBT.putBoolean("Saddled", this.isSaddled());
     }
 
-    private <E extends Jackalope> PlayState predicate(final AnimationState<E> event) {
+    private <E extends Jackalope> PlayState predicate(final AnimationState<E> event){
 
-        if (this.jumpDuration >= 1) {
+        if(this.jumpDuration >= 1) {
             return event.setAndContinue(RawAnimation.begin().thenLoop("animation.jackalope.walk"));
         }
         return PlayState.STOP;
     }
 
 
-    public boolean isSaddled() {
+    public boolean isSaddled(){
         return this.entityData.get(SADDLED);
     }
 
-    public void setSaddled(boolean saddled) {
+    public void setSaddled(boolean saddled){
         this.entityData.set(SADDLED, saddled);
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar){
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
 
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimatableInstanceCache getAnimatableInstanceCache(){
         return this.geoCache;
     }
 
@@ -316,26 +323,26 @@ public class Jackalope extends Animal implements GeoEntity {
         private final Jackalope jack;
         private double nextJumpSpeed;
 
-        public MoveHelperController(Jackalope jackalope) {
+        public MoveHelperController(Jackalope jackalope){
             super(jackalope);
             this.jack = jackalope;
         }
 
-        public void tick() {
-            if (this.jack.onGround() && !this.jack.jumping && !((JumpHelperController) this.jack.jumpControl).wantJump()) {
+        public void tick(){
+            if(this.jack.onGround() && !this.jack.jumping && !((JumpHelperController) this.jack.jumpControl).wantJump()) {
                 this.jack.setSpeedModifier(0.0D);
-            } else if (this.hasWanted()) {
+            } else if(this.hasWanted()) {
                 this.jack.setSpeedModifier(this.nextJumpSpeed);
             }
             super.tick();
         }
 
-        public void setWantedPosition(double p_75642_1_, double p_75642_3_, double p_75642_5_, double p_75642_7_) {
-            if (this.jack.isInWater()) {
+        public void setWantedPosition(double p_75642_1_, double p_75642_3_, double p_75642_5_, double p_75642_7_){
+            if(this.jack.isInWater()) {
                 p_75642_7_ = 1.5D;
             }
             super.setWantedPosition(p_75642_1_, p_75642_3_, p_75642_5_, p_75642_7_);
-            if (p_75642_7_ > 0.0D) {
+            if(p_75642_7_ > 0.0D) {
                 this.nextJumpSpeed = p_75642_7_;
             }
         }
@@ -345,25 +352,25 @@ public class Jackalope extends Animal implements GeoEntity {
         private final Jackalope jack;
         private boolean canJump;
 
-        public JumpHelperController(Jackalope jackalope) {
+        public JumpHelperController(Jackalope jackalope){
             super(jackalope);
             this.jack = jackalope;
         }
 
-        public boolean wantJump() {
+        public boolean wantJump(){
             return this.jump;
         }
 
-        public boolean canJump() {
+        public boolean canJump(){
             return this.canJump;
         }
 
-        public void setCanJump(boolean p_180066_1_) {
+        public void setCanJump(boolean p_180066_1_){
             this.canJump = p_180066_1_;
         }
 
-        public void tick() {
-            if (this.jump) {
+        public void tick(){
+            if(this.jump) {
                 this.jack.startJumping();
                 this.jump = false;
             }

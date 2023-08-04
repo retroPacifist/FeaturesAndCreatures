@@ -23,10 +23,11 @@ public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigge
         return new Instance(predicate, entityPredicate, itemPredicate);
     }
 
-    public void trigger(ServerPlayer player, Jockey jockey, ItemStack item) {
+    public void trigger(ServerPlayer player, Jockey jockey, ItemStack item){
         LootContext lootcontext = EntityPredicate.createContext(player, jockey);
         this.trigger(player, instance -> instance.matches(lootcontext, item));
     }
+
     public static class Instance extends AbstractCriterionTriggerInstance {
 
         private final ContextAwarePredicate jockey;
@@ -46,8 +47,8 @@ public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigge
             return jsonObject;
         }
 
-        public boolean matches(LootContext lootContext, ItemStack stack) {
-            if (!this.jockey.matches(lootContext)) {
+        public boolean matches(LootContext lootContext, ItemStack stack){
+            if(!this.jockey.matches(lootContext)) {
                 return false;
             } else {
                 return this.itemPredicate.matches(stack);

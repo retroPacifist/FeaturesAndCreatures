@@ -11,15 +11,15 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 
 public class FnCFabric implements ModInitializer {
 
+    public static void registerEntityAttributes(){
+        FabricDefaultAttributeRegistry.register(FnCEntities.JACKALOPE.get(), Jackalope.createAttributes());
+        FabricDefaultAttributeRegistry.register(FnCEntities.JOCKEY.get(), Jockey.createAttributes());
+    }
+
     @Override
-    public void onInitialize() {
+    public void onInitialize(){
         FnCRegistry.initialise();
         FnCFabric.registerEntityAttributes();
         FnCTriggers.register();
-    }
-
-    public static void registerEntityAttributes() {
-        FabricDefaultAttributeRegistry.register(FnCEntities.JACKALOPE.get(), Jackalope.createAttributes());
-        FabricDefaultAttributeRegistry.register(FnCEntities.JOCKEY.get(), Jockey.createAttributes());
     }
 }
