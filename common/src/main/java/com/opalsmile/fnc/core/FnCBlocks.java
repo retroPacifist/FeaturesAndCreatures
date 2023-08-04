@@ -39,7 +39,7 @@ public class FnCBlocks {
     }
 
     private static <B extends Block> BlockRegistryObject<B> createBlock(String id, Supplier<? extends B> block) {
-        final RegistryObject<B> ro = REGISTER.<B>register(id, block);
+        final RegistryObject<B> ro = REGISTER.register(id, block);
         return BlockRegistryObject.wrap(ro);
     }
 
