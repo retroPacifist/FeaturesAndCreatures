@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import opalsmile.fnc.reg.BlockRegistryObject;
 import opalsmile.fnc.reg.RegistrationProvider;
+import opalsmile.fnc.reg.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -38,7 +39,7 @@ public class FnCBlocks {
     }
 
     private static <B extends Block> BlockRegistryObject<B> createBlock(String id, Supplier<? extends B> block) {
-        final var ro = REGISTER.<B>register(id, block);
+        final RegistryObject<B> ro = REGISTER.<B>register(id, block);
         return BlockRegistryObject.wrap(ro);
     }
 

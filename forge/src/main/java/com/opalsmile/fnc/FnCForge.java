@@ -1,12 +1,10 @@
 package com.opalsmile.fnc;
 
-import com.opalsmile.fnc.client.renderer.JackalopeRenderer;
 import com.opalsmile.fnc.common.entity.Jackalope;
 import com.opalsmile.fnc.common.entity.Jockey;
 import com.opalsmile.fnc.core.FnCEntities;
 import com.opalsmile.fnc.core.FnCRegistry;
 import com.opalsmile.fnc.core.FnCTriggers;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
