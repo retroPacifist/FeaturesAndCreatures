@@ -1,4 +1,4 @@
-package com.opalsmile.fnc.core;
+package com.opalsmile.fnc.registries;
 
 import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.registries.Registries;

@@ -1,4 +1,4 @@
-package com.opalsmile.fnc.core;
+package com.opalsmile.fnc.registries;
 
 public class FnCRegistry {
 

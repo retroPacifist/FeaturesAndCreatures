@@ -1,4 +1,4 @@
-package com.opalsmile.fnc.common;
+package com.opalsmile.fnc.util;
 
 import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.BlockPos;

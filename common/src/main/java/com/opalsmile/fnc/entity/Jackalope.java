@@ -1,7 +1,7 @@
-package com.opalsmile.fnc.common.entity;
+package com.opalsmile.fnc.entity;
 
-import com.opalsmile.fnc.core.FnCEntities;
-import com.opalsmile.fnc.core.FnCSounds;
+import com.opalsmile.fnc.registries.FnCEntities;
+import com.opalsmile.fnc.registries.FnCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

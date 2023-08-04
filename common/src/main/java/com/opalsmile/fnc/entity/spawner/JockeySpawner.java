@@ -1,28 +1,38 @@
-package com.opalsmile.fnc.common.entity.spawner;
+package com.opalsmile.fnc.entity.spawner;
 
-import com.opalsmile.fnc.common.FnCSavedData;
-import com.opalsmile.fnc.common.entity.Jockey;
-import com.opalsmile.fnc.core.FnCEntities;
+import com.opalsmile.fnc.util.FnCSavedData;
+import com.opalsmile.fnc.entity.Jackalope;
+import com.opalsmile.fnc.entity.Jockey;
+import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.platform.FnCServices;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.CustomSpawner;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+
+import javax.annotation.Nullable;
 
 public class JockeySpawner implements CustomSpawner {
     public static final int MAX_OFFSET = 10;
-    private static final long COOLDOWN = 72000L;
     private int spawnChance;
 
     private static boolean handleMount(ServerLevel world, Jockey jockey){
-        final Mob mountEntity = Jockey.getMountEntity(world, jockey);
+        final Mob mountEntity = getMountEntity(world, jockey);
         if(mountEntity != null) {
             mountEntity.moveTo(jockey.position());
             jockey.startRiding(mountEntity);
-            return world.addFreshEntity(mountEntity);
+            return world.addFreshEntity (mountEntity);
         }
         return false;
     }
@@ -55,18 +65,21 @@ public class JockeySpawner implements CustomSpawner {
         }
 
         // Increasing chance, similarly to how the wandering trader functions
-        int i = spawnChance;
-        spawnChance = Mth.clamp(spawnChance + defaultSpawnChance, 0, 75);
+        int oldSpawnChance = spawnChance;
+        spawnChance = Mth.clamp(spawnChance + defaultSpawnChance, 0, 75); //TODO why clamped to 75
 
-        if(world.random.nextInt(100) > i) {
-            savedData.setJockeyCooldown(COOLDOWN);
+        if(world.random.nextInt(100) > oldSpawnChance) {
+            savedData.setJockeyCooldown(FnCServices.CONFIG.jockeySpawningCooldown());
             savedData.setDirty();
             return 0;
         }
 
         // Extra check that is never changed, except by the config value
-        if(world.random.nextInt((int) (successChance * 10)) != 0) {
-            savedData.setJockeyCooldown(COOLDOWN);
+
+
+        //TODO Why is this here?
+        if(world.random.nextInt((int) (successChance * 10)) != 0) { //The lower the successChance the easier it is for this to not return
+            savedData.setJockeyCooldown(FnCServices.CONFIG.jockeySpawningCooldown());
             savedData.setDirty();
             return 0;
         }
@@ -111,5 +124,36 @@ public class JockeySpawner implements CustomSpawner {
         }
         return 0;
     }
+
+    @Nullable
+    public static Mob getMountEntity(Level level, Jockey jockey){
+        if(jockey.getY() < 30) {
+            return EntityType.CAVE_SPIDER.create(level);
+        }
+        final Holder<Biome> biome = level.getBiome(jockey.blockPosition());
+        if(biome.value().coldEnoughToSnow(jockey.blockPosition())) {
+            //Sabertooth
+            return null;
+        } else if(biome.is(BiomeTags.HAS_SWAMP_HUT)) {
+            Slime slime = EntityType.SLIME.create(level);
+            if(slime != null) slime.setSize(2, true);
+            return slime;
+        } else if(biome.is(BiomeTags.IS_MOUNTAIN)) {
+            Jackalope jackalope = FnCEntities.JACKALOPE.get().create(level);
+            if(jackalope != null) jackalope.setSaddled(true);
+            return jackalope;
+        } else if(biome.is(BiomeTags.HAS_VILLAGE_PLAINS)) {
+            Horse horse = EntityType.HORSE.create(level);
+            if(horse != null) {
+                horse.equipSaddle(SoundSource.NEUTRAL);
+                horse.setBaby(true);
+            }
+            return horse;
+        } else {
+            //Summon boar
+            return null;
+        }
+    }
+
 
 }

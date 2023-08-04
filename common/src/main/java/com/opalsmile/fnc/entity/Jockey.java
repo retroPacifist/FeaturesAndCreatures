@@ -1,14 +1,13 @@
-package com.opalsmile.fnc.common.entity;
+package com.opalsmile.fnc.entity;
 
 import com.opalsmile.fnc.FnCConstants;
-import com.opalsmile.fnc.common.FnCSavedData;
-import com.opalsmile.fnc.core.FnCEntities;
-import com.opalsmile.fnc.core.FnCSounds;
-import com.opalsmile.fnc.core.FnCTriggers;
+import com.opalsmile.fnc.util.FnCSavedData;
+import com.opalsmile.fnc.registries.FnCSounds;
+import com.opalsmile.fnc.registries.FnCTriggers;
 import com.opalsmile.fnc.platform.FnCServices;
+import com.opalsmile.fnc.util.FnCUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,8 +19,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -36,9 +33,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -53,7 +48,6 @@ import net.minecraft.world.item.trading.Merchant;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -77,8 +71,6 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
             EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ATTACK_TIMER = SynchedEntityData.defineId(Jockey.class,
             EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> TIME_ALIVE = SynchedEntityData.defineId(Jockey.class,
-            EntityDataSerializers.INT);
     private static final TargetingConditions TARGETING = TargetingConditions.forCombat().ignoreLineOfSight().range(32);
     private static final RawAnimation WALK_ANIMATION = RawAnimation.begin().thenLoop("animation.jockey.walk");
     private static final RawAnimation POTION_ANIMATION = RawAnimation.begin().thenLoop("animation.jockey.potion");
@@ -90,6 +82,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     private MerchantOffers offers;
     private BlockPos lastBlockPos = BlockPos.ZERO;
 
+    private int timeAlive;
+
     public Jockey(EntityType<? extends Jockey> entityType, Level level){
         super(entityType, level);
     }
@@ -98,58 +92,17 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         return createMobAttributes().add(Attributes.MAX_HEALTH, 12.0);
     }
 
-    private static <T> T getRandomElement(RandomSource random, Collection<T> collection){
-        int size = random.nextInt(collection.size());
-        int i = 0;
-        for(T t : collection) {
-            if(i++ == size) {
-                return t;
-            }
-        }
-        return null;
-    }
 
     public static boolean isRiding(Jockey jockey){
         Entity entity = jockey.getVehicle();
         return entity instanceof LivingEntity;
     }
 
-    @Nullable
-    public static Mob getMountEntity(Level level, Jockey jockey){
-        if(jockey.getY() < 30) {
-            return EntityType.CAVE_SPIDER.create(level);
-        }
-        final Holder<Biome> biome = level.getBiome(jockey.blockPosition());
-        if(biome.value().coldEnoughToSnow(jockey.blockPosition())) {
-            //Sabertooth
-            return null;
-        } else if(biome.is(BiomeTags.HAS_SWAMP_HUT)) {
-            Slime slime = EntityType.SLIME.create(level);
-            if(slime != null) slime.setSize(2, true);
-            return slime;
-        } else if(biome.is(BiomeTags.IS_MOUNTAIN)) {
-            Jackalope jackalope = FnCEntities.JACKALOPE.get().create(level);
-            if(jackalope != null) jackalope.setSaddled(true);
-            return jackalope;
-        } else if(biome.is(BiomeTags.HAS_VILLAGE_PLAINS)) {
-            Horse horse = EntityType.HORSE.create(level);
-            if(horse != null) {
-                horse.equipSaddle(SoundSource.NEUTRAL);
-                horse.setBaby(true);
-            }
-            return horse;
-        } else {
-            //Summon boar
-            return null;
-        }
-    }
-
     @Override
     protected void defineSynchedData(){
+        super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
         this.entityData.define(ATTACK_TIMER, 10);
-        this.entityData.define(TIME_ALIVE, 0);
-        super.defineSynchedData();
     }
 
     @Override
@@ -243,66 +196,33 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         this.entityData.set(ATTACK_TIMER, attackTimer);
     }
 
-    public int getTimeAlive(){
-        return this.entityData.get(TIME_ALIVE);
-
-    }
-
-    public void setTimeAlive(int time){
-        this.entityData.set(TIME_ALIVE, time);
-    }
-
     @Override
     public MerchantOffers getOffers(){
         if(this.offers == null) {
             this.offers = new MerchantOffers();
             for(int i = 0; i < 7; ++i) {
-                List<MobEffectInstance> effects = new ArrayList<>();
-                int price = random.nextInt(8) + 5;
-                int effectCount = generateEffectCount();
-                TradeType type = generateTradeType();
+                final List<MobEffectInstance> effects = new ArrayList<>();
+                final int price = random.nextInt(8) + 5;
+                final int effectCount = generateEffectCount();
+                final TradeType type = generateTradeType();
 
-                int amount = switch (type) {
-                    case ARROWS_16 -> 16;
-                    case ARROWS_32 -> 32;
-                    default -> 1;
-                };
+                int amount = type.getAmount();
 
                 Predicate<MobEffect> blacklisted = FnCServices.CONFIG.jockeyEffectBlacklist()::contains;
 
-                Set<MobEffect> effectsSet = BuiltInRegistries.MOB_EFFECT.stream().filter(blacklisted.negate()).collect(
-                        Collectors.toSet());
+                List<MobEffect> availableEffects = BuiltInRegistries.MOB_EFFECT.stream().filter(blacklisted.negate()).collect(
+                        Collectors.toList());
+
+                if (availableEffects.isEmpty()) availableEffects.add(MobEffects.REGENERATION);
 
                 for(int j = 0; j < effectCount; ++j) {
-                    MobEffect effect = getRandomElement(random, effectsSet);
-                    if(effect == null) effect = MobEffects.REGENERATION;
-                    effectsSet.remove(effect);
+                    MobEffect effect = FnCUtil.getRandomElement(random, availableEffects);
+                    availableEffects.remove(effect);
                     effects.add(new MobEffectInstance(effect, 1800, generatePotionStrength(effectCount)));
                 }
 
-                Item item;
-                String translationKey;
-                switch (type) {
-                    case DRINK: {
-                        item = Items.POTION;
-                        translationKey = POTION_TRANSLATION_KEY;
-                        break;
-                    }
-                    case SPLASH: {
-                        item = Items.SPLASH_POTION;
-                        translationKey = POTION_TRANSLATION_KEY;
-                        break;
-                    }
-                    case LINGERING: {
-                        item = Items.LINGERING_POTION;
-                        translationKey = POTION_TRANSLATION_KEY;
-                        break;
-                    }
-                    default: {
-                        item = Items.TIPPED_ARROW;
-                        translationKey = ARROW_TRANSLATION_KEY;
-                    }
-                }
+                Item item = type.getTrade();
+                String translationKey = type.getTranslationKey();
 
                 ItemStack potion = PotionUtils.setCustomEffects(new ItemStack(item, amount), effects).setHoverName(
                         Component.translatable(translationKey).withStyle(Style.EMPTY.withItalic(false)).withStyle(
@@ -313,11 +233,13 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
                         Integer.MAX_VALUE, 0, 1));
             }
         }
+        Collections.shuffle(offers); //Shuffle the order of the offers.
         return offers;
     }
 
     private TradeType generateTradeType(){
         TradeType type;
+        //TODO Extensibility and weight calculating
         int typeChance = random.nextInt(20);
         if(typeChance < 2) {
             type = TradeType.ARROWS_32;
@@ -334,6 +256,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     }
 
     private int generateEffectCount(){
+        //TODO Figure out a way to provide extensibility
+        //Maybe go full blown into a recipe.
         int effectCount;
         int effectCountChance = random.nextInt(20);
         if(effectCountChance < 3) {
@@ -426,9 +350,9 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     public void tick(){
         super.tick();
         if(!this.level().isClientSide) {
-            trackedGlobalJockey();
+            updateJockeyPosition();
         }
-        setTimeAlive(getTimeAlive() + 1);
+        ++timeAlive;
         if(isAttacking()) {
             this.setAttackTimer(this.getAttackTimer() - 1);
             if(getAttackTimer() <= 0) {
@@ -439,8 +363,10 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         if(this.getVehicle() instanceof Mob mount) {
             if(getTarget() != null) {
                 mount.setTarget(this.getTarget());
-                if(mount instanceof NeutralMob neutralMob) neutralMob.startPersistentAngerTimer();
-            } else if(mount.getTarget() != null) setTarget(mount.getTarget());
+                if(mount instanceof NeutralMob neutralMob)
+                    neutralMob.startPersistentAngerTimer();
+            } else if(mount.getTarget() != null)
+                setTarget(mount.getTarget());
         }
     }
 
@@ -463,7 +389,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     /**
      * May only be called on the server side.
      */
-    private void trackedGlobalJockey(){
+    private void updateJockeyPosition(){
         final FnCSavedData savedData = FnCSavedData.get((ServerLevel) level());
         if(!this.lastBlockPos.equals(this.blockPosition())) {
             final UUID uuid = savedData.getJockeyUUID();
@@ -492,13 +418,13 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
 
     @Override
     public boolean removeWhenFarAway(double distance){
-        return getTimeAlive() >= 48000 && (FnCServices.CONFIG.namedJockeyDespawn() || !hasCustomName());
+        return timeAlive >= FnCServices.CONFIG.jockeyDespawnTime() && (FnCServices.CONFIG.namedJockeyDespawn() || !hasCustomName());
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag){
         super.addAdditionalSaveData(compoundTag);
-        compoundTag.putInt("TimeAlive", getTimeAlive());
+        compoundTag.putInt("TimeAlive", timeAlive);
         compoundTag.putBoolean("Attacking", isAttacking());
         compoundTag.putInt("AttackTimer", getAttackTimer());
         if(offers != null) compoundTag.put("Offers", offers.createTag());
@@ -508,7 +434,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     @Override
     public void readAdditionalSaveData(CompoundTag nbt){
         super.readAdditionalSaveData(nbt);
-        setTimeAlive(nbt.getInt("TimeAlive"));
+        this.timeAlive = nbt.getInt("TimeAlive");
         setAttacking(nbt.getBoolean("Attacking"));
         setAttackTimer(nbt.getInt("AttackTimer"));
 
@@ -574,7 +500,36 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     }
 
     public enum TradeType {
-        DRINK, SPLASH, LINGERING, ARROWS_16, ARROWS_32
+
+        //TODO Should this really be an enum or extensible?
+        //Probably extensible with a regular class.
+        DRINK(1, Items.POTION, POTION_TRANSLATION_KEY),
+        SPLASH(1, Items.SPLASH_POTION, POTION_TRANSLATION_KEY),
+        LINGERING(1, Items.LINGERING_POTION, POTION_TRANSLATION_KEY),
+        ARROWS_16(16, Items.TIPPED_ARROW, ARROW_TRANSLATION_KEY),
+        ARROWS_32(32, Items.TIPPED_ARROW, ARROW_TRANSLATION_KEY);
+
+        int amount;
+        Item trade;
+        String translationKey;
+
+        TradeType(int amount, Item item, String translationKey) {
+            this.amount = amount;
+            this.trade = item;
+            this.translationKey = translationKey;
+        }
+
+        public int getAmount(){
+            return amount;
+        }
+
+        public Item getTrade(){
+            return trade;
+        }
+
+        public String getTranslationKey(){
+            return translationKey;
+        }
     }
 
     public static class FollowPlayerGoal extends Goal {

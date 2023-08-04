@@ -1,4 +1,4 @@
-package com.opalsmile.fnc.core;
+package com.opalsmile.fnc.registries;
 
 import com.opalsmile.fnc.advancements.AntlerHeaddressTrigger;
 import com.opalsmile.fnc.advancements.JockeyTradeTrigger;

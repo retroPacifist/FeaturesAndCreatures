@@ -2,7 +2,7 @@ package com.opalsmile.fnc;
 
 import com.opalsmile.fnc.client.renderer.JackalopeRenderer;
 import com.opalsmile.fnc.client.renderer.JockeyRenderer;
-import com.opalsmile.fnc.core.FnCEntities;
+import com.opalsmile.fnc.registries.FnCEntities;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +13,7 @@ public class FnCClientModEvents {
 
 
     @SubscribeEvent
-    public void registerRenderers(EntityRenderersEvent.RegisterRenderers renderer){
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderer){
         renderer.registerEntityRenderer(FnCEntities.JACKALOPE.get(), JackalopeRenderer::new);
         renderer.registerEntityRenderer(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
     }

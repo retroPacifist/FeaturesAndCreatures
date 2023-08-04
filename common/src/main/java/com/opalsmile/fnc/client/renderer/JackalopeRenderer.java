@@ -1,6 +1,7 @@
 package com.opalsmile.fnc.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.client.model.JackalopeModel;
 import com.opalsmile.fnc.entity.Jackalope;
 import net.minecraft.client.renderer.MultiBufferSource;

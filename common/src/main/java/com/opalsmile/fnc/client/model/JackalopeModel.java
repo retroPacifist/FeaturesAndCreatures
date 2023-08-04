@@ -1,6 +1,7 @@
 package com.opalsmile.fnc.client.model;
 
 import com.opalsmile.fnc.FnCConstants;
+import com.opalsmile.fnc.entity.Jackalope;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;

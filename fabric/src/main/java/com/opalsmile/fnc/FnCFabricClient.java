@@ -2,7 +2,7 @@ package com.opalsmile.fnc;
 
 import com.opalsmile.fnc.client.renderer.JackalopeRenderer;
 import com.opalsmile.fnc.client.renderer.JockeyRenderer;
-import com.opalsmile.fnc.core.FnCEntities;
+import com.opalsmile.fnc.registries.FnCEntities;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 

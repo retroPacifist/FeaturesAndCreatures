@@ -1,7 +1,7 @@
 package com.opalsmile.fnc.advancements;
 
 import com.google.gson.JsonObject;
-import com.opalsmile.fnc.common.entity.Jockey;
+import com.opalsmile.fnc.entity.Jockey;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;

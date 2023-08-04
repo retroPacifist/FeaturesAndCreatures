@@ -1,6 +1,6 @@
 package com.opalsmile.fnc.mixin;
 
-import com.opalsmile.fnc.common.entity.spawner.JockeySpawner;
+import com.opalsmile.fnc.entity.spawner.JockeySpawner;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
