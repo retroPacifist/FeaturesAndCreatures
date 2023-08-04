@@ -13,7 +13,7 @@ public class FnCClientModEvents {
 
 
     @SubscribeEvent
-    public void registerRenderers(EntityRenderersEvent.RegisterRenderers renderer) {
+    public void registerRenderers(EntityRenderersEvent.RegisterRenderers renderer){
         renderer.registerEntityRenderer(FnCEntities.JACKALOPE.get(), JackalopeRenderer::new);
         renderer.registerEntityRenderer(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
     }

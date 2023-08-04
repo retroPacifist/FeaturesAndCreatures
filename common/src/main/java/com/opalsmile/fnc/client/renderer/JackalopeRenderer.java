@@ -9,13 +9,13 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class JackalopeRenderer extends GeoEntityRenderer<Jackalope> {
 
-    public JackalopeRenderer(EntityRendererProvider.Context dispatcher) {
+    public JackalopeRenderer(EntityRendererProvider.Context dispatcher){
         super(dispatcher, new JackalopeModel());
     }
 
     @Override
-    public void render(Jackalope entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn) {
-        if (entity.isBaby()) {
+    public void render(Jackalope entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn){
+        if(entity.isBaby()) {
             stack.scale(0.5f, 0.5f, 0.5f);
             shadowRadius = 0.5f;
         } else {
