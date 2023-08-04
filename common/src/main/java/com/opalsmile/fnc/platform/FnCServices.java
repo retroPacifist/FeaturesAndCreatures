@@ -1,15 +1,15 @@
 package com.opalsmile.fnc.platform;
 
 import com.opalsmile.fnc.FnCConstants;
-import com.opalsmile.fnc.platform.services.IConfigHelper;
-import com.opalsmile.fnc.platform.services.IPlatformHelper;
+import com.opalsmile.fnc.platform.services.FnCIConfigHelper;
+import com.opalsmile.fnc.platform.services.FnCIPlatformHelper;
 
 import java.util.ServiceLoader;
 
 public class FnCServices {
 
-    public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
-    public static final IConfigHelper CONFIG = load(IConfigHelper.class);
+    public static final FnCIPlatformHelper PLATFORM = load(FnCIPlatformHelper.class);
+    public static final FnCIConfigHelper CONFIG = load(FnCIConfigHelper.class);
 
 
     public static <T> T load(Class<T> clazz){

@@ -2,9 +2,11 @@ package com.opalsmile.fnc;
 
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
+import com.opalsmile.fnc.platform.FnCFabricConfigHelper;
 import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.registries.FnCRegistry;
 import com.opalsmile.fnc.registries.FnCTriggers;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
@@ -21,5 +23,6 @@ public class FnCFabric implements ModInitializer {
         FnCRegistry.initialise();
         FnCFabric.registerEntityAttributes();
         FnCTriggers.register();
+        MidnightConfig.init(FnCConstants.MOD_ID, FnCFabricConfigHelper.class);
     }
 }

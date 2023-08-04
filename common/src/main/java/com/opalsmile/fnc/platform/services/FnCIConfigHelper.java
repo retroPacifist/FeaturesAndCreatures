@@ -4,7 +4,7 @@ import net.minecraft.world.effect.MobEffect;
 
 import java.util.Set;
 
-public interface IConfigHelper {
+public interface FnCIConfigHelper {
 
     //Spawning cooldown : 3 hours
     int JOCKEY_DEFAULT_COOLDOWN = 3 * 60 * 60 * 20;

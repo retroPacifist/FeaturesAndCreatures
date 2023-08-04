@@ -122,5 +122,12 @@
   "bestiary.fnc.shulkren_youngling.spawn": "The End",
   "bestiary.fnc.shulkren_youngling.spawn.byg": "The End, especially Shulkren Forests",
   "bestiary.fnc.tbh.description": "I… don’t know what to say about this one. I observe them from a distance, watching them frolick throughout the flowers. They don’t do anything else.\n\nI ventured too close, once. Looked it right in those vacant eyes. This thing has knowledge no creature should have.",
-  "bestiary.fnc.tbh.spawn": "Flower Forest, Meadows, Plains, and Sunflower Plains at daytime."
+  "bestiary.fnc.tbh.spawn": "Flower Forest, Meadows, Plains, and Sunflower Plains at daytime.",
+
+  "fnc.midnightconfig.title" : "Features and Creatures Config",
+  "fnc.midnightconfig.jockeySpawnChance" : "The chance, in a 0-1 range, for a jockey to spawn",
+  "fnc.midnightconfig.namedJockeyDespawn": "Whether named jockeys should still despawn",
+  "fnc.midnightconfig.jockeyEffectBlackList" : "The list of effects, in resourcelocation form (minecraft:regeneration) that cannot be sold by the jockey",
+  "fnc.midnightconfig.jockeyDespawnTime": "The time the jockey is alive for",
+  "fnc.midnightconfig.jockeyCooldownTime" : "The time the game waits before attempting to spawn a new jockey"
 }

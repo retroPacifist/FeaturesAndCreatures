@@ -1,6 +1,6 @@
 package com.opalsmile.fnc.platform.services;
 
-public interface IPlatformHelper {
+public interface FnCIPlatformHelper {
 
     /**
      * Gets the name of the current platform
