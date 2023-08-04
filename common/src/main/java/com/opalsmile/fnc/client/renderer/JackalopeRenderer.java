@@ -2,7 +2,7 @@ package com.opalsmile.fnc.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.opalsmile.fnc.client.model.JackalopeModel;
-import com.opalsmile.fnc.common.entity.Jackalope;
+import com.opalsmile.fnc.entity.Jackalope;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -10,7 +10,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class JackalopeRenderer extends GeoEntityRenderer<Jackalope> {
 
     public JackalopeRenderer(EntityRendererProvider.Context dispatcher){
-        super(dispatcher, new JackalopeModel());
+        super(dispatcher, new JackalopeModel(FnCConstants.resourceLocation("jackalope")));
     }
 
     @Override
