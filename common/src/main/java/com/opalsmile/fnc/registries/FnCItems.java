@@ -1,6 +1,7 @@
 package com.opalsmile.fnc.registries;
 
 import com.opalsmile.fnc.FnCConstants;
+import com.opalsmile.fnc.item.SpearItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -25,7 +26,8 @@ public class FnCItems {
     // Armor, Weapons, and Tools
 //    public static final RegistryObject<? extends ArmorItem> ANTLER_HEADDRESS = REGISTER.register("antler_headdress", () -> PlatformItemHandler.INSTANCE.getAntlerHeaddressItem(FnCArmorMaterial.ANTLER, EquipmentSlot.HEAD, createProperties()));
 //    public static final RegistryObject<? extends ArmorItem> LUNAR_HEADDRESS = REGISTER.register("lunar_headdress", () -> PlatformItemHandler.INSTANCE.getLunarHeaddressItem(FnCArmorMaterial.LUNAR, EquipmentSlot.HEAD, createProperties()));
-//    public static final RegistryObject<Item> SPEAR = REGISTER.register("spear", () -> new SpearItem(createProperties()));
+
+    public static final RegistryObject<Item> SPEAR = REGISTER.register("spear", () -> new SpearItem(new Item.Properties()));
     //dawn spear goes here
 //    public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new DowsingRodItem(createProperties()));
     //dawn dowser goes here
@@ -83,6 +85,7 @@ public class FnCItems {
                         output.accept(DAWN_BLOCK.get());
                         output.accept(SABERTOOTH_FANG.get());
                         output.accept(ANTLER.get());
+                        output.accept(SPEAR.get());
                     })
                     .build());
 

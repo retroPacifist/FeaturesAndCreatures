@@ -3,6 +3,7 @@ package com.opalsmile.fnc.registries;
 import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
+import com.opalsmile.fnc.entity.Spear;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -27,7 +28,7 @@ public class FnCEntities {
 //    public static final RegistryObject<EntityType<BFSAttack>> BFS_ATTACK = createEntity("bfs_attack", EntityType.Builder.<BFSAttack>of((p_37391_, p_37392_) -> new BFSAttack(p_37392_), MobCategory.MISC).sized(0.4F, 0.4f));
 //    public static final RegistryObject<EntityType<Tbh>> TBH = createEntity("tbh", EntityType.Builder.of(Tbh::new, MobCategory.CREATURE).sized(0.4F, 0.6f));
 //
-//    public static final RegistryObject<EntityType<Spear>> SPEAR = createEntity("spear", EntityType.Builder.<Spear>of(Spear::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20));
+  public static final RegistryObject<EntityType<Spear>> SPEAR = createEntity("spear", EntityType.Builder.<Spear>of(Spear::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20));
 
     private static <T extends Entity> RegistryObject<EntityType<T>> createEntity(String name, EntityType.Builder<T> builder){
         return REGISTRAR.register(name, () -> builder.build(name));
