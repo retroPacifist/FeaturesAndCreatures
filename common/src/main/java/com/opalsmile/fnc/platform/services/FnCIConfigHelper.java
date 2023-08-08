@@ -7,10 +7,12 @@ import java.util.Set;
 public interface FnCIConfigHelper {
 
     //Spawning cooldown : 3 hours
-    int JOCKEY_DEFAULT_COOLDOWN = 3 * 60 * 60 * 20;
+    // 3 * 1 hour * to ticks conversion
+    int JOCKEY_DEFAULT_COOLDOWN = 3 * (60 * 60) * 20;
 
     //Alive time: 1 hour or 3 in game days
-    int JOCKEY_DEFAULT_ALIVE_TIME = 3 * 20 * 60 * 20;
+    // 3 * 1 in game day * to ticks
+    int JOCKEY_DEFAULT_ALIVE_TIME = 3 * (20 * 60) * 20;
 
     /**
      * Jockey spawn chance. Clamped between 0 and 1. Default value is 0.5
