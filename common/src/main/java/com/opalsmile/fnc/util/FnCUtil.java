@@ -2,7 +2,6 @@ package com.opalsmile.fnc.util;
 
 import net.minecraft.util.RandomSource;
 
-import java.util.Collection;
 import java.util.List;
 
 public class FnCUtil {

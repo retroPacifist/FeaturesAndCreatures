@@ -1,10 +1,10 @@
 package com.opalsmile.fnc.entity;
 
 import com.opalsmile.fnc.FnCConstants;
-import com.opalsmile.fnc.util.FnCSavedData;
+import com.opalsmile.fnc.platform.FnCServices;
 import com.opalsmile.fnc.registries.FnCSounds;
 import com.opalsmile.fnc.registries.FnCTriggers;
-import com.opalsmile.fnc.platform.FnCServices;
+import com.opalsmile.fnc.util.FnCSavedData;
 import com.opalsmile.fnc.util.FnCUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -15,12 +15,10 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -59,7 +57,10 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 

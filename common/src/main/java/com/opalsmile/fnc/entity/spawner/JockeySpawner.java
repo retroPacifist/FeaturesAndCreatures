@@ -1,10 +1,10 @@
 package com.opalsmile.fnc.entity.spawner;
 
-import com.opalsmile.fnc.util.FnCSavedData;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
-import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.platform.FnCServices;
+import com.opalsmile.fnc.registries.FnCEntities;
+import com.opalsmile.fnc.util.FnCSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
