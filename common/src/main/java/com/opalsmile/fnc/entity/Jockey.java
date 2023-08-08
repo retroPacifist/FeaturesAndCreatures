@@ -368,6 +368,12 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
             } else if(mount.getTarget() != null)
                 setTarget(mount.getTarget());
         }
+        if (this.timeAlive >= FnCServices.CONFIG.jockeyDespawnTime() && (FnCServices.CONFIG.namedJockeyDespawn() || !this.hasCustomName())) {
+            this.discard();
+            if (this.getVehicle() != null) {
+                this.getVehicle().discard();
+            }
+        }
     }
 
     @org.jetbrains.annotations.Nullable
@@ -390,13 +396,13 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
      * May only be called on the server side.
      */
     private void updateJockeyPosition(){
-        final FnCSavedData savedData = FnCSavedData.get((ServerLevel) level());
+        final FnCSavedData savedData = FnCSavedData.get(this.getServer());
         if(!this.lastBlockPos.equals(this.blockPosition())) {
             final UUID uuid = savedData.getJockeyUUID();
             if(this.uuid.equals(uuid)) {
                 savedData.setSpawnPosition(this.blockPosition());
                 savedData.setDirty();
-                //TODO NetworkHandler.sendToAllClients(((ServerWorld) this.level).players(), new JockeyPosPacket(this.blockPosition()));
+                //TODO sync dimension too NetworkHandler.sendToAllClients(((ServerWorld) this.level).players(), new JockeyPosPacket(this.blockPosition()));
                 this.lastBlockPos = this.blockPosition();
             }
         }
@@ -405,20 +411,16 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     @Override
     public void die(DamageSource damageSource){
         if(!this.level().isClientSide) {
-            final FnCSavedData savedData = FnCSavedData.get((ServerLevel) this.level());
+            final FnCSavedData savedData = FnCSavedData.get(this.getServer());
             final UUID jockeyUUID = savedData.getJockeyUUID();
             if(this.uuid.equals(jockeyUUID)) {
                 savedData.setJockeyUUID(null);
                 savedData.setSpawnPosition(null);
+                System.out.println("Dying from despawning? Probably not");
                 savedData.setJockeySpawned(false);
             }
         }
         super.die(damageSource);
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double distance){
-        return timeAlive >= FnCServices.CONFIG.jockeyDespawnTime() && (FnCServices.CONFIG.namedJockeyDespawn() || !hasCustomName());
     }
 
     @Override

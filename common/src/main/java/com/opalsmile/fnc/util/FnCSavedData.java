@@ -4,6 +4,7 @@ import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -20,8 +21,8 @@ public class FnCSavedData extends SavedData {
     private long jockeyCooldown;
     private boolean jockeySpawned;
 
-    public static FnCSavedData get(ServerLevel level){
-        return level.getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FNC_SAVED_CLAIM_DATA_ID);
+    public static FnCSavedData get(MinecraftServer server){
+        return server.overworld().getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FNC_SAVED_CLAIM_DATA_ID);
     }
 
     public static FnCSavedData load(final CompoundTag tag){

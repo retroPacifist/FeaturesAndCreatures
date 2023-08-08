@@ -42,7 +42,7 @@ public class JockeySpawner implements CustomSpawner {
         double successChance = FnCServices.CONFIG.getJockeySpawnChance();
         if(successChance <= 0) return 0;
 
-        FnCSavedData savedData = FnCSavedData.get(level);
+        FnCSavedData savedData = FnCSavedData.get(level.getServer());
 
         if(savedData.hasJockeySpawned()) {
             return 0;
