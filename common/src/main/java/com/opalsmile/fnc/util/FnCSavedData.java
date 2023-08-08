@@ -20,6 +20,9 @@ public class FnCSavedData extends SavedData {
     private long jockeyCooldown;
     private boolean jockeySpawned;
 
+    //TODO Record dimension id
+    //TODO Test if one can spawn when the other is on the nether with Debugger and higher time
+
     public static FnCSavedData get(MinecraftServer server){
         return server.overworld().getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FNC_SAVED_CLAIM_DATA_ID);
     }

@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -350,9 +351,6 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     @Override
     public void tick(){
         super.tick();
-        if(!this.level().isClientSide) {
-            updateJockeyPosition();
-        }
         ++timeAlive;
         if(isAttacking()) {
             this.setAttackTimer(this.getAttackTimer() - 1);
@@ -369,12 +367,37 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
             } else if(mount.getTarget() != null)
                 setTarget(mount.getTarget());
         }
-        if (this.timeAlive >= FnCServices.CONFIG.jockeyDespawnTime() && (FnCServices.CONFIG.namedJockeyDespawn() || !this.hasCustomName())) {
-            this.discard();
-            if (this.getVehicle() != null) {
-                this.getVehicle().discard();
+        if(!this.level().isClientSide) {
+            updateJockeyPosition();
+            if (this.timeAlive >= FnCServices.CONFIG.jockeyDespawnTime() && (FnCServices.CONFIG.namedJockeyDespawn() || !this.hasCustomName())) {
+                this.removeJockey();
+                if (this.getVehicle() != null) {
+                    this.getVehicle().discard();
+                }
+                this.discard();
             }
         }
+    }
+
+    //TODO Figure out why the Jockey can't cross.
+    //Is it the mount?
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public Entity changeDimension(ServerLevel $$0) {
+        if (this.level() instanceof ServerLevel level) {
+            this.removeJockey();
+            final Entity target = super.changeDimension($$0);
+            if (target instanceof Jockey jockey) {
+                FnCSavedData savedData = FnCSavedData.get(level.getServer());
+                savedData.setJockeyUUID(jockey.getUUID());
+                savedData.setJockeyCooldown(-1);
+                savedData.setSpawnPosition(jockey.blockPosition());
+                savedData.setJockeySpawned(true);
+                savedData.setDirty();
+            }
+            return target;
+        }
+        return null;
     }
 
     @org.jetbrains.annotations.Nullable
@@ -409,19 +432,14 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         }
     }
 
-    @Override
-    public void die(DamageSource damageSource){
-        if(!this.level().isClientSide) {
-            final FnCSavedData savedData = FnCSavedData.get(this.getServer());
-            final UUID jockeyUUID = savedData.getJockeyUUID();
-            if(this.uuid.equals(jockeyUUID)) {
-                savedData.setJockeyUUID(null);
-                savedData.setSpawnPosition(null);
-                System.out.println("Dying from despawning? Probably not");
-                savedData.setJockeySpawned(false);
-            }
+    public void removeJockey() {
+        final FnCSavedData savedData = FnCSavedData.get(this.getServer());
+        final UUID jockeyUUID = savedData.getJockeyUUID();
+        if(this.uuid.equals(jockeyUUID)) {
+            savedData.setJockeyUUID(null);
+            savedData.setSpawnPosition(null);
+            savedData.setJockeySpawned(false);
         }
-        super.die(damageSource);
     }
 
     @Override
