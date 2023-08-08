@@ -66,7 +66,7 @@ public class JockeySpawner implements CustomSpawner {
 
         // Increasing chance, similarly to how the wandering trader functions
         int oldSpawnChance = spawnChance;
-        spawnChance = Mth.clamp(spawnChance + defaultSpawnChance, 0, 75); //TODO why clamped to 75
+        spawnChance = Mth.clamp(spawnChance + defaultSpawnChance, 0, 75);
 
         if(world.random.nextInt(100) > oldSpawnChance) {
             savedData.setJockeyCooldown(FnCServices.CONFIG.jockeySpawningCooldown());
@@ -75,15 +75,6 @@ public class JockeySpawner implements CustomSpawner {
         }
 
         // Extra check that is never changed, except by the config value
-
-
-        //TODO Why is this here?
-        if(world.random.nextInt((int) (successChance * 10)) != 0) { //The lower the successChance the easier it is for this to not return
-            savedData.setJockeyCooldown(FnCServices.CONFIG.jockeySpawningCooldown());
-            savedData.setDirty();
-            return 0;
-        }
-
         ServerPlayer player = world.getRandomPlayer();
         if(player != null) {
             BlockPos position = player.blockPosition().offset(world.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2),
@@ -111,7 +102,6 @@ public class JockeySpawner implements CustomSpawner {
 
             jockey.moveTo(position.getX(), position.getY(), position.getZ());
             jockey.finalizeSpawn(world, world.getCurrentDifficultyAt(position), MobSpawnType.NATURAL, null, null);
-
             if(handleMount(world, jockey) && world.addFreshEntity(jockey)) {
                 savedData.setJockeyUUID(jockey.getUUID());
                 savedData.setJockeyCooldown(-1);
