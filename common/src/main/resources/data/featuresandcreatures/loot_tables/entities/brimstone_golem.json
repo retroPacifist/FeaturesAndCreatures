@@ -1,7 +1,7 @@
 {
   "pools": [
     {
-      "name": "fnc:brimstone_golem",
+      "name": "featuresandcreatures:brimstone_golem",
       "rolls": 1,
       "entries": [
         {
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "fnc:brimstone_golem",
+      "name": "featuresandcreatures:brimstone_golem",
       "rolls": 1,
       "entries": [
         {

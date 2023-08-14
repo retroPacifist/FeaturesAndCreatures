@@ -7,42 +7,42 @@
         "mode": "modify",
         "index": 0,
         "criteria": {
-          "fnc:jackalope": {
+          "featuresandcreatures:jackalope": {
             "trigger": "minecraft:bred_animals",
             "conditions": {
               "child": [
                 {
                   "condition": "minecraft:entity_properties",
                   "predicate": {
-                    "type": "fnc:jackalope"
+                    "type": "featuresandcreatures:jackalope"
                   },
                   "entity": "this"
                 }
               ]
             }
           },
-          "fnc:sabertooth": {
+          "featuresandcreatures:sabertooth": {
             "trigger": "minecraft:bred_animals",
             "conditions": {
               "child": [
                 {
                   "condition": "minecraft:entity_properties",
                   "predicate": {
-                    "type": "fnc:sabertooth"
+                    "type": "featuresandcreatures:sabertooth"
                   },
                   "entity": "this"
                 }
               ]
             }
           },
-          "fnc:boar": {
+          "featuresandcreatures:boar": {
             "trigger": "minecraft:bred_animals",
             "conditions": {
               "child": [
                 {
                   "condition": "minecraft:entity_properties",
                   "predicate": {
-                    "type": "fnc:boar"
+                    "type": "featuresandcreatures:boar"
                   },
                   "entity": "this"
                 }
@@ -52,13 +52,13 @@
         },
         "requirements": [
           [
-            "fnc:jackalope"
+            "featuresandcreatures:jackalope"
           ],
           [
-            "fnc:sabertooth"
+            "featuresandcreatures:sabertooth"
           ],
           [
-            "fnc:boar"
+            "featuresandcreatures:boar"
           ]
         ]
       }

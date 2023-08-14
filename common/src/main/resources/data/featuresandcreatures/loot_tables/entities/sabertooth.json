@@ -1,12 +1,12 @@
 {
   "pools": [
     {
-      "name": "fnc:sabertooth",
+      "name": "featuresandcreatures:sabertooth",
       "rolls": 1,
       "entries": [
         {
           "type": "item",
-          "name": "fnc:sabertooth_fang",
+          "name": "featuresandcreatures:sabertooth_fang",
           "weight": 1,
           "functions": [
             {

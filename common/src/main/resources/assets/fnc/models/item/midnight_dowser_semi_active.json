@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "fnc:item/midnight_dowser_semi_active"
-  }
-}

@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing_transform",
   "base": {
-    "item": "fnc:spear"
+    "item": "featuresandcreatures:spear"
   },
   "addition": {
-    "item": "fnc:dawn_crystal"
+    "item": "featuresandcreatures:dawn_crystal"
   },
   "result": {
-    "item": "fnc:dawn_spear"
+    "item": "featuresandcreatures:dawn_spear"
   }
 }

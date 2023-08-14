@@ -6,10 +6,10 @@
   ],
   "key": {
     "A": {
-      "item": "fnc:midnight_crystal"
+      "item": "featuresandcreatures:midnight_crystal"
     }
   },
   "result": {
-    "item": "fnc:midnight_block"
+    "item": "featuresandcreatures:midnight_block"
   }
 }

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "fnc:block/deepslate_dawn_ore_top",
-    "side": "fnc:block/deepslate_dawn_ore"
-  }
-}

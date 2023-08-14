@@ -1,0 +1,224 @@
+{
+  "entity.boar.hurt": {
+    "sounds": [
+      "mob/pig/say1",
+      "mob/pig/say2",
+      "mob/pig/say3"
+    ],
+    "subtitle": "subtitles.entity.boar.hurts"
+  },
+  "entity.boar.ambient": {
+    "sounds": [
+      "mob/pig/say1",
+      "mob/pig/say2",
+      "mob/pig/say3"
+    ],
+    "subtitle": "subtitles.entity.boar.ambient"
+  },
+  "entity.boar.death": {
+    "sounds": [
+      "mob/pig/death"
+    ],
+    "subtitle": "subtitles.entity.boar.dies"
+  },
+  "entity.boar.attack": {
+    "sounds": [
+      "mob/pig/say1",
+      "mob/pig/say2",
+      "mob/pig/say3"
+    ],
+    "subtitle": "subtitles.entity.boar.attack"
+  },
+  "entity.boar.saddle": {
+    "sounds": [
+      "mob/horse/leather"
+    ],
+    "subtitle": "subtitles.entity.boar.saddled"
+  },
+  "entity.boar.step": {
+    "sounds": [
+      "mob/pig/step1",
+      "mob/pig/step2",
+      "mob/pig/step3",
+      "mob/pig/step4",
+      "mob/pig/step5"
+    ],
+    "subtitle": "subtitles.entity.boar.steps"
+  },
+  "entity.jockey.ambient": {
+    "sounds": [
+      "featuresandcreatures:mob/jockey/eep1",
+      "featuresandcreatures:mob/jockey/eep2",
+      "featuresandcreatures:mob/jockey/trill2"
+    ],
+    "subtitle": "subtitles.entity.jockey.ambient"
+  },
+  "entity.jockey.hurt": {
+    "sounds": [
+      "featuresandcreatures:mob/jockey/hurt1",
+      "featuresandcreatures:mob/jockey/hurt2"
+    ],
+    "subtitle": "subtitles.entity.jockey.hurts"
+  },
+  "entity.jockey.death": {
+    "sounds": [
+      "featuresandcreatures:mob/jockey/die1",
+      "featuresandcreatures:mob/jockey/die1"
+    ],
+    "subtitle": "subtitles.entity.jockey.dies"
+  },
+  "entity.jockey.attack": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "subtitles.entity.jockey.attack"
+  },
+  "entity.jockey.yes": {
+    "sounds": [
+      "featuresandcreatures:mob/jockey/trill1"
+    ],
+    "subtitle": "subtitles.entity.jockey.yes"
+  },
+  "entity.jockey.no": {
+    "sounds": [
+      "featuresandcreatures:mob/jockey/frustrated1",
+      "featuresandcreatures:mob/jockey/frustrated2"
+    ],
+    "subtitle": "subtitles.entity.jockey.no"
+  },
+  "entity.jackalope.hurt": {
+    "sounds": [
+       "mob/rabbit/hurt1",
+       "mob/rabbit/hurt2",
+       "mob/rabbit/hurt3",
+       "mob/rabbit/hurt4"
+    ],
+    "subtitle": "subtitles.entity.jackalope.hurts"
+  },
+  "entity.jackalope.ambient": {
+    "sounds": [
+      "mob/rabbit/idle1",
+      "mob/rabbit/idle2",
+      "mob/rabbit/idle3",
+      "mob/rabbit/idle4"
+    ],
+    "subtitle": "subtitles.entity.jackalope.ambient"
+  },
+  "entity.jackalope.death": {
+    "sounds": [
+      "mob/rabbit/bunnymurder"
+    ],
+    "subtitle": "subtitles.entity.jackalope.dies"
+  },
+  "entity.jackalope.saddle": {
+    "sounds": [
+      "mob/horse/leather"
+    ],
+    "subtitle": "subtitles.entity.jackalope.saddled"
+  },
+  "entity.jackalope.step": {
+    "sounds": [
+      "mob/rabbit/hop1",
+      "mob/rabbit/hop2",
+      "mob/rabbit/hop3",
+      "mob/rabbit/hop4"
+    ],
+    "subtitle": "subtitles.entity.jackalope.jumps"
+  },
+  "entity.sabertooth.hurt": {
+    "sounds": [
+      "mob/cat/hitt1",
+      "mob/cat/hitt2",
+      "mob/cat/hitt3"
+    ],
+    "subtitle": "subtitles.entity.sabertooth.hurts"
+  },
+  "entity.sabertooth.ambient": {
+    "sounds": [
+      "mob/cat/ocelot/idle1",
+      "mob/cat/ocelot/idle2",
+      "mob/cat/ocelot/idle3",
+      "mob/cat/ocelot/idle4"
+    ],
+    "subtitle": "subtitles.entity.sabertooth.ambient"
+  },
+  "entity.sabertooth.death": {
+    "sounds": [
+      "mob/cat/ocelot/death1",
+      "mob/cat/ocelot/death2",
+      "mob/cat/ocelot/death3"
+    ],
+    "subtitle": "subtitles.entity.sabertooth.dies"
+  },
+  "entity.sabertooth.attack": {
+    "sounds": [
+      "mob/cat/ocelot/death1",
+      "mob/cat/ocelot/death2",
+      "mob/cat/ocelot/death3"
+    ],
+    "subtitle": "subtitles.entity.sabertooth.attack"
+  },
+  "entity.sabertooth.saddle": {
+    "sounds": [
+      "mob/horse/leather"
+    ],
+    "subtitle": "subtitles.entity.sabertooth.saddled"
+  },
+  "entity.spear.throw": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "subtitles.entity.spear.thrown"
+  },
+  "entity.spear.attack": {
+    "sounds": [
+      "random/successful_hit"
+    ],
+    "subtitle": "subtitles.entity.spear.hits"
+  },
+  "entity.spear.miss": {
+    "sounds": [
+      "random/successful_hit"
+    ],
+    "subtitle": "subtitles.entity.spear.lands"
+  },
+  "entity.antler_headdress.attack_weak": {
+    "sounds": [
+      "entity/player/attack/weak1",
+      "entity/player/attack/weak2",
+      "entity/player/attack/weak3",
+      "entity/player/attack/weak4"
+    ],
+    "subtitle": "subtitles.entity.antler_headdress.hit_weak"
+  },
+  "entity.antler_headdress.attack_strong": {
+    "sounds": [
+      "entity/player/attack/strong1",
+      "entity/player/attack/strong2",
+      "entity/player/attack/strong3",
+      "entity/player/attack/strong4"
+    ],
+    "subtitle": "subtitles.entity.antler_headdress.hit_strong"
+  },
+  "entity.antler_headdress.charge": {
+    "sounds": [
+      "random/click"
+    ],
+    "subtitle": "subtitles.entity.antler_headdress.charging"
+  },
+  "entity.antler_headdress.finished_charging": {
+    "sounds": [
+      "note/icechime"
+    ],
+    "subtitle": "subtitles.entity.antler_headdress.finished_charging"
+  },
+  "entity.saddled.desaddle": {
+    "sounds": [
+      "entity/itemframe/remove_item1",
+      "entity/itemframe/remove_item2",
+      "entity/itemframe/remove_item3",
+      "entity/itemframe/remove_item4"
+    ],
+    "subtitle": "subtitles.entity.featuresandcreatures.desaddle"
+  }
+}

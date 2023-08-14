@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fnc:antler_headdress"
+      "featuresandcreatures:antler_headdress"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:antler"
+            "item": "featuresandcreatures:antler"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fnc:antler_headdress"
+        "recipe": "featuresandcreatures:antler_headdress"
       }
     }
   },

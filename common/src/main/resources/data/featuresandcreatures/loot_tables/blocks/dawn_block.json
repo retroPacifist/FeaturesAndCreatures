@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fnc:dawn_block"
+          "name": "featuresandcreatures:dawn_block"
         }
       ],
       "conditions": [

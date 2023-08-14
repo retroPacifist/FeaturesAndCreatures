@@ -6,10 +6,10 @@
   ],
   "key": {
     "A": {
-      "item": "fnc:sunset_crystal"
+      "item": "featuresandcreatures:sunset_crystal"
     }
   },
   "result": {
-    "item": "fnc:sunset_block"
+    "item": "featuresandcreatures:sunset_block"
   }
 }

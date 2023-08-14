@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fnc:dawn_dowser"
+      "featuresandcreatures:dawn_dowser"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:dowsing_rod"
+            "item": "featuresandcreatures:dowsing_rod"
           }
         ]
       }
@@ -21,14 +21,14 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:dawn_crystal"
+            "item": "featuresandcreatures:dawn_crystal"
           }
         ]
       },
       "has_the_recipe": {
         "trigger": "minecraft:recipe_unlocked",
         "conditions": {
-          "recipe": "fnc:dawn_dowser"
+          "recipe": "featuresandcreatures:dawn_dowser"
         }
       }
     }

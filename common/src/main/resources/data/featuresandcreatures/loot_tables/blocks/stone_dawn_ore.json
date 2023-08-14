@@ -16,7 +16,7 @@
         },
         {
           "condition": "minecraft:block_state_property",
-          "block": "fnc:stone_dawn_ore",
+          "block": "featuresandcreatures:stone_dawn_ore",
           "properties": {
             "revealed": "false"
           }
@@ -45,13 +45,13 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "fnc:stone_dawn_ore",
+                  "block": "featuresandcreatures:stone_dawn_ore",
                   "properties": {
                     "revealed": "true"
                   }
                 }
               ],
-              "name": "fnc:dawn_crystal"
+              "name": "featuresandcreatures:dawn_crystal"
             }
           ]
         }

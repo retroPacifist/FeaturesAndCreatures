@@ -1,8 +1,8 @@
 {
-  "parent": "fnc:root",
+  "parent": "featuresandcreatures:root",
   "display": {
     "icon": {
-      "item": "fnc:antler"
+      "item": "featuresandcreatures:antler"
     },
     "title": "CHARGE!!",
     "frame": "challenge",
@@ -13,7 +13,7 @@
   },
   "criteria": {
     "requirement": {
-      "trigger": "fnc:used_headdress",
+      "trigger": "featuresandcreatures:used_headdress",
       "conditions": {}
     }
   }

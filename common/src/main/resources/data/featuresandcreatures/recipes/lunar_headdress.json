@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing_transform",
   "base": {
-    "item": "fnc:antler_headdress"
+    "item": "featuresandcreatures:antler_headdress"
   },
   "addition": {
-    "item": "fnc:midnight_crystal"
+    "item": "featuresandcreatures:midnight_crystal"
   },
   "result": {
-    "item": "fnc:lunar_headdress"
+    "item": "featuresandcreatures:lunar_headdress"
   }
 }

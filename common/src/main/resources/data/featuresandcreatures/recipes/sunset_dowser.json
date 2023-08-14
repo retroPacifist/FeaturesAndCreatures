@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing_transform",
   "base": {
-    "item": "fnc:dowsing_rod"
+    "item": "featuresandcreatures:dowsing_rod"
   },
   "addition": {
-    "item": "fnc:sunset_crystal"
+    "item": "featuresandcreatures:sunset_crystal"
   },
   "result": {
-    "item": "fnc:sunset_dowser"
+    "item": "featuresandcreatures:sunset_dowser"
   }
 }

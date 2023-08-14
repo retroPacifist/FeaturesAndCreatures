@@ -1,7 +1,7 @@
 {
   "pools": [
     {
-      "name": "fnc:boar",
+      "name": "featuresandcreatures:boar",
       "rolls": 1,
       "entries": [
         {
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "fnc:boar",
+      "name": "featuresandcreatures:boar",
       "rolls": 1,
       "entries": [
         {

@@ -75,7 +75,7 @@ public class FnCItems {
             CreativeModeTab
                     .builder(null, -1)
                     .icon(() -> MEGA_POTION.get().getDefaultInstance())
-                    .title(Component.translatable("creativetab.fnc"))
+                    .title(Component.translatable("creativetab." + FnCConstants.MOD_ID))
                     .displayItems((parameters, output) -> {
                         output.accept(MIDNIGHT_CRYSTAL.get());
                         output.accept(MIDNIGHT_BLOCK.get());

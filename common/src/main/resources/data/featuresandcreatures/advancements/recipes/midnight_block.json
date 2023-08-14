@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fnc:midnight_block"
+      "featuresandcreatures:midnight_block"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:midnight_crystal"
+            "item": "featuresandcreatures:midnight_crystal"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fnc:midnight_block"
+        "recipe": "featuresandcreatures:midnight_block"
       }
     }
   },

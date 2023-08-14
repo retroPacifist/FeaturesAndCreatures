@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fnc:tinted_potion"
+      "featuresandcreatures:tinted_potion"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fnc:tinted_potion"
+        "recipe": "featuresandcreatures:tinted_potion"
       }
     }
   },

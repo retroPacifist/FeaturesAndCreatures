@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fnc:dawn_spear"
+      "featuresandcreatures:dawn_spear"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:spear"
+            "item": "featuresandcreatures:spear"
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:dawn_crystal"
+            "item": "featuresandcreatures:dawn_crystal"
           }
         ]
       }
@@ -29,7 +29,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fnc:dawn_spear"
+        "recipe": "featuresandcreatures:dawn_spear"
       }
     }
   },

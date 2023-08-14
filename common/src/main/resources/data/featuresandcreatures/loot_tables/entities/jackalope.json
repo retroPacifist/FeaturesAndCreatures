@@ -1,7 +1,7 @@
 {
   "pools": [
     {
-      "name": "fnc:jackalope",
+      "name": "featuresandcreatures:jackalope",
       "rolls": 1,
       "entries": [
         {
@@ -28,12 +28,12 @@
       ]
     },
     {
-      "name": "fnc:jackalope",
+      "name": "featuresandcreatures:jackalope",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fnc:antler",
+          "name": "featuresandcreatures:antler",
           "functions": [
             {
               "function": "set_count",

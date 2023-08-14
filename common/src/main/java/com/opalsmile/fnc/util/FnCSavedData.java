@@ -23,7 +23,7 @@ public class FnCSavedData extends SavedData {
     private long jockeyCooldown;
     private boolean jockeySpawned;
 
-    private String dimensionId;
+    private String dimensionId = "";
 
     //TODO Test if one can spawn when the other is on the nether with Debugger and higher time
 

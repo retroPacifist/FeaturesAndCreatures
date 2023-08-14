@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "revealed=false": {
+      "model": "minecraft:block/deepslate"
+    },
+    "revealed=true": {
+      "model": "featuresandcreatures:block/deepslate_sunset_ore"
+    }
+  }
+}

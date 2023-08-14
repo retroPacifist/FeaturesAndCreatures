@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "revealed=false": {
+      "model": "minecraft:block/stone"
+    },
+    "revealed=true": {
+      "model": "featuresandcreatures:block/stone_dawn_ore"
+    }
+  }
+}
