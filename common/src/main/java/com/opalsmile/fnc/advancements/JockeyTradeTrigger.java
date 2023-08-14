@@ -1,6 +1,7 @@
 package com.opalsmile.fnc.advancements;
 
 import com.google.gson.JsonObject;
+import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.entity.Jockey;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
@@ -9,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 
 public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigger.Instance> {
-    static final ResourceLocation ID = new ResourceLocation("jockey_trade");
+    static final ResourceLocation ID = FnCConstants.resourceLocation("jockey_trade");
 
     @Override
     public ResourceLocation getId(){
