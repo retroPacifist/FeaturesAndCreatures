@@ -68,9 +68,9 @@ public class Jackalope extends Animal implements GeoEntity {
     }
 
     @Override
-    public void setBaby(boolean p_82227_1_){
+    public void setBaby(boolean baby){
         //TODO Why
-        super.setBaby(p_82227_1_);
+        super.setBaby(baby);
         this.setBoundingBox(new AABB(this.blockPosition()));
     }
 
@@ -217,7 +217,7 @@ public class Jackalope extends Animal implements GeoEntity {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource p_184601_1_){
+    protected SoundEvent getHurtSound(DamageSource damageSource){
         return FnCSounds.JACKALOPE_HURT.get();
     }
 
@@ -376,8 +376,8 @@ public class Jackalope extends Animal implements GeoEntity {
             return this.canJump;
         }
 
-        public void setCanJump(boolean p_180066_1_){
-            this.canJump = p_180066_1_;
+        public void setCanJump(boolean canJump){
+            this.canJump = canJump;
         }
 
         @Override
