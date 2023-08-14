@@ -46,7 +46,10 @@ public class Jackalope extends Animal implements GeoEntity {
 
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(Jackalope.class,
             EntityDataSerializers.BOOLEAN);
+    //TODO Tag?
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.GOLDEN_CARROT);
+    public static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.jackalope.walk");
+
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private int jumpTicks;
     private int jumpDuration;
@@ -66,11 +69,12 @@ public class Jackalope extends Animal implements GeoEntity {
 
     @Override
     public void setBaby(boolean p_82227_1_){
+        //TODO Why
         super.setBaby(p_82227_1_);
         this.setBoundingBox(new AABB(this.blockPosition()));
     }
 
-
+    @Override
     protected float getJumpPower(){
         if(!this.horizontalCollision && (!this.moveControl.hasWanted() || !(this.moveControl.getWantedY() > this.getY() + 0.7D))) {
             Path path = this.navigation.getPath();
@@ -86,6 +90,7 @@ public class Jackalope extends Animal implements GeoEntity {
         }
     }
 
+    @Override
     protected void jumpFromGround(){
         super.jumpFromGround();
         double d0 = this.moveControl.getSpeedModifier();
@@ -96,16 +101,17 @@ public class Jackalope extends Animal implements GeoEntity {
             }
         }
         if(!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, (byte) 1);
+            this.level().broadcastEntityEvent(this, (byte) 1); //TODO Why not spawn particle directly
         }
     }
 
-    public void setSpeedModifier(double p_175515_1_){
-        this.getNavigation().setSpeedModifier(p_175515_1_);
+    public void setSpeedModifier(double speedModifier){
+        this.getNavigation().setSpeedModifier(speedModifier);
         this.moveControl.setWantedPosition(this.moveControl.getWantedX(), this.moveControl.getWantedY(),
-                this.moveControl.getWantedZ(), p_175515_1_);
+                this.moveControl.getWantedZ(), speedModifier);
     }
 
+    @Override
     public void setJumping(boolean isJumping){
         super.setJumping(isJumping);
         if(isJumping) {
@@ -116,7 +122,6 @@ public class Jackalope extends Animal implements GeoEntity {
 
     @Override
     protected void dropEquipment(){
-        super.dropEquipment();
         if(this.isSaddled()) this.spawnAtLocation(Items.SADDLE);
     }
 
@@ -126,6 +131,7 @@ public class Jackalope extends Animal implements GeoEntity {
         this.jumpTicks = 0;
     }
 
+    @Override
     public void customServerAiStep(){
         if(this.jumpDelayTicks > 0) {
             --this.jumpDelayTicks;
@@ -157,13 +163,15 @@ public class Jackalope extends Animal implements GeoEntity {
         this.wasOnGround = this.onGround();
     }
 
+    @Override
     public boolean canSpawnSprintParticle(){
         return false;
     }
 
-    private void facePoint(double p_175533_1_, double p_175533_3_){
-        this.setYRot((float) (Mth.atan2(p_175533_3_ - this.getZ(),
-                p_175533_1_ - this.getX()) * (double) (180F / (float) Math.PI)) - 90.0F);
+    //Rotates towards the given coordinates
+    private void facePoint(double xCoord, double yCoord){
+        this.setYRot((float) (Mth.atan2(yCoord - this.getZ(),
+                xCoord - this.getX()) * (double) (180F / (float) Math.PI)) - 90.0F);
     }
 
     private void enableJumpControl(){
@@ -187,6 +195,7 @@ public class Jackalope extends Animal implements GeoEntity {
         this.disableJumpControl();
     }
 
+    @Override //TODO Follow method call and figure out if this could be merged into customServerAiStep()
     public void aiStep(){
         super.aiStep();
         if(this.jumpTicks != this.jumpDuration) {
@@ -217,13 +226,14 @@ public class Jackalope extends Animal implements GeoEntity {
         return FnCSounds.JACKALOPE_DEATH.get();
     }
 
-    public void handleEntityEvent(byte p_70103_1_){
-        if(p_70103_1_ == 1) {
-            this.spawnSprintParticle();
+    @Override
+    public void handleEntityEvent(byte dataValue){
+        if(dataValue == 1) {
+            this.spawnSprintParticle(); //TODO breakpoint and figure out in which side(s) this fires. Hopefully only client.
             this.jumpDuration = 10;
             this.jumpTicks = 0;
         } else {
-            super.handleEntityEvent(p_70103_1_);
+            super.handleEntityEvent(dataValue);
         }
     }
 
@@ -236,7 +246,7 @@ public class Jackalope extends Animal implements GeoEntity {
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity){
         Jackalope jackalope = FnCEntities.JACKALOPE.get().create(world);
-        if(jackalope != null) jackalope.setAge(-24000);
+        if(jackalope != null) jackalope.setAge(-24000); //Spawn baby - 24000 = 20 minutes
         return jackalope;
     }
 
@@ -291,14 +301,13 @@ public class Jackalope extends Animal implements GeoEntity {
         compoundNBT.putBoolean("Saddled", this.isSaddled());
     }
 
-    private <E extends Jackalope> PlayState predicate(final AnimationState<E> event){
+    private PlayState predicate(final AnimationState<Jackalope> event){
 
         if(this.jumpDuration >= 1) {
-            return event.setAndContinue(RawAnimation.begin().thenLoop("animation.jackalope.walk"));
+            return event.setAndContinue(WALK);
         }
-        return PlayState.STOP;
+        return PlayState.STOP; //TODO Idle anim?
     }
-
 
     public boolean isSaddled(){
         return this.entityData.get(SADDLED);
@@ -328,6 +337,7 @@ public class Jackalope extends Animal implements GeoEntity {
             this.jack = jackalope;
         }
 
+        @Override
         public void tick(){
             if(this.jack.onGround() && !this.jack.jumping && !((JumpHelperController) this.jack.jumpControl).wantJump()) {
                 this.jack.setSpeedModifier(0.0D);
@@ -337,13 +347,14 @@ public class Jackalope extends Animal implements GeoEntity {
             super.tick();
         }
 
-        public void setWantedPosition(double p_75642_1_, double p_75642_3_, double p_75642_5_, double p_75642_7_){
+        @Override
+        public void setWantedPosition(double x, double y, double z, double speedModifier){
             if(this.jack.isInWater()) {
-                p_75642_7_ = 1.5D;
+                speedModifier = 1.5D;
             }
-            super.setWantedPosition(p_75642_1_, p_75642_3_, p_75642_5_, p_75642_7_);
-            if(p_75642_7_ > 0.0D) {
-                this.nextJumpSpeed = p_75642_7_;
+            super.setWantedPosition(x, y, z, speedModifier);
+            if(speedModifier > 0.0D) {
+                this.nextJumpSpeed = speedModifier;
             }
         }
     }
@@ -369,6 +380,7 @@ public class Jackalope extends Animal implements GeoEntity {
             this.canJump = p_180066_1_;
         }
 
+        @Override
         public void tick(){
             if(this.jump) {
                 this.jack.startJumping();
