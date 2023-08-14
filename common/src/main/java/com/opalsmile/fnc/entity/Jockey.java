@@ -234,8 +234,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
                 offers.add(new MerchantOffer(new ItemStack(Items.DIAMOND, price), ItemStack.EMPTY, potion,
                         Integer.MAX_VALUE, 0, 1));
             }
+            Collections.shuffle(offers); //Shuffle the order of the offers.
         }
-        Collections.shuffle(offers); //Shuffle the order of the offers.
         return offers;
     }
 
