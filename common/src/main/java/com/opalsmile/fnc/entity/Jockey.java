@@ -379,7 +379,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         }
     }
 
-    //TODO Figure out why the Jockey can't cross.
+    //TODO Figure out why the Jockey can't change dimensions.
     //Is it the mount?
     @org.jetbrains.annotations.Nullable
     @Override
@@ -448,7 +448,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         compoundTag.putInt("TimeAlive", timeAlive);
         compoundTag.putBoolean("Attacking", isAttacking());
         compoundTag.putInt("AttackTimer", getAttackTimer());
-        if(offers != null) compoundTag.put("Offers", offers.createTag());
+        compoundTag.put("Offers", getOffers().createTag());
 
     }
 
@@ -458,8 +458,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         this.timeAlive = nbt.getInt("TimeAlive");
         setAttacking(nbt.getBoolean("Attacking"));
         setAttackTimer(nbt.getInt("AttackTimer"));
-
-        if(nbt.contains("Offers")) offers = new MerchantOffers(nbt.getCompound("Offers"));
+        offers = new MerchantOffers(nbt.getCompound("Offers"));
     }
 
     private PlayState predicate(AnimationState<Jockey> event){
@@ -517,7 +516,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
             this.level().playSound(null, this.getX(), this.getY(), this.getZ(), FnCSounds.JOCKEY_ATTACK.get(),
                     this.getSoundSource(), 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
         }
-        this.level().addFreshEntity(thrownPotion);
+        this.level().addFreshEntity(thrownPotion); //TODO Drop potion if killed while drinking
     }
 
     public enum TradeType {
