@@ -4,7 +4,10 @@ import com.opalsmile.fnc.FnCConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.UUID;
@@ -20,7 +23,8 @@ public class FnCSavedData extends SavedData {
     private long jockeyCooldown;
     private boolean jockeySpawned;
 
-    //TODO Record dimension id
+    private String dimensionId;
+
     //TODO Test if one can spawn when the other is on the nether with Debugger and higher time
 
     public static FnCSavedData get(MinecraftServer server){
@@ -33,6 +37,7 @@ public class FnCSavedData extends SavedData {
             savedData.jockeySpawned = true;
             savedData.jockeyUUID = tag.getUUID("jockey_uuid");
             savedData.spawnPosition = NbtUtils.readBlockPos(tag.getCompound("jockey_position"));
+            savedData.dimensionId = tag.getString("jockey_dimension");
         }
         savedData.jockeyCooldown = tag.getLong("jockey_cooldown");
         return savedData;
@@ -44,6 +49,7 @@ public class FnCSavedData extends SavedData {
         if(jockeySpawned) {
             compoundTag.putUUID("jockey_uuid", jockeyUUID);
             compoundTag.put("jockey_position", NbtUtils.writeBlockPos(spawnPosition));
+            compoundTag.putString("jockey_dimension", dimensionId);
         }
         compoundTag.putLong("jockey_cooldown", jockeyCooldown);
         return compoundTag;
@@ -79,5 +85,15 @@ public class FnCSavedData extends SavedData {
 
     public void setJockeyCooldown(long jockeyCooldown){
         this.jockeyCooldown = jockeyCooldown;
+    }
+
+    public ResourceLocation getDimensionId() {
+        return new ResourceLocation(dimensionId);
+    }
+
+    //TODO Make sure dimension itself isn't synced to the player but rather
+    //A boolean representing whether its in the same dimension as the Jockey or not for the rod.
+    public void setDimensionId(ResourceKey<Level> dimension) {
+        this.dimensionId = dimension.location().toString();
     }
 }
