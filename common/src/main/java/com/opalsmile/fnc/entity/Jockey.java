@@ -350,6 +350,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
 
     @Override
     public void tick(){
+        //TODO probably see how other mobs ride vehicles as movement is janky as of now.
         super.tick();
         ++timeAlive;
         if(isAttacking()) {
@@ -377,6 +378,12 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
                 this.discard();
             }
         }
+    }
+
+    @Override
+    public void die(DamageSource $$0) {
+        super.die($$0);
+        if (!this.level().isClientSide()) this.removeJockey();
     }
 
     //TODO Figure out why the Jockey can't change dimensions.
