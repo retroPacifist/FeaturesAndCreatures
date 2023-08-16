@@ -16,8 +16,6 @@ import java.util.UUID;
 public class FnCSavedData extends SavedData {
 
     //Used to keep track of the one jockey instance per overworld
-
-    public static final String FNC_SAVED_CLAIM_DATA_ID = FnCConstants.MOD_ID + "_fnc_saved_claim_data";
     private BlockPos spawnPosition;
     private UUID jockeyUUID;
     private long jockeyCooldown;
@@ -28,7 +26,7 @@ public class FnCSavedData extends SavedData {
     //TODO Test if one can spawn when the other is on the nether with Debugger and higher time
 
     public static FnCSavedData get(MinecraftServer server){
-        return server.overworld().getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FNC_SAVED_CLAIM_DATA_ID);
+        return server.overworld().getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FnCConstants.MOD_ID);
     }
 
     public static FnCSavedData load(final CompoundTag tag){

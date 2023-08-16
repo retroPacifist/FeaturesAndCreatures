@@ -32,7 +32,7 @@ public class JockeySpawner implements CustomSpawner {
         if(mountEntity != null) {
             mountEntity.moveTo(jockey.position());
             jockey.startRiding(mountEntity);
-            return world.addFreshEntity (mountEntity);
+            return world.addFreshEntity(mountEntity);
         }
         return false;
     }
@@ -83,7 +83,7 @@ public class JockeySpawner implements CustomSpawner {
 
             // Prevent suffocating
             for(BlockPos blockPos : BlockPos.betweenClosed(position.offset(-2, 0, -2), position.offset(2, 3, 2))) {
-                if(!world.isEmptyBlock(blockPos)) {
+                if(!world.isEmptyBlock(blockPos)) { //TODO This stops jockeys from spawning in gra
                     return 0;
                 }
             }
@@ -115,7 +115,10 @@ public class JockeySpawner implements CustomSpawner {
         return 0;
     }
 
-    @Nullable
+    @Nullable //TODO Shouldn't probably be nullable
+    //TODO Find some common multiplatform way to emulate BiomeTags or delegate to service
+    //Forge has biome tags I thin
+    //Maybe add custom ones?
     public static Mob getMountEntity(Level level, Jockey jockey){
         if(jockey.getY() < 30) {
             return EntityType.CAVE_SPIDER.create(level);
@@ -126,11 +129,12 @@ public class JockeySpawner implements CustomSpawner {
             return null;
         } else if(biome.is(BiomeTags.HAS_SWAMP_HUT)) {
             Slime slime = EntityType.SLIME.create(level);
-            if(slime != null) slime.setSize(2, true);
+            slime.setSize(2, true);
             return slime;
         } else if(biome.is(BiomeTags.IS_MOUNTAIN)) {
+            //TODO Adjust jackalope riding position / rotation
             Jackalope jackalope = FnCEntities.JACKALOPE.get().create(level);
-            if(jackalope != null) jackalope.setSaddled(true);
+            jackalope.setSaddled(true);
             return jackalope;
         } else if(biome.is(BiomeTags.HAS_VILLAGE_PLAINS)) {
             Horse horse = EntityType.HORSE.create(level);
