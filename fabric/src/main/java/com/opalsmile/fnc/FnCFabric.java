@@ -1,5 +1,6 @@
 package com.opalsmile.fnc;
 
+import com.opalsmile.fnc.entity.Boar;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.platform.FnCFabricConfigHelper;
@@ -16,6 +17,7 @@ public class FnCFabric implements ModInitializer {
     public static void registerEntityAttributes(){
         FabricDefaultAttributeRegistry.register(FnCEntities.JACKALOPE.get(), Jackalope.createAttributes());
         FabricDefaultAttributeRegistry.register(FnCEntities.JOCKEY.get(), Jockey.createAttributes());
+        FabricDefaultAttributeRegistry.register(FnCEntities.BOAR.get(), Boar.createAttributes());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.opalsmile.fnc;
 
+import com.opalsmile.fnc.entity.Boar;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.platform.FnCForgeConfigHelper;
@@ -31,6 +32,7 @@ public class FnCForge {
     public void createEntityAttributes(final EntityAttributeCreationEvent event){
         event.put(FnCEntities.JACKALOPE.get(), Jackalope.createAttributes().build());
         event.put(FnCEntities.JOCKEY.get(), Jockey.createAttributes().build());
+        event.put(FnCEntities.BOAR.get(), Boar.createAttributes().build());
     }
 
     public void setupCommon(final FMLCommonSetupEvent event){

@@ -301,14 +301,6 @@ public class Jackalope extends Animal implements GeoEntity {
         compoundNBT.putBoolean("Saddled", this.isSaddled());
     }
 
-    private PlayState predicate(final AnimationState<Jackalope> event){
-
-        if(this.jumpDuration >= 1) {
-            return event.setAndContinue(WALK);
-        }
-        return PlayState.STOP; //TODO Idle anim?
-    }
-
     public boolean isSaddled(){
         return this.entityData.get(SADDLED);
     }
@@ -320,7 +312,14 @@ public class Jackalope extends Animal implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar){
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
 
+    private PlayState predicate(final AnimationState<Jackalope> event){
+
+        if(this.jumpDuration >= 1) {
+            return event.setAndContinue(WALK);
+        }
+        return PlayState.STOP; //TODO Idle anim?
     }
 
     @Override

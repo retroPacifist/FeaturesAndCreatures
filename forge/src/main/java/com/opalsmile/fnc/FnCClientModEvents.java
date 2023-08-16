@@ -1,5 +1,6 @@
 package com.opalsmile.fnc;
 
+import com.opalsmile.fnc.client.renderer.BoarRenderer;
 import com.opalsmile.fnc.client.renderer.JackalopeRenderer;
 import com.opalsmile.fnc.client.renderer.JockeyRenderer;
 import com.opalsmile.fnc.client.renderer.SpearRenderer;
@@ -12,11 +13,11 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT, modid = FnCConstants.MOD_ID)
 public class FnCClientModEvents {
 
-
     @SubscribeEvent
-    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderer){
-        renderer.registerEntityRenderer(FnCEntities.JACKALOPE.get(), JackalopeRenderer::new);
-        renderer.registerEntityRenderer(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
-        renderer.registerEntityRenderer(FnCEntities.SPEAR.get(), SpearRenderer::new);
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
+        event.registerEntityRenderer(FnCEntities.JACKALOPE.get(), JackalopeRenderer::new);
+        event.registerEntityRenderer(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
+        event.registerEntityRenderer(FnCEntities.SPEAR.get(), SpearRenderer::new);
+        event.registerEntityRenderer(FnCEntities.BOAR.get(), BoarRenderer::new);
     }
 }
