@@ -18,10 +18,10 @@ public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigge
     }
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext context){
+    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate playerPredicate, DeserializationContext context){
         ContextAwarePredicate entityPredicate = EntityPredicate.fromJson(jsonObject, "jockey", context);
         ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item_predicate"));
-        return new Instance(predicate, entityPredicate, itemPredicate);
+        return new Instance(playerPredicate, entityPredicate, itemPredicate);
     }
 
     public void trigger(ServerPlayer player, Jockey jockey, ItemStack item){
@@ -34,9 +34,9 @@ public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigge
         private final ContextAwarePredicate jockey;
         private final ItemPredicate itemPredicate;
 
-        public Instance(ContextAwarePredicate predicate, ContextAwarePredicate entityPredicate, ItemPredicate itemPredicate){
-            super(JockeyTradeTrigger.ID, predicate);
-            this.jockey = entityPredicate;
+        public Instance(ContextAwarePredicate playerPredicate, ContextAwarePredicate jockeyPredicate, ItemPredicate itemPredicate){
+            super(JockeyTradeTrigger.ID, playerPredicate);
+            this.jockey = jockeyPredicate;
             this.itemPredicate = itemPredicate;
         }
 

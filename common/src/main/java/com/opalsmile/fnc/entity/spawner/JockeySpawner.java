@@ -83,7 +83,7 @@ public class JockeySpawner implements CustomSpawner {
 
             // Prevent suffocating
             for(BlockPos blockPos : BlockPos.betweenClosed(position.offset(-2, 0, -2), position.offset(2, 3, 2))) {
-                if(!world.isEmptyBlock(blockPos)) { //TODO This stops jockeys from spawning in gra
+                if(!world.isEmptyBlock(blockPos)) { //TODO This stops jockeys from spawning in grass
                     return 0;
                 }
             }
