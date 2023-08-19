@@ -101,7 +101,7 @@ public class Jackalope extends Animal implements GeoEntity {
             }
         }
         if(!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, (byte) 1); //TODO Why not spawn particle directly
+            this.level().broadcastEntityEvent(this, (byte) 1); //Spawns particle on the clientside as well as syncs
         }
     }
 
