@@ -195,7 +195,7 @@ public class Jackalope extends Animal implements GeoEntity {
         this.disableJumpControl();
     }
 
-    @Override //TODO Follow method call and figure out if this could be merged into customServerAiStep()
+    @Override 
     public void aiStep(){
         super.aiStep();
         if(this.jumpTicks != this.jumpDuration) {
