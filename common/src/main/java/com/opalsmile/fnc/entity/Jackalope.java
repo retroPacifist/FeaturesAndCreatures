@@ -195,7 +195,7 @@ public class Jackalope extends Animal implements GeoEntity {
         this.disableJumpControl();
     }
 
-    @Override 
+    @Override
     public void aiStep(){
         super.aiStep();
         if(this.jumpTicks != this.jumpDuration) {
@@ -319,7 +319,7 @@ public class Jackalope extends Animal implements GeoEntity {
         if(this.jumpDuration >= 1) {
             return event.setAndContinue(WALK);
         }
-        return PlayState.STOP; //TODO Idle anim?
+        return PlayState.STOP;
     }
 
     @Override

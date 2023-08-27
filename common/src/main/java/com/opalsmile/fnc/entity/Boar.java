@@ -41,7 +41,7 @@ public class Boar extends Animal implements NeutralMob, GeoEntity {
 
     //TODO Tag?
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.GOLDEN_CARROT);
-    public static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.jackalope.walk");
+    public static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.boar.walk");
 
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
@@ -122,7 +122,8 @@ public class Boar extends Animal implements NeutralMob, GeoEntity {
     }
 
     private PlayState predicate(final AnimationState<Boar> event){
-        return event.setAndContinue(WALK);
+        if (event.isMoving()) return event.setAndContinue(WALK);
+        return PlayState.STOP;
     }
 
 
