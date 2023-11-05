@@ -82,7 +82,7 @@ public class FnCAntlerHandler {
         playSound(chargePercentage, player);
         player.setDeltaMovement(player.getDeltaMovement().add(xForwards, 0.0, zForwards));
         AABB targetBoundingBox = player.getBoundingBox().expandTowards(xForwards, 0, zForwards);
-        level.getEntities(EntityTypeTest.forClass(Entity.class), targetBoundingBox, Entity::isAlive).forEach(entity -> {
+        level.getEntities(EntityTypeTest.forClass(Entity.class), targetBoundingBox, entity -> entity.isAlive() && entity != player).forEach(entity -> {
             entity.move(MoverType.PLAYER, new Vec3(knockback * vec.x, 2.0, knockback * vec.z));
             entity.hurt(level.damageSources().mobAttack(player), MAX_DAMAGE * chargePercentage);
             level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), FnCSounds.ANTLER_HEADDRESS_ATTACK_STRONG.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
