@@ -10,6 +10,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -147,11 +148,10 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     public InteractionResult mobInteract(Player player, InteractionHand hand){
         ItemStack itemstack = player.getItemInHand(hand);
         if(!(itemstack.getItem() instanceof SpawnEggItem) && this.isAlive() && tradingPlayer == null) {
-            if(!this.getOffers().isEmpty()) {
-                if(!this.level().isClientSide) {
-                    this.setTradingPlayer(player);
-                    this.openTradingScreen(player, this.getDisplayName(), 1);
-                }
+            if (!this.level().isClientSide) {
+                if (this.getOffers().isEmpty()) return InteractionResult.PASS;
+                this.setTradingPlayer(player);
+                this.openTradingScreen(player, this.getDisplayName(), 1);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide());
         } else {
@@ -455,7 +455,6 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         compoundTag.putBoolean("Attacking", isAttacking());
         compoundTag.putInt("AttackTimer", getAttackTimer());
         compoundTag.put("Offers", getOffers().createTag());
-
     }
 
     @Override
@@ -464,7 +463,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         this.timeAlive = nbt.getInt("TimeAlive");
         setAttacking(nbt.getBoolean("Attacking"));
         setAttackTimer(nbt.getInt("AttackTimer"));
-        offers = new MerchantOffers(nbt.getCompound("Offers"));
+        if (nbt.contains("Offers", Tag.TAG_COMPOUND))
+            offers = new MerchantOffers(nbt.getCompound("Offers"));
     }
 
     private PlayState predicate(AnimationState<Jockey> event){
