@@ -1,8 +1,13 @@
 package com.opalsmile.fnc.entity;
 
+import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.registries.FnCEntities;
+import com.opalsmile.fnc.registries.FnCSounds;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.AgeableMob;
@@ -11,68 +16,77 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class Boar extends Animal implements NeutralMob, GeoEntity {
+public class Boar extends RideableNeutralMob implements NeutralMob, GeoEntity {
+
+
+    public static final TagKey<Item> BOAR_FOOD = TagKey.create(Registries.ITEM, FnCConstants.resourceLocation("boar_food"));
 
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 30);
     private int remainingPersistentAngerTime;
     @javax.annotation.Nullable
     private UUID persistentAngerTarget;
-
-    //TODO Tag?
-    private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.GOLDEN_CARROT);
     public static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.boar.walk");
 
-    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-
-    public Boar(EntityType<? extends Animal> entityType, Level level) {
+    public Boar(EntityType<? extends RideableNeutralMob> entityType, Level level) {
         super(entityType, level);
     }
 
     public static AttributeSupplier.Builder createAttributes(){
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 11.0D).add(Attributes.MOVEMENT_SPEED, 0.2F).add(Attributes.ATTACK_DAMAGE, 4);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 11.0D).add(Attributes.MOVEMENT_SPEED, 0.2F).add(Attributes.ATTACK_DAMAGE, 8);
+    }
+
+    @Override
+    public void tick(){
+        super.tick();
+        if (!this.level().isClientSide) {
+            this.updatePersistentAnger((ServerLevel)this.level(), true);
+        }
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, FOOD_ITEMS, false));
-        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-
-        //TODO add melee attack and target goal
+        super.registerGoals();
+        this.goalSelector.addGoal(8, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false));
+        //TODO check this
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
     }
 
     @Override
-    public boolean isFood(ItemStack stack){
-        return FOOD_ITEMS.test(stack);
+    public TagKey<Item> getFoodTag(){
+        return BOAR_FOOD;
     }
 
-    //TODO Copy over saddle code from Jackalope / inherit
+    @Override
+    public SoundEvent getSaddleSound(){
+        return FnCSounds.BOAR_SADDLE.get();
+    }
+
+
+    @Override
+    public boolean isPlayerRideable() {
+        return true;
+    }
 
     @Nullable
     @Override
@@ -80,11 +94,14 @@ public class Boar extends Animal implements NeutralMob, GeoEntity {
         return FnCEntities.BOAR.get().create(serverLevel);
     }
 
+
+    @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.readPersistentAngerSaveData(this.level(), compoundTag);
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         this.addPersistentAngerSaveData(compoundTag);
@@ -126,9 +143,4 @@ public class Boar extends Animal implements NeutralMob, GeoEntity {
         return PlayState.STOP;
     }
 
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return geoCache;
-    }
 }

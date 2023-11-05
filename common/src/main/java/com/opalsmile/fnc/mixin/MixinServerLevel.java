@@ -33,9 +33,9 @@ public class MixinServerLevel {
     private List<CustomSpawner> customSpawners;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void featurescritters_addFnCSpawners(MinecraftServer $$0, Executor $$1, LevelStorageSource.LevelStorageAccess $$2, ServerLevelData $$3, ResourceKey<Level> resourceKey, LevelStem $$5, ChunkProgressListener $$6, boolean $$7, long $$8, List<CustomSpawner> $$9, boolean $$10, @Nullable RandomSequences $$11, CallbackInfo cInfo){
-        this.customSpawners = new ArrayList<>(this.customSpawners);
+    private void featurescritters_addSpawners(MinecraftServer minecraftServer, Executor executor, LevelStorageSource.LevelStorageAccess levelStorageAccess, ServerLevelData serverLevelData, ResourceKey<Level> resourceKey, LevelStem levelStem, ChunkProgressListener chunkProgressListener, boolean debug, long biomeZoomSeed, List<CustomSpawner> customSpawners, boolean tickTime, @Nullable RandomSequences randomSequences, CallbackInfo cInfo){
         if(resourceKey.equals(Level.OVERWORLD)) {
+            this.customSpawners = new ArrayList<>(this.customSpawners);
             this.customSpawners.add(new JockeySpawner());
         }
     }

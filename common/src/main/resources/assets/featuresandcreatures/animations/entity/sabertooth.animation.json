@@ -104,6 +104,7 @@
 		},
 		"animation.sabertooth.attack": {
 			"animation_length": 1,
+			"loop": true,
 			"bones": {
 				"legFrontRight": {
 					"rotation": {

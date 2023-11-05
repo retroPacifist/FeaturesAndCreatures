@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "armor",
-					"pivot": [0, 0, 0]
+					"name": "armorHead",
+					"pivot": [0, 24, 0]
 				},
 				{
 					"name": "head",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 24, 0],
 					"cubes": [
 						{"origin": [-4, 21, -4], "size": [8, 11, 8], "inflate": 0.3, "uv": [0, 0]}
@@ -48,37 +48,37 @@
 				},
 				{
 					"name": "body",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "rarm",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "larm",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "rleg",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "lleg",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "rboot",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "lboot",
-					"parent": "armor",
+					"parent": "armorHead",
 					"pivot": [0, 0, 0]
 				}
 			]

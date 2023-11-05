@@ -1,10 +1,7 @@
 package com.opalsmile.fnc.registries;
 
 import com.opalsmile.fnc.FnCConstants;
-import com.opalsmile.fnc.entity.Boar;
-import com.opalsmile.fnc.entity.Jackalope;
-import com.opalsmile.fnc.entity.Jockey;
-import com.opalsmile.fnc.entity.Spear;
+import com.opalsmile.fnc.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +18,7 @@ public class FnCEntities {
     public static final RegistryObject<EntityType<Boar>> BOAR = createEntity("boar", EntityType.Builder.of(Boar::new, MobCategory.CREATURE).sized(0.9F, 0.9F));
     public static final RegistryObject<EntityType<Jackalope>> JACKALOPE = createEntity("jackalope",
             EntityType.Builder.of(Jackalope::new, MobCategory.CREATURE).sized(1F, 0.8F));
-//    public static final RegistryObject<EntityType<Sabertooth>> SABERTOOTH = createEntity("sabertooth", EntityType.Builder.of(Sabertooth::new, MobCategory.CREATURE).sized(1.2F, 1.3F));
+    public static final RegistryObject<EntityType<Sabertooth>> SABERTOOTH = createEntity("sabertooth", EntityType.Builder.of(Sabertooth::new, MobCategory.CREATURE).sized(1.2F, 1.3F));
 //    public static final RegistryObject<EntityType<BlackForestSpirit>> BLACK_FOREST_SPIRIT = createEntity("black_forest_spirit", EntityType.Builder.of(BlackForestSpirit::new, MobCategory.CREATURE).sized(0.7F, 2f));
 //    public static final RegistryObject<EntityType<Gup>> GUP = createEntity("gup", EntityType.Builder.of(Gup::new, MobCategory.CREATURE).sized(2.625F, 2f));
 //    public static final RegistryObject<EntityType<BrimstoneGolem>> BRIMSTONE_GOLEM = createEntity("brimstone_golem", EntityType.Builder.of(BrimstoneGolem::new, MobCategory.CREATURE).sized(2.6F, 4f));

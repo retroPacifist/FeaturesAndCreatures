@@ -91,7 +91,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     }
 
     public static AttributeSupplier.Builder createAttributes(){
-        return createMobAttributes().add(Attributes.MAX_HEALTH, 12.0);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0).add(Attributes.MOVEMENT_SPEED, 0.2);
     }
 
 
@@ -119,8 +119,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.35D));
-        this.goalSelector.addGoal(0,
-                new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING),
+        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING),
                         SoundEvents.GENERIC_DRINK, entity -> this.getHealth() <= 6));
         this.targetSelector.addGoal(7, new HurtByTargetGoal(this));
     }
@@ -241,7 +240,6 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
 
     private TradeType generateTradeType(){
         TradeType type;
-        //TODO Extensibility and weight calculating
         int typeChance = random.nextInt(20);
         if(typeChance < 2) {
             type = TradeType.ARROWS_32;
@@ -258,8 +256,6 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     }
 
     private int generateEffectCount(){
-        //TODO Figure out a way to provide extensibility
-        //Maybe go full blown into a recipe.
         int effectCount;
         int effectCountChance = random.nextInt(20);
         if(effectCountChance < 3) {
@@ -272,12 +268,11 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         return effectCount;
     }
 
-    // TODO clean this function
     private int generatePotionStrength(int effectCount){
         int strength;
         int strengthChance = random.nextInt(100);
         switch (effectCount) {
-            case 1: {
+            case 1 -> {
                 if(strengthChance < 10) {
                     strength = 4;
                 } else if(strengthChance < 35) {
@@ -289,9 +284,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
                 } else {
                     strength = 0;
                 }
-                break;
             }
-            case 2: {
+            case 2 -> {
                 if(strengthChance == 0) {
                     strength = 4;
                 } else if(strengthChance < 8) {
@@ -303,9 +297,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
                 } else {
                     strength = 0;
                 }
-                break;
             }
-            default: {
+            default -> {
                 if(strengthChance < 17) {
                     strength = 2;
                 } else if(strengthChance < 40) {
@@ -383,7 +376,13 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     @Override
     public void die(DamageSource $$0) {
         super.die($$0);
-        if (!this.level().isClientSide()) this.removeJockey();
+        if (!this.level().isClientSide()) {
+            if (this.isHolding(Items.POTION)) {
+                final ItemStack stack = this.getMainHandItem();
+                this.spawnAtLocation(stack);
+            }
+            this.removeJockey();
+        }
     }
 
     //TODO Figure out why the Jockey can't change dimensions.
@@ -507,7 +506,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     }
 
     @Override
-    public void performRangedAttack(LivingEntity target, float v){
+        public void performRangedAttack(LivingEntity target, float v){
         this.setAttacking(true);
         Vec3 vector3d = target.getDeltaMovement();
         double d0 = target.getX() + vector3d.x - this.getX();

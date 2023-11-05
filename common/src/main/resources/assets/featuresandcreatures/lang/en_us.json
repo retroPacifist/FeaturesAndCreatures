@@ -90,6 +90,8 @@
   "advancementRoot.description": "A world of creatures big and small.",
   "advancements.adventure.throw_trident.description": "Throw a throwable weapon at something.\nNote: Throwing away your only weapon is not a good idea.",
 
+  "key.featuresandcreatures.antler_headdress" : "Antler Headdress Charge",
+
   "bestiary.featuresandcreatures.toast": "New page unlocked!",
   "bestiary.featuresandcreatures.right": "Next Page",
   "bestiary.featuresandcreatures.left": "Previous Page",

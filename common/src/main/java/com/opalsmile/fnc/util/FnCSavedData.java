@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -26,7 +27,8 @@ public class FnCSavedData extends SavedData {
     //TODO Test if one can spawn when the other is on the nether with Debugger and higher time
 
     public static FnCSavedData get(MinecraftServer server){
-        return server.overworld().getDataStorage().computeIfAbsent(FnCSavedData::load, FnCSavedData::new, FnCConstants.MOD_ID);
+        return server.overworld().getDataStorage().computeIfAbsent(
+                new SavedData.Factory<>(FnCSavedData::new, FnCSavedData::load, DataFixTypes.SAVED_DATA_MAP_DATA), FnCConstants.MOD_ID);
     }
 
     public static FnCSavedData load(final CompoundTag tag){

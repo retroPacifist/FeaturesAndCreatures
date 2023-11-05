@@ -1,12 +1,11 @@
 package com.opalsmile.fnc;
 
-import com.opalsmile.fnc.client.renderer.BoarRenderer;
-import com.opalsmile.fnc.client.renderer.JackalopeRenderer;
-import com.opalsmile.fnc.client.renderer.JockeyRenderer;
-import com.opalsmile.fnc.client.renderer.SpearRenderer;
+import com.opalsmile.fnc.client.FnCClient;
+import com.opalsmile.fnc.client.renderer.*;
 import com.opalsmile.fnc.registries.FnCEntities;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -19,5 +18,11 @@ public class FnCClientModEvents {
         event.registerEntityRenderer(FnCEntities.JOCKEY.get(), JockeyRenderer::new);
         event.registerEntityRenderer(FnCEntities.SPEAR.get(), SpearRenderer::new);
         event.registerEntityRenderer(FnCEntities.BOAR.get(), BoarRenderer::new);
+        event.registerEntityRenderer(FnCEntities.SABERTOOTH.get(), SabertoothRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void setupClient(final RegisterKeyMappingsEvent event) {
+        event.register(FnCClient.ANTLER_KEYBIND);
     }
 }

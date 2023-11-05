@@ -1,5 +1,11 @@
 package com.opalsmile.fnc.platform.services;
 
+import com.opalsmile.fnc.item.AntlerHeaddress;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
+
+import java.util.function.Supplier;
+
 public interface FnCIPlatformHelper {
 
     /**
@@ -33,4 +39,12 @@ public interface FnCIPlatformHelper {
 
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    TagKey<Biome> snowBiomes();
+    TagKey<Biome> swampBiomes();
+    TagKey<Biome> plainsBiomes();
+    TagKey<Biome> mountainBiomes();
+
+    Supplier<? extends AntlerHeaddress> getAntlerHeaddress();
+
 }

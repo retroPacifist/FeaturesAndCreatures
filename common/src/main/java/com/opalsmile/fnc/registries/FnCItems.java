@@ -2,11 +2,10 @@ package com.opalsmile.fnc.registries;
 
 import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.item.SpearItem;
+import com.opalsmile.fnc.platform.FnCServices;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import opalsmile.fnc.reg.RegistrationProvider;
 import opalsmile.fnc.reg.RegistryObject;
@@ -24,10 +23,10 @@ public class FnCItems {
     public static final RegistryObject<Item> SABERTOOTH_FANG = REGISTER.register("sabertooth_fang", createItem());
 
     // Armor, Weapons, and Tools
-//    public static final RegistryObject<? extends ArmorItem> ANTLER_HEADDRESS = REGISTER.register("antler_headdress", () -> PlatformItemHandler.INSTANCE.getAntlerHeaddressItem(FnCArmorMaterial.ANTLER, EquipmentSlot.HEAD, createProperties()));
+    public static final Supplier<? extends ArmorItem> ANTLER_HEADDRESS = FnCServices.PLATFORM.getAntlerHeaddress();
 //    public static final RegistryObject<? extends ArmorItem> LUNAR_HEADDRESS = REGISTER.register("lunar_headdress", () -> PlatformItemHandler.INSTANCE.getLunarHeaddressItem(FnCArmorMaterial.LUNAR, EquipmentSlot.HEAD, createProperties()));
 
-    public static final RegistryObject<Item> SPEAR = REGISTER.register("spear", () -> new SpearItem(new Item.Properties()));
+    public static final RegistryObject<Item> SPEAR = REGISTER.register("spear", () -> new SpearItem(new Item.Properties().durability(200)));
     //dawn spear goes here
 //    public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new DowsingRodItem(createProperties()));
     //dawn dowser goes here

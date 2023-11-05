@@ -1,26 +1,20 @@
 package com.opalsmile.fnc.advancements;
 
 import com.google.gson.JsonObject;
-import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.entity.Jockey;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 
+import java.util.Optional;
+
 public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigger.Instance> {
-    static final ResourceLocation ID = FnCConstants.resourceLocation("jockey_trade");
 
     @Override
-    public ResourceLocation getId(){
-        return ID;
-    }
-
-    @Override
-    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate playerPredicate, DeserializationContext context){
-        ContextAwarePredicate entityPredicate = EntityPredicate.fromJson(jsonObject, "jockey", context);
-        ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item_predicate"));
+    public Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> playerPredicate, DeserializationContext context){
+        Optional<ContextAwarePredicate> entityPredicate = EntityPredicate.fromJson(jsonObject, "jockey", context);
+        Optional<ItemPredicate> itemPredicate = ItemPredicate.fromJson(jsonObject.get("item_predicate"));
         return new Instance(playerPredicate, entityPredicate, itemPredicate);
     }
 
@@ -31,28 +25,28 @@ public class JockeyTradeTrigger extends SimpleCriterionTrigger<JockeyTradeTrigge
 
     public static class Instance extends AbstractCriterionTriggerInstance {
 
-        private final ContextAwarePredicate jockey;
-        private final ItemPredicate itemPredicate;
+        private final Optional<ContextAwarePredicate> jockey;
+        private final Optional<ItemPredicate> itemPredicate;
 
-        public Instance(ContextAwarePredicate playerPredicate, ContextAwarePredicate jockeyPredicate, ItemPredicate itemPredicate){
-            super(JockeyTradeTrigger.ID, playerPredicate);
+        public Instance(Optional<ContextAwarePredicate> playerPredicate, Optional<ContextAwarePredicate> jockeyPredicate, Optional<ItemPredicate> itemPredicate){
+            super(playerPredicate);
             this.jockey = jockeyPredicate;
             this.itemPredicate = itemPredicate;
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext serializationContext){
-            JsonObject jsonObject = super.serializeToJson(serializationContext);
-            jsonObject.add("item_predicate", this.itemPredicate.serializeToJson());
-            jsonObject.add("jockey", this.jockey.toJson(serializationContext));
+        public JsonObject serializeToJson(){
+            JsonObject jsonObject = super.serializeToJson();
+            itemPredicate.ifPresent(predicate -> jsonObject.add("item_predicate", predicate.serializeToJson()));
+            jockey.ifPresent(predicate -> jsonObject.add("jockey", predicate.toJson()));
             return jsonObject;
         }
 
         public boolean matches(LootContext lootContext, ItemStack stack){
-            if(!this.jockey.matches(lootContext)) {
+            if(this.jockey.isEmpty() || !this.jockey.get().matches(lootContext)) {
                 return false;
             } else {
-                return this.itemPredicate.matches(stack);
+                return this.itemPredicate.isPresent() && this.itemPredicate.get().matches(stack);
             }
         }
     }

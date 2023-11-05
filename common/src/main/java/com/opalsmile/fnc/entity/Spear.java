@@ -30,8 +30,8 @@ public class Spear extends AbstractArrow implements GeoEntity {
         super(entityType, level);
     }
 
-    public Spear(Level worldIn, LivingEntity thrower, ItemStack stack){
-        super(FnCEntities.SPEAR.get(), thrower, worldIn);
+    public Spear(Level level, LivingEntity thrower, ItemStack stack){
+        super(FnCEntities.SPEAR.get(), thrower, level);
         this.thrownStack = stack.copy();
     }
 
