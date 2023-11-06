@@ -7,6 +7,7 @@ import com.opalsmile.fnc.entity.Sabertooth;
 import com.opalsmile.fnc.item.AntlerHeaddress;
 import com.opalsmile.fnc.item.ForgeAntlerHeaddress;
 import com.opalsmile.fnc.platform.FnCForgeConfigHelper;
+import com.opalsmile.fnc.platform.FnCForgeNetworkHelper;
 import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.registries.FnCRegistry;
 import com.opalsmile.fnc.registries.FnCTriggers;
@@ -34,6 +35,7 @@ public class FnCForge {
 
     public FnCForge(){
         FnCRegistry.initialise();
+        FnCForgeNetworkHelper.register();
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::createEntityAttributes);
         modBus.addListener(this::setupCommon);

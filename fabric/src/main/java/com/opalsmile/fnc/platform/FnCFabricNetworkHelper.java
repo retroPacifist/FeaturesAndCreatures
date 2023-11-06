@@ -27,7 +27,7 @@ public class FnCFabricNetworkHelper implements FnCINetworkHelper {
 
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(ANTLER_PACKET, (server, player,
-                handler, buf, responseSender) -> FnCAntlerHandler.handlePacket(player, buf));
+                handler, buf, responseSender) -> FnCAntlerHandler.handlePacket(player, buf.readBoolean()));
     }
 
 }

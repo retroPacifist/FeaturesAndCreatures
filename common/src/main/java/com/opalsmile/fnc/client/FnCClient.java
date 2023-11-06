@@ -23,11 +23,29 @@ public class FnCClient {
     private static boolean sameLevel = false;
     private static BlockPos jockeyPosition;
 
+    private static boolean keybindPressed;
+
+    public static void handleClientTick() {
+        if (keybindPressed && !ANTLER_KEYBIND.isDown()) {
+            keybindPressed = false;
+            onKeyPress(InputConstants.RELEASE);
+        }
+        if (ANTLER_KEYBIND.isDown()) {
+            ANTLER_KEYBIND.consumeClick();
+            keybindPressed = true;
+            onKeyPress(InputConstants.PRESS);
+        }
+    }
+
     public static void onKeyPress(int action) {
        boolean release = action == InputConstants.RELEASE;
-       if (release) dashScale = 0;
+       if (release) {
+           dashScale = 0;
+       }
        else {
-           if (dashScale < 1 && !Minecraft.getInstance().player.getCooldowns().isOnCooldown(FnCServices.PLATFORM.getAntlerHeaddress().get())) dashScale += 0.02f;
+           if (dashScale < 1 && !Minecraft.getInstance().player.getCooldowns().isOnCooldown(FnCServices.PLATFORM.getAntlerHeaddress().get())) {
+               dashScale += 0.02f;
+           }
        }
        FnCServices.NETWORK.sendAntlerKeypress(release);
     }

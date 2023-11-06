@@ -38,8 +38,7 @@ public class FnCAntlerHandler {
 
     private static final Map<UUID, AntlerStorage> antlerValues = new HashMap<>();
 
-    public static void handlePacket(final ServerPlayer player, final FriendlyByteBuf keyReleased) {
-        boolean released = keyReleased.readBoolean();
+    public static void handlePacket(final ServerPlayer player, final boolean released) {
         if (!player.getItemBySlot(EquipmentSlot.HEAD).is(FnCServices.PLATFORM.getAntlerHeaddress().get())) return;
         AntlerStorage storage = antlerValues.computeIfAbsent(player.getUUID(), uuid -> new AntlerStorage());
         if (storage.pastTick) {

@@ -26,15 +26,7 @@ public class FnCFabricClient implements ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(FnCClient.ANTLER_KEYBIND);
 
         ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
-            if (keybindPressed && !FnCClient.ANTLER_KEYBIND.isDown()) {
-                keybindPressed = false;
-                FnCClient.onKeyPress(InputConstants.RELEASE);
-            }
-            if (FnCClient.ANTLER_KEYBIND.isDown()) {
-                FnCClient.ANTLER_KEYBIND.consumeClick();
-                keybindPressed = true;
-                FnCClient.onKeyPress(InputConstants.PRESS);
-            }
+            FnCClient.handleClientTick();
         });
     }
 
