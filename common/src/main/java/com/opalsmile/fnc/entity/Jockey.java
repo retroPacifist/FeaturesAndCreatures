@@ -399,6 +399,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
                 savedData.setJockeyCooldown(-1);
                 savedData.setSpawnPosition(jockey.blockPosition());
                 savedData.setJockeySpawned(true);
+                savedData.setDimensionId($$0.dimension());
                 savedData.setDirty();
             }
             return target;
@@ -444,7 +445,18 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         if(this.uuid.equals(jockeyUUID)) {
             savedData.setJockeyUUID(null);
             savedData.setSpawnPosition(null);
+            savedData.clearDimensionId();
             savedData.setJockeySpawned(false);
+            FnCServices.NETWORK.notifyJockeyDeath((ServerLevel) this.level());
+        }
+    }
+
+    @Override
+    public void load(CompoundTag $$0){
+        super.load($$0);
+        if (!this.level().isClientSide()) {
+            FnCSavedData savedData = FnCSavedData.get(this.getServer());
+            savedData.setSpawnPosition(this.blockPosition());
         }
     }
 

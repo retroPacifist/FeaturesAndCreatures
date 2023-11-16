@@ -8,18 +8,21 @@ import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.util.FnCSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.monster.Slime;
-import net.minecraft.world.level.CustomSpawner;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import javax.annotation.Nullable;
 
@@ -28,8 +31,8 @@ import javax.annotation.Nullable;
  */
 public class JockeySpawner implements CustomSpawner {
 
-    public static final int MAX_OFFSET = 10;
     private int spawnChance;
+    private final RandomSource randomSource = RandomSource.create();
 
     private static boolean handleMount(ServerLevel level, Jockey jockey){
         final Mob mountEntity = getMountEntity(level, jockey);
@@ -80,25 +83,15 @@ public class JockeySpawner implements CustomSpawner {
 
         ServerPlayer player = level.getRandomPlayer();
         if(player == null) return 0;
-        BlockPos position = player.blockPosition().offset(level.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2),
-                level.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2),
-                level.random.nextInt(MAX_OFFSET) - (MAX_OFFSET / 2));
 
-        // Prevent suffocating
-        for(BlockPos blockPos : BlockPos.betweenClosed(position.offset(-1, 0, -2), position.offset(2, 3, 2))) {
-            if(!level.isEmptyBlock(blockPos) || !level.noCollision(FnCEntities.JOCKEY.get().getAABB(blockPos.getX() + 4, blockPos.getY() + 2, blockPos.getZ() + 4))) { //TODO This stops jockeys from spawning in grass
-                return 0;
-            }
-        }
+        BlockPos startPosition = player.blockPosition();
 
-        // Floor finder
-        for(BlockPos blockPos : BlockPos.betweenClosed(position.offset(-1, 0, -1), position.offset(1, 0, 1))) {
-            if(level.isEmptyBlock(blockPos) && level.getFluidState(blockPos).isEmpty()) {
-                return 0;
-            }
-        }
+        BlockPos position = findSpawnPositionNear(level, startPosition, 48);
+
+        if (position == null || !this.hasEnoughSpace(level, position)) return 0;
 
         Jockey jockey = FnCEntities.JOCKEY.get().create(level);
+
         if(jockey == null) {
             return 0;
         }
@@ -109,9 +102,11 @@ public class JockeySpawner implements CustomSpawner {
             savedData.setJockeyUUID(jockey.getUUID());
             savedData.setJockeyCooldown(-1);
             savedData.setSpawnPosition(jockey.blockPosition());
+            savedData.setDimensionId(level.dimension());
             savedData.setJockeySpawned(true);
             savedData.setDirty();
             spawnChance = defaultSpawnChance;
+            FnCServices.NETWORK.broadcastJockeySpawning(level, jockey.blockPosition());
             return 1;
         }
         return 0;
@@ -148,5 +143,35 @@ public class JockeySpawner implements CustomSpawner {
         }
     }
 
+    //TODO test with all rides
+    //TODO adjust riding position.
+
+    @Nullable
+    private BlockPos findSpawnPositionNear(LevelReader levelReader, BlockPos centerPos, int radius) {
+        BlockPos targetPosition = null;
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        for(int i = 0; i < 10; ++i) {
+            int randX = centerPos.getX() + this.randomSource.nextInt(radius * 2) - radius;
+            int randZ = centerPos.getZ() + this.randomSource.nextInt(radius * 2) - radius;
+            int levelHeight = levelReader.getHeight(Heightmap.Types.WORLD_SURFACE, randX, randZ);
+            mutableBlockPos.set(randX, levelHeight, randZ);
+            if (NaturalSpawner.isSpawnPositionOk(SpawnPlacements.Type.ON_GROUND, levelReader, mutableBlockPos, EntityType.WANDERING_TRADER)) {
+                targetPosition = mutableBlockPos;
+                break;
+            }
+        }
+
+        return targetPosition;
+    }
+
+    private boolean hasEnoughSpace(BlockGetter blockGetter, BlockPos blockPos) {
+        for(BlockPos position : BlockPos.betweenClosed(blockPos, blockPos.offset(2, 4, 2))) {
+            if (!blockGetter.getBlockState(position).getCollisionShape(blockGetter, position).isEmpty()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }

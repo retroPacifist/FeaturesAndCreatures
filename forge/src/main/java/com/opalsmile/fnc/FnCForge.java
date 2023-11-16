@@ -1,5 +1,6 @@
 package com.opalsmile.fnc;
 
+import com.opalsmile.fnc.client.FnCClient;
 import com.opalsmile.fnc.entity.Boar;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
@@ -8,18 +9,26 @@ import com.opalsmile.fnc.item.AntlerHeaddress;
 import com.opalsmile.fnc.item.ForgeAntlerHeaddress;
 import com.opalsmile.fnc.platform.FnCForgeConfigHelper;
 import com.opalsmile.fnc.platform.FnCForgeNetworkHelper;
+import com.opalsmile.fnc.platform.FnCServices;
 import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.registries.FnCRegistry;
 import com.opalsmile.fnc.registries.FnCTriggers;
+import com.opalsmile.fnc.util.FnCEventHandler;
+import com.opalsmile.fnc.util.FnCSavedData;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -41,7 +50,9 @@ public class FnCForge {
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::configLoad);
         modBus.addListener(this::configReload);
+        modBus.addListener(this::setupClient);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FnCForgeConfigHelper.GENERAL_SPEC);
+        MinecraftForge.EVENT_BUS.addListener(this::entityJoinLevel);
         ITEM_REGISTRY.register(modBus);
     }
 
@@ -59,6 +70,12 @@ public class FnCForge {
         });
     }
 
+    public void setupClient(final FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            FnCClient.registerItemProperties();
+        });
+    }
+
     public void configLoad(final ModConfigEvent.Loading event) {
         handleConfigUpdate(event.getConfig());
     }
@@ -70,6 +87,13 @@ public class FnCForge {
     public void handleConfigUpdate(final ModConfig config) {
         if (FnCConstants.MOD_ID.equals(config.getModId())){
             FnCForgeConfigHelper.update();
+        }
+    }
+
+    public void entityJoinLevel(final EntityJoinLevelEvent event) {
+        if (event.getLevel().isClientSide) return;
+        if (event.getEntity() instanceof ServerPlayer player) {
+            FnCEventHandler.onPlayerJoinLevel(player, player.serverLevel());
         }
     }
 

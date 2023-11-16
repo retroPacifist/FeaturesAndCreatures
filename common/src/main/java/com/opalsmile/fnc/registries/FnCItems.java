@@ -28,7 +28,7 @@ public class FnCItems {
 
     public static final RegistryObject<Item> SPEAR = REGISTER.register("spear", () -> new SpearItem(new Item.Properties().durability(200)));
     //dawn spear goes here
-//    public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new DowsingRodItem(createProperties()));
+    public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new Item(new Item.Properties()));
     //dawn dowser goes here
     //sunset dowser goes here
     //midnight dowser goes here
@@ -85,6 +85,7 @@ public class FnCItems {
                         output.accept(SABERTOOTH_FANG.get());
                         output.accept(ANTLER.get());
                         output.accept(SPEAR.get());
+                        output.accept(DOWSING_ROD.get());
                     })
                     .build());
 

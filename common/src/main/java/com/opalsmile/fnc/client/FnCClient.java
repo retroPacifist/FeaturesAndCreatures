@@ -1,13 +1,19 @@
 package com.opalsmile.fnc.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.platform.FnCServices;
+import com.opalsmile.fnc.registries.FnCItems;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -76,10 +82,40 @@ public class FnCClient {
         sameLevel = value;
     }
 
-    public static void setSameJockeyLevel(BlockPos value) {
+    public static void setJockeyPosition(BlockPos value) {
         jockeyPosition = value;
     }
 
+    public static void registerItemProperties() {
+        ItemProperties.register(
+                FnCItems.DOWSING_ROD.get(), FnCConstants.resourceLocation("dowsing"), (itemStack, clientLevel, livingEntity, seed) -> {
 
+                    if (!(livingEntity instanceof Player player)) return 0.0f;
+
+                    //if selected and second hand is empty.
+                    if (player.getItemBySlot(EquipmentSlot.MAINHAND) != itemStack || !player.getItemBySlot(EquipmentSlot.OFFHAND).isEmpty()) {return 0.0f;}
+
+                    if (!FnCClient.isOnJockeyLevel()) {
+                        return 0.0f;
+                    }
+                    else {
+                        BlockPos pos = livingEntity.blockPosition();
+                        BlockPos jockeyPos = FnCClient.getJockeyPosition();
+                        int x = jockeyPos.getX() - pos.getX();
+                        int z = jockeyPos.getZ() - pos.getZ();
+                        Vec3 viewVector = player.getViewVector(1.0f).scale(100);
+                        double dot = x * viewVector.x + z * viewVector.z;
+                        double modView = Math.sqrt(viewVector.x * viewVector.x +  viewVector.z * viewVector.z);
+                        double modDistance = Math.sqrt(x * x + z * z);
+                        double angle = Math.acos(dot / (modView * modDistance)); // 0.0 < angle < PI
+                        if (angle < 0.14) {
+                            return 0.2f;
+                        } else if(angle < 1.179) {
+                            return 0.1f;
+                        }
+                        return 0.0f;
+                    }
+                });
+    }
 
 }

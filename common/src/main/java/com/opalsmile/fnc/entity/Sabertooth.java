@@ -8,10 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -55,6 +52,7 @@ public class Sabertooth extends RideableNeutralMob implements NeutralMob {
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
     }
+
 
     @Override
     public void tick(){

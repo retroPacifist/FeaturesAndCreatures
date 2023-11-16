@@ -14,13 +14,13 @@
   "overrides": [
     {
       "predicate": {
-        "featuresandcreatures:dowsing": 112.5
+        "featuresandcreatures:dowsing": 0.1
       },
       "model": "featuresandcreatures:item/dowsing_rod_semi_active"
     },
     {
       "predicate": {
-        "featuresandcreatures:dowsing": 170
+        "featuresandcreatures:dowsing": 0.2
       },
       "model": "featuresandcreatures:item/dowsing_rod_active"
     }

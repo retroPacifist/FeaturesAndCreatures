@@ -91,9 +91,11 @@ public class FnCSavedData extends SavedData {
         return new ResourceLocation(dimensionId);
     }
 
-    //TODO Make sure dimension itself isn't synced to the player but rather
-    //A boolean representing whether its in the same dimension as the Jockey or not for the rod.
     public void setDimensionId(ResourceKey<Level> dimension) {
         this.dimensionId = dimension.location().toString();
+    }
+
+    public void clearDimensionId() {
+        this.dimensionId = null;
     }
 }

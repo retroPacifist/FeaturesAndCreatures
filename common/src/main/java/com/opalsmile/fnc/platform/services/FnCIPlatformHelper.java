@@ -30,16 +30,6 @@ public interface FnCIPlatformHelper {
      */
     boolean isDevelopmentEnvironment();
 
-    /**
-     * Gets the name of the environment type as a string.
-     *
-     * @return The name of the environment type.
-     */
-    default String getEnvironmentName(){
-
-        return isDevelopmentEnvironment() ? "development" : "production";
-    }
-
     TagKey<Biome> snowBiomes();
     TagKey<Biome> swampBiomes();
     TagKey<Biome> plainsBiomes();

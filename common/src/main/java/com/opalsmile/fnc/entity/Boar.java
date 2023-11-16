@@ -10,10 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -75,6 +72,16 @@ public class Boar extends RideableNeutralMob implements NeutralMob, GeoEntity {
     @Override
     public TagKey<Item> getFoodTag(){
         return BOAR_FOOD;
+    }
+
+    @Override
+    public float getScale(){
+        return super.getScale();
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose $$0){
+        return super.getDimensions($$0);
     }
 
     @Override

@@ -1,15 +1,16 @@
 package com.opalsmile.fnc;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.opalsmile.fnc.client.FnCClient;
 import com.opalsmile.fnc.client.renderer.*;
-import com.opalsmile.fnc.entity.Sabertooth;
+import com.opalsmile.fnc.platform.FnCFabricNetworkHelper;
 import com.opalsmile.fnc.registries.FnCEntities;
+import com.opalsmile.fnc.registries.FnCItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.renderer.item.ItemProperties;
 
 public class FnCFabricClient implements ClientModInitializer {
 
@@ -25,10 +26,20 @@ public class FnCFabricClient implements ClientModInitializer {
 
         KeyBindingHelper.registerKeyBinding(FnCClient.ANTLER_KEYBIND);
 
+        FnCClient.registerItemProperties();
+
         ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
             FnCClient.handleClientTick();
         });
+
+        ClientPlayNetworking.registerGlobalReceiver(
+                FnCFabricNetworkHelper.JOCKEY_PACKET, ((client, handler, buf, responseSender) -> {
+            boolean sameLevel = buf.readBoolean();
+            FnCClient.setSameJockeyLevel(sameLevel);
+            if (sameLevel) FnCClient.setJockeyPosition(buf.readBlockPos());
+        }));
     }
+
 
 
 }
