@@ -26,20 +26,20 @@ public class FnCForgeNetworkHelper implements FnCINetworkHelper {
     @Override
     public void notifyPlayerOfJockey(ServerPlayer player, BlockPos jockeyPosition){
         FnCSavedData savedData = FnCSavedData.get(player.server);
-        INSTANCE.send(new PacketJockeyInformation(savedData.hasJockeySpawned() && savedData.getDimensionId().equals(player.level().dimension().location())),
+        INSTANCE.send(new PacketJockeyInformation(savedData.hasJockeySpawned() && savedData.getDimensionId().equals(player.level().dimension().location()),
+                        jockeyPosition),
                 PacketDistributor.PLAYER.with(player));
     }
 
     @Override
     public void broadcastJockeySpawning(ServerLevel level, BlockPos position){
-        PacketJockeyInformation packet = new PacketJockeyInformation(true);
-        packet.setPosition(position);
+        PacketJockeyInformation packet = new PacketJockeyInformation(true, position);
         INSTANCE.send(packet, PacketDistributor.DIMENSION.with(level.dimension()));
     }
 
     @Override
     public void notifyJockeyDeath(ServerLevel level){
-        PacketJockeyInformation packet = new PacketJockeyInformation(false);
+        PacketJockeyInformation packet = new PacketJockeyInformation(false, null);
         INSTANCE.send(packet, PacketDistributor.DIMENSION.with(level.dimension()));
     }
 

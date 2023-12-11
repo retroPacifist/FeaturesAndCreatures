@@ -10,20 +10,15 @@ public class PacketJockeyInformation {
     private final boolean sameLevel;
     @Nullable private BlockPos position;
     
-    public PacketJockeyInformation(boolean sameLevel) {
+    public PacketJockeyInformation(boolean sameLevel, BlockPos position) {
         this.sameLevel = sameLevel;
-    }
-
-    public void setPosition(BlockPos position){
         this.position = position;
     }
 
     public static PacketJockeyInformation decode(FriendlyByteBuf buf) {
-        PacketJockeyInformation packet = new PacketJockeyInformation(buf.readBoolean());
-        if (packet.sameLevel) {
-            packet.setPosition(buf.readBlockPos());
-        }
-        return packet;
+        boolean sameLevel = buf.readBoolean();
+        if (sameLevel) return new PacketJockeyInformation(true, buf.readBlockPos());
+        else return new PacketJockeyInformation(false, null);
     }
 
     public void encode(FriendlyByteBuf buf) {
