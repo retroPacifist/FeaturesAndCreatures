@@ -2,6 +2,7 @@ package com.opalsmile.fnc.item;
 
 import com.opalsmile.fnc.entity.Spear;
 import com.opalsmile.fnc.registries.FnCSounds;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -16,10 +17,17 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Map;
 
-public class SpearItem extends Item implements Vanishable {
+public abstract class SpearItem extends Item implements Vanishable, GeoItem {
+
+    private final AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
 
     public SpearItem(Properties itemProperties){
         super(itemProperties);
@@ -71,5 +79,31 @@ public class SpearItem extends Item implements Vanishable {
         ItemStack stack = player.getItemInHand(hand);
         player.startUsingItem(hand);
         return InteractionResultHolder.consume(stack);
+    }
+
+    /**
+     * Register your {@link AnimationController AnimationControllers} and their respective animations and conditions.
+     * Override this method in your animatable object and add your controllers via {@link AnimatableManager.ControllerRegistrar#add ControllerRegistrar.add}.
+     * You may add as many controllers as wanted.
+     * <br><br>
+     * Each controller can only play <u>one</u> animation at a time, and so animations that you intend to play concurrently should be handled in independent controllers.
+     * Note having multiple animations playing via multiple controllers can override parts of one animation with another if both animations use the same bones or child bones.
+     *
+     * @param controllers The object to register your controller instances to
+     */
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers){
+
+    }
+
+    /**
+     * Each instance of a {@code GeoAnimatable} must return an instance of an {@link AnimatableInstanceCache}, which handles instance-specific animation info.
+     * Generally speaking, you should create your cache using {@code GeckoLibUtil#createCache} and store it in your animatable instance, returning that cached instance when called.
+     *
+     * @return A cached instance of an {@code AnimatableInstanceCache}
+     */
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache(){
+        return instanceCache;
     }
 }

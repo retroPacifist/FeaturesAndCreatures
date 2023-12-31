@@ -2,6 +2,7 @@ package com.opalsmile.fnc.platform;
 
 import com.opalsmile.fnc.FnCFabric;
 import com.opalsmile.fnc.item.AntlerHeaddress;
+import com.opalsmile.fnc.item.SpearItem;
 import com.opalsmile.fnc.platform.services.FnCIPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.Registries;
@@ -58,5 +59,10 @@ public class FnCFabricPlatformHelper implements FnCIPlatformHelper {
     @Override
     public Supplier<? extends AntlerHeaddress> getAntlerHeaddress(){
         return () -> FnCFabric.ANTLER_HEADDRESS;
+    }
+
+    @Override
+    public Supplier<? extends SpearItem> getSpear() {
+        return () -> FnCFabric.SPEAR;
     }
 }

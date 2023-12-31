@@ -6,6 +6,8 @@ import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.entity.Sabertooth;
 import com.opalsmile.fnc.item.AntlerHeaddress;
 import com.opalsmile.fnc.item.FabricAntlerHeadress;
+import com.opalsmile.fnc.item.FabricSpearItem;
+import com.opalsmile.fnc.item.SpearItem;
 import com.opalsmile.fnc.platform.FnCFabricConfigHelper;
 import com.opalsmile.fnc.platform.FnCFabricNetworkHelper;
 import com.opalsmile.fnc.platform.FnCServices;
@@ -30,6 +32,9 @@ public class FnCFabric implements ModInitializer {
     public static final AntlerHeaddress ANTLER_HEADDRESS
             = Registry.register(BuiltInRegistries.ITEM, FnCConstants.resourceLocation("antler_headdress"),
             new FabricAntlerHeadress(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
+
+    public static final SpearItem SPEAR = Registry.register(BuiltInRegistries.ITEM, FnCConstants.resourceLocation("spear"),
+            new FabricSpearItem(new Item.Properties()));
 
     public static void registerEntityAttributes(){
         FabricDefaultAttributeRegistry.register(FnCEntities.JACKALOPE.get(), Jackalope.createAttributes());

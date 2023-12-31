@@ -1,6 +1,7 @@
 package com.opalsmile.fnc.platform.services;
 
 import com.opalsmile.fnc.item.AntlerHeaddress;
+import com.opalsmile.fnc.item.SpearItem;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
@@ -36,5 +37,7 @@ public interface FnCIPlatformHelper {
     TagKey<Biome> mountainBiomes();
 
     Supplier<? extends AntlerHeaddress> getAntlerHeaddress();
+
+    Supplier<? extends SpearItem> getSpear();
 
 }

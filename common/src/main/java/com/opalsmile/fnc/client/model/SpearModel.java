@@ -11,7 +11,7 @@ public class SpearModel extends GeoModel<Spear> {
     private static final ResourceLocation MODEL = FnCConstants.resourceLocation("geo/entity/spear.geo.json");
     private static final ResourceLocation ANIMATION = FnCConstants.resourceLocation("animations/empty.animation.json");
 
-    private static final ResourceLocation TEXTURE = FnCConstants.resourceLocation("textures/entity/spear_entity.png");
+    private static final ResourceLocation TEXTURE = FnCConstants.resourceLocation("textures/entity/spear.png");
 
     @Override
     public ResourceLocation getModelResource(Spear animatable){
