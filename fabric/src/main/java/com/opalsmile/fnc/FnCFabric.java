@@ -34,7 +34,7 @@ public class FnCFabric implements ModInitializer {
             new FabricAntlerHeadress(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final SpearItem SPEAR = Registry.register(BuiltInRegistries.ITEM, FnCConstants.resourceLocation("spear"),
-            new FabricSpearItem(new Item.Properties()));
+            new FabricSpearItem(new Item.Properties().stacksTo(1).durability(200)));
 
     public static void registerEntityAttributes(){
         FabricDefaultAttributeRegistry.register(FnCEntities.JACKALOPE.get(), Jackalope.createAttributes());

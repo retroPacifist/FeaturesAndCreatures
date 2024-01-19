@@ -45,7 +45,7 @@ public class FnCForge {
             new ForgeAntlerHeaddress(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<? extends SpearItem> SPEAR = ITEM_REGISTRY.register("spear", () ->
-            new ForgeSpearItem(new Item.Properties()));
+            new ForgeSpearItem(new Item.Properties().stacksTo(1).durability(200)));
 
     public FnCForge(){
         FnCRegistry.initialise();

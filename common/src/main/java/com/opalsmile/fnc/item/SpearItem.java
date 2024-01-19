@@ -38,19 +38,6 @@ public abstract class SpearItem extends Item implements Vanishable, GeoItem {
         return 72000;
     }
 
-    //TODO Forge uses this method, figure out how to do on Fabric
-    //I'm leaning towards having this class once on each loader and to both handle the BEWLR (ISTER in the past)
-    //As well as these methods + Fabric mixins on each loader.
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(book);
-        return enchantments.containsKey(Enchantments.FIRE_ASPECT) || enchantments.containsKey(Enchantments.MENDING)
-                || enchantments.containsKey(Enchantments.UNBREAKING);
-    }
-
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment == Enchantments.UNBREAKING || enchantment == Enchantments.FIRE_ASPECT;
-    }
-
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft){
         if (!livingEntity.level().isClientSide && livingEntity instanceof Player player) {
@@ -63,6 +50,10 @@ public abstract class SpearItem extends Item implements Vanishable, GeoItem {
                 spear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0, 3.5f, 1.0F);
                 if(player.getAbilities().instabuild) {
                     spear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
+                }
+                int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, stack);
+                if (fireAspectLevel > 0) {
+                    spear.setSecondsOnFire(fireAspectLevel * 10);
                 }
                 level.addFreshEntity(spear);
                 level.playSound(null, spear, FnCSounds.SPEAR_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -81,29 +72,14 @@ public abstract class SpearItem extends Item implements Vanishable, GeoItem {
         return InteractionResultHolder.consume(stack);
     }
 
-    /**
-     * Register your {@link AnimationController AnimationControllers} and their respective animations and conditions.
-     * Override this method in your animatable object and add your controllers via {@link AnimatableManager.ControllerRegistrar#add ControllerRegistrar.add}.
-     * You may add as many controllers as wanted.
-     * <br><br>
-     * Each controller can only play <u>one</u> animation at a time, and so animations that you intend to play concurrently should be handled in independent controllers.
-     * Note having multiple animations playing via multiple controllers can override parts of one animation with another if both animations use the same bones or child bones.
-     *
-     * @param controllers The object to register your controller instances to
-     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers){
 
     }
 
-    /**
-     * Each instance of a {@code GeoAnimatable} must return an instance of an {@link AnimatableInstanceCache}, which handles instance-specific animation info.
-     * Generally speaking, you should create your cache using {@code GeckoLibUtil#createCache} and store it in your animatable instance, returning that cached instance when called.
-     *
-     * @return A cached instance of an {@code AnimatableInstanceCache}
-     */
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache(){
         return instanceCache;
     }
+
 }

@@ -50,16 +50,16 @@ public class Spear extends AbstractArrow implements GeoEntity {
     @Override
     protected void onHitEntity(EntityHitResult result){
         Entity entity = result.getEntity();
-        float f = 12.0F;
+        float damage = 12.0F;
         if(entity instanceof LivingEntity livingEntity) {
-            f += EnchantmentHelper.getDamageBonus(this.thrownStack, livingEntity.getMobType());
+            damage += EnchantmentHelper.getDamageBonus(this.thrownStack, livingEntity.getMobType());
         }
 
         Entity owner = this.getOwner();
         DamageSource damagesource = this.level().damageSources().trident(this, (owner == null ? this : owner));
         this.dealtDamage = true;
         SoundEvent soundevent = FnCSounds.SPEAR_ATTACK.get();
-        if(entity.hurt(damagesource, f)) {
+        if(entity.hurt(damagesource, damage)) {
             if(entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
