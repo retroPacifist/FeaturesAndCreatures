@@ -30,11 +30,6 @@ public class ForgeSpearItem extends SpearItem {
     }
 
     @Override
-    public int getEnchantmentValue(ItemStack stack){
-        return 1;
-    }
-
-    @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer){
        consumer.accept(new IClientItemExtensions() {
            final SpearItemRenderer renderer = new SpearItemRenderer();

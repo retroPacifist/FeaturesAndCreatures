@@ -25,6 +25,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 
 public class FnCFabric implements ModInitializer {
@@ -60,5 +63,14 @@ public class FnCFabric implements ModInitializer {
         });
 
         FnCFabricNetworkHelper.register();
+    }
+
+    public static boolean handleEnchantability(boolean acceptable, ItemStack stack, Enchantment enchantment) {
+        if (stack.is(FnCFabric.SPEAR)) {
+            if (enchantment == Enchantments.UNBREAKING || enchantment == Enchantments.FIRE_ASPECT) {
+                return true;
+            }
+        }
+        return acceptable;
     }
 }

@@ -39,6 +39,11 @@ public abstract class SpearItem extends Item implements Vanishable, GeoItem {
     }
 
     @Override
+    public int getEnchantmentValue(){
+        return 1;
+    }
+
+    @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft){
         if (!livingEntity.level().isClientSide && livingEntity instanceof Player player) {
             int i = this.getUseDuration(stack) - timeLeft;
