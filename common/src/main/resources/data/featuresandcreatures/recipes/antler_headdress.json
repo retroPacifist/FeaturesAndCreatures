@@ -7,7 +7,7 @@
   ],
   "key": {
     "A": {
-      "item": "fnc:antler"
+      "item": "featuresandcreatures:antler"
     },
     "B": {
       "item": "minecraft:leather"
@@ -17,6 +17,6 @@
     }
   },
   "result": {
-    "item": "fnc:antler_headdress"
+    "item": "featuresandcreatures:antler_headdress"
   }
 }

@@ -1,10 +1,3 @@
-buildscript {
-    repositories {
-        maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
-    }
-}
-
-
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -16,13 +9,14 @@ base {
 }
 mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
-
     config("${mod_id}.mixins.json")
     config("${mod_id}.forge.mixins.json")
 }
 
 minecraft {
     mappings channel: 'official', version: minecraft_version
+
+    copyIdeResources.set(true)
 
     // Automatically enable forge AccessTransformers if the file exists
     // This location is hardcoded in Forge and can not be changed.
@@ -34,10 +28,11 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
+            
             taskName 'Client'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args '--username', 'Dev###'
             mods {
                 modClientRun {
                     source sourceSets.main
@@ -46,9 +41,16 @@ minecraft {
             }
         }
 
+        clientAlt {
+            workingDirectory project.file('runAlt')
+            
+            taskName 'ClientAlt'
+            parent minecraft.runs.client
+        }
+
         server {
             workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
+            
             taskName 'Server'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -62,7 +64,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
+            
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             taskName 'Data'
             property 'mixin.env.remapRefMap', 'true'
@@ -83,7 +85,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20:4.2")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
 
 }
 
@@ -91,8 +93,11 @@ tasks.withType(JavaCompile).configureEach {
     source(project(":common").sourceSets.main.allSource)
 }
 tasks.withType(Javadoc).configureEach {
+    //Enable when I can take a look at find the issue that's causing common to crash in dev
+    it.enabled = false
     source(project(":common").sourceSets.main.allJava)
 }
+
 tasks.named("sourcesJar", Jar) {
     from(project(":common").sourceSets.main.allSource)
 }

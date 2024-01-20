@@ -1,16 +1,16 @@
 {
   "display": {
     "icon": {
-      "item": "fnc:mega_potion"
+      "item": "featuresandcreatures:mega_potion"
     },
     "title": {
-      "translate": "itemGroup.fnc"
+      "translate": "creativetab.featuresandcreatures"
     },
     "description": "A world of creatures big and small.",
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": true,
-    "background": "fnc:textures/block/templestone.png"
+    "background": "featuresandcreatures:textures/block/templestone.png"
   },
   "criteria": {
     "always": {

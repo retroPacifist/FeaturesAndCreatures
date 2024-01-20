@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fnc:lunar_headdress"
+      "featuresandcreatures:lunar_headdress"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:antler_headdress"
+            "item": "featuresandcreatures:antler_headdress"
           }
         ]
       }
@@ -21,14 +21,14 @@
       "conditions": {
         "items": [
           {
-            "item": "fnc:midnight_crystal"
+            "item": "featuresandcreatures:midnight_crystal"
           }
         ]
       },
       "has_the_recipe": {
         "trigger": "minecraft:recipe_unlocked",
         "conditions": {
-          "recipe": "fnc:lunar_headdress"
+          "recipe": "featuresandcreatures:lunar_headdress"
         }
       }
     }

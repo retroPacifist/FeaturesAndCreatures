@@ -1,7 +1,6 @@
 {
   "pools": [
     {
-      "name": "fnc:jackalope",
       "rolls": 1,
       "entries": [
         {
@@ -10,6 +9,7 @@
           "weight": 1,
           "functions": [
             {
+              "add" : false,
               "function": "set_count",
               "count": {
                 "min": 0,
@@ -28,27 +28,20 @@
       ]
     },
     {
-      "name": "fnc:jackalope",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fnc:antler",
+          "name": "featuresandcreatures:antler",
           "functions": [
             {
+              "add" : false,
               "function": "set_count",
               "count": {
                 "min": 0,
                 "max": 2
               }
         }
-          ],
-          "conditions": [
-           {
-             "condition": "minecraft:random_chance_with_looting",
-             "chance": 0.05,
-            "looting_multiplier": 0.01
-            }
           ]
         }
       ]

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fnc:midnight_block"
+          "name": "featuresandcreatures:midnight_block"
         }
       ],
       "conditions": [

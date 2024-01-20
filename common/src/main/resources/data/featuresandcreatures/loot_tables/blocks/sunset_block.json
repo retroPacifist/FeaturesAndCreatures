@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fnc:sunset_block"
+          "name": "featuresandcreatures:sunset_block"
         }
       ],
       "conditions": [

@@ -6,10 +6,10 @@
   ],
   "key": {
     "A": {
-      "item": "fnc:dawn_crystal"
+      "item": "featuresandcreatures:dawn_crystal"
     }
   },
   "result": {
-    "item": "fnc:dawn_block"
+    "item": "featuresandcreatures:dawn_block"
   }
 }

@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "fnc:sunset_block"
+      "item": "featuresandcreatures:sunset_block"
     }
   ],
   "result": {
-    "item": "fnc:sunset_crystal",
+    "item": "featuresandcreatures:sunset_crystal",
     "count": 4
   }
 }

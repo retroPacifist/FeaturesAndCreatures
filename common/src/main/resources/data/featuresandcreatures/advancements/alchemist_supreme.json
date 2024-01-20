@@ -1,8 +1,8 @@
 {
-  "parent": "fnc:root",
+  "parent": "featuresandcreatures:root",
   "display": {
     "icon": {
-      "item": "fnc:mega_potion"
+      "item": "featuresandcreatures:mega_potion"
     },
     "title": "Alchemist Supreme",
     "frame": "challenge",
@@ -13,7 +13,7 @@
   },
   "criteria": {
     "requirement": {
-      "trigger": "fnc:jockey_trade",
+      "trigger": "featuresandcreatures:jockey_trade",
       "conditions": {}
       }
     }

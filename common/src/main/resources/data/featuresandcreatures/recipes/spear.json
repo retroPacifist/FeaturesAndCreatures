@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "fnc:sabertooth_fang"
+      "item": "featuresandcreatures:sabertooth_fang"
     },
     "B": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "fnc:spear"
+    "item": "featuresandcreatures:spear"
   }
 }

@@ -58,8 +58,19 @@ subprojects {
         it.options.getRelease().set(17)
     }
 
+    tasks.withType(Javadoc).configureEach {
+        //Enable when I can take a look at find the issue that's causing common to crash in dev
+        it.enabled = false
+    }
+
     processResources {
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'mods.toml', '*.mixins.json']) {
+        inputs.properties(
+            version: version,  minecraft_version: minecraft_version,
+            forge_version: forge_version, fabric_version: fabric_version, fabric_loader_version: fabric_loader_version,
+            mod_name: mod_name, mod_author: mod_author, mod_id: mod_id,
+            description: description, mod_url: mod_url, geckolib_version: geckolib_version
+        )
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
             expand project.properties
         }
     }

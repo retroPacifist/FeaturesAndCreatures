@@ -1,7 +1,7 @@
 {
   "pools": [
     {
-      "name": "fnc:black_forest_spirit",
+      "name": "featuresandcreatures:black_forest_spirit",
       "rolls": 1,
       "entries": [
         {
