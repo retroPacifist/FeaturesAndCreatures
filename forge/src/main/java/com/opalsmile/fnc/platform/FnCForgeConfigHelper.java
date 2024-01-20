@@ -89,7 +89,7 @@ public class FnCForgeConfigHelper implements FnCIConfigHelper {
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
 
-        jockeyEffectBlacklistInternal = configBuilder.defineList("jockeyEffectBlacklist", List.of(), it -> it instanceof String str
+        jockeyEffectBlacklistInternal = configBuilder.defineList("jockeyEffectBlacklist", FnCIConfigHelper.defaultBlacklistedEffects(), it -> it instanceof String str
             && ForgeRegistries.MOB_EFFECTS.containsKey(new ResourceLocation(str)));
 
         jockeySpawnChanceInternal = configBuilder.defineInRange("jockeySpawnChance", 0.5, 0, 1);

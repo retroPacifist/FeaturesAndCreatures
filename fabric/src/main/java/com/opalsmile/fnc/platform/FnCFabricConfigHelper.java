@@ -4,10 +4,13 @@ import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.platform.services.FnCIConfigHelper;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,7 @@ public class FnCFabricConfigHelper extends MidnightConfig implements FnCIConfigH
     @MidnightConfig.Entry
     public static boolean namedJockeyDespawn = true;
     @MidnightConfig.Entry
-    public static List<String> jockeyEffectBlacklist = new ArrayList<>();
+    public static List<String> jockeyEffectBlacklist = FnCIConfigHelper.defaultBlacklistedEffects();
 
     @MidnightConfig.Entry
     public static int jockeyDespawnTime = JOCKEY_DEFAULT_ALIVE_TIME;
