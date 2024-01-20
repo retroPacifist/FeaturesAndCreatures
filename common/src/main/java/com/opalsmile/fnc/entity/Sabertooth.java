@@ -45,7 +45,6 @@ public class Sabertooth extends RideableNeutralMob implements NeutralMob {
     protected void registerGoals(){
         super.registerGoals();
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, false));
-        //TODO test
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Fox.class, 10, true, true, fox -> ((Fox)fox).getVariant() == Fox.Type.SNOW));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Sheep.class, 10, true, true, null));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));

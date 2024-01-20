@@ -27,7 +27,6 @@ import software.bernie.geckolib.core.object.PlayState;
 
 
 public class Jackalope extends RideableNeutralMob {
-    //TODO Tag?
     public static final TagKey<Item> JACKALOPE_FOOD = TagKey.create(Registries.ITEM, FnCConstants.resourceLocation("jackalope_food"));
     public static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.jackalope.walk");
 
@@ -40,10 +39,9 @@ public class Jackalope extends RideableNeutralMob {
         super(type, level);
         this.jumpControl = new JumpHelperController(this);
         this.moveControl = new MoveHelperController(this);
-        this.setSpeedModifier(0.0D); //TODO WHY
+        this.setSpeedModifier(0.0D);
     }
 
-    //TODO rewrite movement to handle jumping
 
     public static AttributeSupplier.Builder createAttributes(){
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.3F);

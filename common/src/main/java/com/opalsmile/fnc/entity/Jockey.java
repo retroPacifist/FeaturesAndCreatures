@@ -539,8 +539,6 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
 
     public enum TradeType {
 
-        //TODO Should this really be an enum or extensible?
-        //Probably extensible with a regular class.
         DRINK(1, Items.POTION, POTION_TRANSLATION_KEY),
         SPLASH(1, Items.SPLASH_POTION, POTION_TRANSLATION_KEY),
         LINGERING(1, Items.LINGERING_POTION, POTION_TRANSLATION_KEY),
