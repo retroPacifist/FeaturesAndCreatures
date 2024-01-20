@@ -5,7 +5,7 @@
       "item": "featuresandcreatures:mega_potion"
     },
     "title": "Alchemist Supreme",
-    "frame": "challenge",
+    "frame": "task",
     "description": "Trade with a Jockey.",
     "show_toast": true,
     "announce_to_chat": true,

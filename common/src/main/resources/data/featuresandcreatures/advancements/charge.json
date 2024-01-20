@@ -5,7 +5,7 @@
       "item": "featuresandcreatures:antler"
     },
     "title": "CHARGE!!",
-    "frame": "challenge",
+    "frame": "task",
     "description": "Use the Antler Headdress",
     "show_toast": true,
     "announce_to_chat": true,
