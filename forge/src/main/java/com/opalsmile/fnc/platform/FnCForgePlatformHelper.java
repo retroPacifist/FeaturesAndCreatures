@@ -67,4 +67,9 @@ public class FnCForgePlatformHelper implements FnCIPlatformHelper {
     public Supplier<? extends SpearItem> getSpear(){
         return FnCForge.SPEAR;
     }
+
+    @Override
+    public float getHeaddressSpeed(){
+        return 0.015f;
+    }
 }

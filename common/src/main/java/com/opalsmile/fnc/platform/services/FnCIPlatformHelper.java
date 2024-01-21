@@ -40,4 +40,6 @@ public interface FnCIPlatformHelper {
 
     Supplier<? extends SpearItem> getSpear();
 
+    float getHeaddressSpeed();
+
 }

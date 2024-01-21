@@ -50,7 +50,8 @@ public class FnCClient {
        }
        else {
            if (dashScale < 1 && !Minecraft.getInstance().player.getCooldowns().isOnCooldown(FnCServices.PLATFORM.getAntlerHeaddress().get())) {
-               dashScale += 0.02f;
+               //Forge and Fabric call this from separate places, so this method is not called at the same rate in both platforms.
+               dashScale += FnCServices.PLATFORM.getHeaddressSpeed();
            }
        }
        FnCServices.NETWORK.sendAntlerKeypress(release);

@@ -65,4 +65,9 @@ public class FnCFabricPlatformHelper implements FnCIPlatformHelper {
     public Supplier<? extends SpearItem> getSpear() {
         return () -> FnCFabric.SPEAR;
     }
+
+    @Override
+    public float getHeaddressSpeed(){
+        return 0.03f;
+    }
 }
