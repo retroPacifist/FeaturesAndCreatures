@@ -28,7 +28,7 @@ public class FnCItems {
 
     public static final Supplier<? extends SpearItem> SPEAR = FnCServices.PLATFORM.getSpear();
     //dawn spear goes here
-    public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new Item(new Item.Properties().stacksTo(1)));
     //dawn dowser goes here
     //sunset dowser goes here
     //midnight dowser goes here

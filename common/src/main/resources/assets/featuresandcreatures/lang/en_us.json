@@ -129,7 +129,7 @@
   "featuresandcreatures.midnightconfig.title" : "Features and Creatures Config",
   "featuresandcreatures.midnightconfig.jockeySpawnChance" : "The chance, in a 0-1 range, for a jockey to spawn",
   "featuresandcreatures.midnightconfig.namedJockeyDespawn": "Whether named jockeys should still despawn",
-  "featuresandcreatures.midnightconfig.jockeyEffectBlackList" : "The list of effects, in resourcelocation form (minecraft:regeneration) that cannot be sold by the jockey",
+  "featuresandcreatures.midnightconfig.jockeyEffectBlacklist" : "The list of effects, in resourcelocation form (minecraft:regeneration) that cannot be sold by the jockey",
   "featuresandcreatures.midnightconfig.jockeyDespawnTime": "The time the jockey is alive for",
   "featuresandcreatures.midnightconfig.jockeyCooldownTime" : "The time the game waits before attempting to spawn a new jockey"
 }

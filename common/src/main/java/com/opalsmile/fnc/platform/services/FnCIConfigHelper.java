@@ -1,7 +1,12 @@
 package com.opalsmile.fnc.platform.services;
 
+import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public interface FnCIConfigHelper {
@@ -51,4 +56,11 @@ public interface FnCIConfigHelper {
      * @return The amount of time the game waits before attempting to spawn a jockey.
      */
     int jockeySpawningCooldown();
+
+    static List<String> defaultBlacklistedEffects() {
+        return Util.make(new ArrayList<>(), effects -> {
+            effects.add(BuiltInRegistries.MOB_EFFECT.getKey(MobEffects.CONDUIT_POWER).toString());
+            effects.add(BuiltInRegistries.MOB_EFFECT.getKey(MobEffects.DARKNESS).toString());
+        });
+    }
 }
