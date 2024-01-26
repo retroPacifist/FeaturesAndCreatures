@@ -10,8 +10,8 @@ public class SabertoothModel extends DefaultedEntityGeoModel<Sabertooth> {
 
     private static final ResourceLocation SADDLED = FnCConstants.resourceLocation("textures/entity/sabertooth_saddled.png");
 
-    public SabertoothModel(ResourceLocation assetSubpath){
-        super(assetSubpath);
+    public SabertoothModel(ResourceLocation assetSubpath, boolean turnsHead){
+        super(assetSubpath, turnsHead);
     }
 
     @Override

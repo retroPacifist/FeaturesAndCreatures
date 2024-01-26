@@ -6,8 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
 public class BoarModel extends DefaultedEntityGeoModel<Boar> {
-    public BoarModel(ResourceLocation assetSubpath) {
-        super(assetSubpath);
+    public BoarModel(ResourceLocation assetSubpath, boolean turnsHead) {
+        super(assetSubpath, turnsHead);
     }
 
     public static final ResourceLocation TEXTURE = FnCConstants.resourceLocation("textures/entity/boar.png");

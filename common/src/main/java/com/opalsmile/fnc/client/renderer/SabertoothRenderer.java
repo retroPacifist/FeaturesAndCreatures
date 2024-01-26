@@ -9,6 +9,6 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class SabertoothRenderer extends GeoEntityRenderer<Sabertooth> {
 
     public SabertoothRenderer(EntityRendererProvider.Context renderManager){
-        super(renderManager, new SabertoothModel(FnCConstants.resourceLocation("sabertooth")));
+        super(renderManager, new SabertoothModel(FnCConstants.resourceLocation("sabertooth"), true));
     }
 }

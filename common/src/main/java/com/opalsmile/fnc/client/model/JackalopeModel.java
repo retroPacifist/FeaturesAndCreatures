@@ -16,7 +16,7 @@ public class JackalopeModel extends DefaultedEntityGeoModel<Jackalope> {
         return jackalope.isSaddled() ? SADDLED : TEXTURE;
     }
 
-    public JackalopeModel(ResourceLocation assetSubpath){
-        super(assetSubpath, true);
+    public JackalopeModel(ResourceLocation assetSubpath, boolean turnsHead){
+        super(assetSubpath, turnsHead);
     }
 }
