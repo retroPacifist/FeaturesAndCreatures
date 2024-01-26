@@ -35,7 +35,7 @@ public interface FnCIConfigHelper {
 
     /**
      * Serialized as a List<String> mapped with ResourceLocation::new and Registry#get
-     * Contains Purity by default
+     * Contains Conduit Power and Darkness by default.
      *
      * @return A list of mob effects that are blacklisted from appearing in the Jockey's shop
      */
