@@ -79,33 +79,37 @@ public abstract class RideableNeutralMob extends Animal implements GeoEntity {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand){
-        if (this.isFood(player.getItemInHand(hand))) {
+        if (this.isFood(player.getItemInHand(hand)) || !this.isPlayerRideable()) {
             return super.mobInteract(player, hand);
         }
-        if(!this.isPlayerRideable() || player.level().isClientSide) return super.mobInteract(player, hand);
+        boolean isServerSide = !player.level().isClientSide();
         if (this.isSaddled()) {
-            if(player.isCrouching()) {
-                this.setSaddled(false);
-                this.spawnAtLocation(Items.SADDLE);
-                player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), FnCSounds.ENTITY_DESADDLE.get(), SoundSource.AMBIENT, 1, 1);
-                return InteractionResult.SUCCESS;
+            if(player.isSecondaryUseActive()) {
+                if (isServerSide) {
+                    this.setSaddled(false);
+                    this.spawnAtLocation(Items.SADDLE);
+                    player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), FnCSounds.ENTITY_DESADDLE.get(), SoundSource.AMBIENT, 1, 1);
+                }
+                return InteractionResult.sidedSuccess(isServerSide);
             }
             else {
                 //Check if not occupied and ride
                 if (this.getControllingPassenger() == null) {
-                    player.startRiding(this);
-                    return InteractionResult.SUCCESS;
+                    if (isServerSide) player.startRiding(this);
+                    return InteractionResult.sidedSuccess(isServerSide);
                 }
             }
         }
         else {
-            if(player.isHolding(Items.SADDLE)) {
-                player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), this.getSaddleSound(), SoundSource.AMBIENT, 1, 1);
-                this.setSaddled(true);
-                if(!player.getAbilities().instabuild) {
-                    player.getItemInHand(hand).shrink(1);
+            if(player.getItemInHand(hand).is(Items.SADDLE)) {
+                if (isServerSide) {
+                    player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), this.getSaddleSound(), SoundSource.AMBIENT, 1, 1);
+                    this.setSaddled(true);
+                    if(!player.getAbilities().instabuild) {
+                        player.getItemInHand(hand).shrink(1);
+                    }
                 }
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(player.level().isClientSide());
             }
         }
         return super.mobInteract(player, hand);
