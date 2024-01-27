@@ -74,16 +74,6 @@ public class Boar extends RideableNeutralMob implements NeutralMob, GeoEntity {
     }
 
     @Override
-    public float getScale(){
-        return super.getScale();
-    }
-
-    @Override
-    public EntityDimensions getDimensions(Pose $$0){
-        return super.getDimensions($$0);
-    }
-
-    @Override
     public SoundEvent getSaddleSound(){
         return FnCSounds.BOAR_SADDLE.get();
     }
