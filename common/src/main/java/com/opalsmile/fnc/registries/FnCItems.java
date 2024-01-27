@@ -27,6 +27,7 @@ public class FnCItems {
 //    public static final RegistryObject<? extends ArmorItem> LUNAR_HEADDRESS = REGISTER.register("lunar_headdress", () -> PlatformItemHandler.INSTANCE.getLunarHeaddressItem(FnCArmorMaterial.LUNAR, EquipmentSlot.HEAD, createProperties()));
 
     public static final Supplier<? extends SpearItem> SPEAR = FnCServices.PLATFORM.getSpear();
+    public static final RegistryObject<Item> THROWAWAY_JOKE = REGISTER.register("throwaway", () -> new Item(new Item.Properties()));
     //dawn spear goes here
     public static final RegistryObject<Item> DOWSING_ROD = REGISTER.register("dowsing_rod", () -> new Item(new Item.Properties().stacksTo(1)));
     //dawn dowser goes here

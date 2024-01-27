@@ -8,6 +8,6 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class JockeyRenderer extends GeoEntityRenderer<Jockey> {
     public JockeyRenderer(EntityRendererProvider.Context renderManager){
-        super(renderManager, new DefaultedEntityGeoModel<>(FnCConstants.resourceLocation("jockey")));
+        super(renderManager, new DefaultedEntityGeoModel<>(FnCConstants.resourceLocation("jockey"), true));
     }
 }

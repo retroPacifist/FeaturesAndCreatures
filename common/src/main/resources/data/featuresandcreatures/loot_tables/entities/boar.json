@@ -8,13 +8,13 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add" : false,
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 1.0,
                 "min": 0.0
               },
-              "function": "minecraft:looting_enchant"
+              "function": "minecraft:set_count"
             }
           ],
           "name": "minecraft:leather"
@@ -60,7 +60,7 @@
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:beef"
+          "name": "minecraft:porkchop"
         }
       ],
       "rolls": 1.0

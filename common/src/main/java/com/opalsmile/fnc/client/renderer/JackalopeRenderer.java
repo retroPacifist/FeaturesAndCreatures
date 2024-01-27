@@ -11,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class JackalopeRenderer extends GeoEntityRenderer<Jackalope> {
 
     public JackalopeRenderer(EntityRendererProvider.Context dispatcher){
-        super(dispatcher, new JackalopeModel(FnCConstants.resourceLocation("jackalope")));
+        super(dispatcher, new JackalopeModel(FnCConstants.resourceLocation("jackalope"), true));
     }
 
     @Override

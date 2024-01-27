@@ -11,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class BoarRenderer extends GeoEntityRenderer<Boar> {
 
     public BoarRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new BoarModel(FnCConstants.resourceLocation("boar")));
+        super(renderManager, new BoarModel(FnCConstants.resourceLocation("boar"), true));
     }
 
     @Override
