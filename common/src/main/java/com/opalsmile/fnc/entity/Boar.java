@@ -61,7 +61,7 @@ public class Boar extends RideableNeutralMob implements NeutralMob, GeoEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(8, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
