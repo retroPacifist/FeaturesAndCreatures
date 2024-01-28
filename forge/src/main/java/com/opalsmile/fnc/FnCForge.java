@@ -5,10 +5,7 @@ import com.opalsmile.fnc.entity.Boar;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.entity.Sabertooth;
-import com.opalsmile.fnc.item.AntlerHeaddress;
-import com.opalsmile.fnc.item.ForgeAntlerHeaddress;
-import com.opalsmile.fnc.item.ForgeSpearItem;
-import com.opalsmile.fnc.item.SpearItem;
+import com.opalsmile.fnc.item.*;
 import com.opalsmile.fnc.platform.FnCForgeConfigHelper;
 import com.opalsmile.fnc.platform.FnCForgeNetworkHelper;
 import com.opalsmile.fnc.platform.FnCServices;
@@ -42,7 +39,7 @@ public class FnCForge {
 
     private static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, FnCConstants.MOD_ID);
     public static final RegistryObject<? extends AntlerHeaddress> ANTLER_HEADDRESS = ITEM_REGISTRY.register("antler_headdress", () ->
-            new ForgeAntlerHeaddress(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
+            new ForgeAntlerHeaddress(new AntlerMaterial("antler"), ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<? extends SpearItem> SPEAR = ITEM_REGISTRY.register("spear", () ->
             new ForgeSpearItem(new Item.Properties().stacksTo(1).durability(200)));
