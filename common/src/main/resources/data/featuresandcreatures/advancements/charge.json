@@ -14,7 +14,11 @@
   "criteria": {
     "requirement": {
       "trigger": "featuresandcreatures:used_headdress",
-      "conditions": {}
+      "conditions": {
+        "item": {
+          "items": ["featuresandcreatures:antler_headdress"]
+        }
+      }
     }
   }
 }
