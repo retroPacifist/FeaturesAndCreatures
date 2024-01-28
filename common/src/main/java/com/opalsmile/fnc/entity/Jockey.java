@@ -201,6 +201,12 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     public MerchantOffers getOffers(){
         if(this.offers == null) {
             this.offers = new MerchantOffers();
+
+            final Predicate<MobEffect> blacklisted = FnCServices.CONFIG.jockeyEffectBlacklist()::contains;
+            final List<MobEffect> availableEffects = BuiltInRegistries.MOB_EFFECT.stream().filter(blacklisted.negate()).collect(
+                    Collectors.toList());
+            final boolean empty = availableEffects.isEmpty();
+
             for(int i = 0; i < 7; ++i) {
                 final List<MobEffectInstance> effects = new ArrayList<>();
                 final int price = random.nextInt(8) + 5;
@@ -209,15 +215,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
 
                 int amount = type.getAmount();
 
-                Predicate<MobEffect> blacklisted = FnCServices.CONFIG.jockeyEffectBlacklist()::contains;
-
-                List<MobEffect> availableEffects = BuiltInRegistries.MOB_EFFECT.stream().filter(blacklisted.negate()).collect(
-                        Collectors.toList());
-
-                if (availableEffects.isEmpty()) availableEffects.add(MobEffects.REGENERATION);
-
                 for(int j = 0; j < effectCount; ++j) {
-                    MobEffect effect = FnCUtil.getRandomElement(random, availableEffects);
+                    MobEffect effect = empty ? MobEffects.REGENERATION : FnCUtil.getRandomElement(random, availableEffects);
                     availableEffects.remove(effect);
                     effects.add(new MobEffectInstance(effect, 1800, generatePotionStrength(effectCount)));
                 }
