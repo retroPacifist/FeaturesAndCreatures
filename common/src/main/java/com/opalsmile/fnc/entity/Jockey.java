@@ -319,7 +319,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         offer.increaseUses();
         this.ambientSoundTime = -this.getAmbientSoundInterval();
         if(this.tradingPlayer instanceof ServerPlayer serverPlayer) {
-            FnCTriggers.JOCKEY_TRADE.trigger(serverPlayer, this, offer.getResult());
+            FnCTriggers.JOCKEY_TRADE.trigger(serverPlayer);
         }
     }
 
