@@ -1,19 +1,13 @@
 package com.opalsmile.fnc.util;
 
-import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.platform.FnCServices;
 import com.opalsmile.fnc.registries.FnCSounds;
 import com.opalsmile.fnc.registries.FnCTriggers;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class FnCAntlerHandler {
+public class AntlerHandler {
 
     private static final UUID ANTLER_HEADDRESS_UUID = UUID.fromString("37822605-a8d7-4ae4-bc85-c11ff9f211c4");
     private static final AttributeModifier ANTLER_HEADDRESS_MODIFIER = new AttributeModifier(ANTLER_HEADDRESS_UUID, "Antler Headdress Slow", -0.05, AttributeModifier.Operation.ADDITION);
@@ -82,11 +76,11 @@ public class FnCAntlerHandler {
         player.setDeltaMovement(player.getDeltaMovement().add(xForwards, 0.0, zForwards));
         AABB targetBoundingBox = player.getBoundingBox().expandTowards(xForwards, 0, zForwards);
         level.getEntities(EntityTypeTest.forClass(Entity.class), targetBoundingBox, entity -> entity.isAlive() && entity != player).forEach(entity -> {
+            FnCTriggers.ANTLER_HEADDRESS.trigger(player, player.getItemBySlot(EquipmentSlot.HEAD));
             entity.move(MoverType.PLAYER, new Vec3(knockback * vec.x, 2.0, knockback * vec.z));
             entity.hurt(level.damageSources().mobAttack(player), MAX_DAMAGE * chargePercentage);
             level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), FnCSounds.ANTLER_HEADDRESS_ATTACK_STRONG.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
         });
-        FnCTriggers.ANTLER_HEADDRESS.trigger(player, player.getItemBySlot(EquipmentSlot.HEAD));
         player.hurtMarked = true;
     }
 

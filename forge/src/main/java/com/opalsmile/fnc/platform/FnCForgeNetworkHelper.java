@@ -4,7 +4,7 @@ import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.platform.network.PacketAntlerKeypress;
 import com.opalsmile.fnc.platform.network.PacketJockeyInformation;
 import com.opalsmile.fnc.platform.services.FnCINetworkHelper;
-import com.opalsmile.fnc.util.FnCSavedData;
+import com.opalsmile.fnc.util.JockeySavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +25,7 @@ public class FnCForgeNetworkHelper implements FnCINetworkHelper {
 
     @Override
     public void notifyPlayerOfJockey(ServerPlayer player, BlockPos jockeyPosition){
-        FnCSavedData savedData = FnCSavedData.get(player.server);
+        JockeySavedData savedData = JockeySavedData.get(player.server);
         INSTANCE.send(new PacketJockeyInformation(savedData.hasJockeySpawned() && savedData.getDimensionId().equals(player.level().dimension().location()),
                         jockeyPosition),
                 PacketDistributor.PLAYER.with(player));

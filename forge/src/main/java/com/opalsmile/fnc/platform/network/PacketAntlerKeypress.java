@@ -1,6 +1,6 @@
 package com.opalsmile.fnc.platform.network;
 
-import com.opalsmile.fnc.util.FnCAntlerHandler;
+import com.opalsmile.fnc.util.AntlerHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
@@ -23,7 +23,7 @@ public class PacketAntlerKeypress {
     public void handle(CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
             if (context.getSender() == null) return;
-            FnCAntlerHandler.handlePacket(context.getSender(), this.release);
+            AntlerHandler.handlePacket(context.getSender(), this.release);
         });
         context.setPacketHandled(true);
     }

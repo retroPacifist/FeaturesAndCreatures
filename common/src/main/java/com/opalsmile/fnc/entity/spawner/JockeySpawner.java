@@ -5,10 +5,9 @@ import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.platform.FnCServices;
 import com.opalsmile.fnc.registries.FnCEntities;
-import com.opalsmile.fnc.util.FnCSavedData;
+import com.opalsmile.fnc.util.JockeySavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -49,7 +48,7 @@ public class JockeySpawner implements CustomSpawner {
         double successChance = FnCServices.CONFIG.getJockeySpawnChance();
         if(successChance <= 0) return 0;
 
-        FnCSavedData savedData = FnCSavedData.get(level.getServer());
+        JockeySavedData savedData = JockeySavedData.get(level.getServer());
 
         if(savedData.hasJockeySpawned()) {
             return 0;
@@ -65,7 +64,7 @@ public class JockeySpawner implements CustomSpawner {
         return 0;
     }
 
-    private int attemptSpawnJockey(ServerLevel level, FnCSavedData savedData, double successChance){
+    private int attemptSpawnJockey(ServerLevel level, JockeySavedData savedData, double successChance){
         int defaultSpawnChance = (int) (25 * successChance);
         if(spawnChance == 0) {
             spawnChance = defaultSpawnChance;

@@ -4,7 +4,7 @@ import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.platform.FnCServices;
 import com.opalsmile.fnc.registries.FnCSounds;
 import com.opalsmile.fnc.registries.FnCTriggers;
-import com.opalsmile.fnc.util.FnCSavedData;
+import com.opalsmile.fnc.util.JockeySavedData;
 import com.opalsmile.fnc.util.FnCUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -393,7 +393,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
             this.removeJockey();
             final Entity target = super.changeDimension($$0);
             if (target instanceof Jockey jockey) {
-                FnCSavedData savedData = FnCSavedData.get(level.getServer());
+                JockeySavedData savedData = JockeySavedData.get(level.getServer());
                 savedData.setJockeyUUID(jockey.getUUID());
                 savedData.setJockeyCooldown(-1);
                 savedData.setSpawnPosition(jockey.blockPosition());
@@ -426,7 +426,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
      * May only be called on the server side.
      */
     private void updateJockeyPosition(){
-        final FnCSavedData savedData = FnCSavedData.get(this.getServer());
+        final JockeySavedData savedData = JockeySavedData.get(this.getServer());
         if(!this.lastBlockPos.equals(this.blockPosition())) {
             final UUID uuid = savedData.getJockeyUUID();
             if(this.uuid.equals(uuid)) {
@@ -439,7 +439,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     }
 
     public void removeJockey() {
-        final FnCSavedData savedData = FnCSavedData.get(this.getServer());
+        final JockeySavedData savedData = JockeySavedData.get(this.getServer());
         final UUID jockeyUUID = savedData.getJockeyUUID();
         if(this.uuid.equals(jockeyUUID)) {
             savedData.setJockeyUUID(null);
@@ -454,7 +454,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     public void load(CompoundTag $$0){
         super.load($$0);
         if (!this.level().isClientSide()) {
-            FnCSavedData savedData = FnCSavedData.get(this.getServer());
+            JockeySavedData savedData = JockeySavedData.get(this.getServer());
             savedData.setSpawnPosition(this.blockPosition());
         }
     }

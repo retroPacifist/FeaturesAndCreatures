@@ -223,7 +223,7 @@ public class Jackalope extends RideableNeutralMob {
     protected void registerGoals(){
         super.registerGoals();
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.25D));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.25D));
 
     }
 
