@@ -11,6 +11,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -44,7 +45,8 @@ public class Sabertooth extends RideableNeutralMob implements NeutralMob {
     @Override
     protected void registerGoals(){
         super.registerGoals();
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, false));
+        this.goalSelector.addGoal(6, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, true));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Fox.class, 10, true, true, fox -> ((Fox)fox).getVariant() == Fox.Type.SNOW));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Sheep.class, 10, true, true, null));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
@@ -83,13 +85,13 @@ public class Sabertooth extends RideableNeutralMob implements NeutralMob {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar){
-        controllerRegistrar.add(new AnimationController<Sabertooth>(this, 20, state -> {
-            if (state.isMoving()) {
+        controllerRegistrar.add(new AnimationController<>(this, 20, state -> {
+            if(state.isMoving()) {
                 state.setAnimation(WALK);
                 return PlayState.CONTINUE;
             }
             Sabertooth sabertooth = state.getAnimatable();
-            if (sabertooth.swinging){
+            if(sabertooth.swinging) {
                 state.setAnimation(ATTACK);
                 return PlayState.CONTINUE;
             }

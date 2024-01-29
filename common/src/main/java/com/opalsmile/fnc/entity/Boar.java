@@ -31,7 +31,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.UUID;
 
-public class Boar extends RideableNeutralMob implements NeutralMob, GeoEntity {
+public class Boar extends RideableNeutralMob implements NeutralMob {
 
 
     public static final TagKey<Item> BOAR_FOOD = TagKey.create(Registries.ITEM, FnCConstants.resourceLocation("boar_food"));
@@ -61,8 +61,8 @@ public class Boar extends RideableNeutralMob implements NeutralMob, GeoEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false));
+        this.goalSelector.addGoal(6, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
