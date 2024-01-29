@@ -111,15 +111,15 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     @Override
     protected void registerGoals(){
         super.registerGoals();
-        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 60, 10.0F));
+        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0, 60, 10.0F));
         this.goalSelector.addGoal(2, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.35D));
-        this.goalSelector.addGoal(4, new FollowPlayerGoal(this, 12, 0.6F));
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(4, new FollowPlayerGoal(this, 12, 1.0F));
         this.goalSelector.addGoal(4, new MountFollowPlayerGoal(this, 12, 1.2F));
         this.goalSelector.addGoal(4, new InteractGoal(this, Player.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.35D));
+        this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 1.0));
         this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING),
                         SoundEvents.GENERIC_DRINK, entity -> this.getHealth() <= 6));
         this.targetSelector.addGoal(7, new HurtByTargetGoal(this));
@@ -201,6 +201,12 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
     public MerchantOffers getOffers(){
         if(this.offers == null) {
             this.offers = new MerchantOffers();
+
+            final Predicate<MobEffect> blacklisted = FnCServices.CONFIG.jockeyEffectBlacklist()::contains;
+            final List<MobEffect> availableEffects = BuiltInRegistries.MOB_EFFECT.stream().filter(blacklisted.negate()).collect(
+                    Collectors.toList());
+            final boolean empty = availableEffects.isEmpty();
+
             for(int i = 0; i < 7; ++i) {
                 final List<MobEffectInstance> effects = new ArrayList<>();
                 final int price = random.nextInt(8) + 5;
@@ -209,15 +215,8 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
 
                 int amount = type.getAmount();
 
-                Predicate<MobEffect> blacklisted = FnCServices.CONFIG.jockeyEffectBlacklist()::contains;
-
-                List<MobEffect> availableEffects = BuiltInRegistries.MOB_EFFECT.stream().filter(blacklisted.negate()).collect(
-                        Collectors.toList());
-
-                if (availableEffects.isEmpty()) availableEffects.add(MobEffects.REGENERATION);
-
                 for(int j = 0; j < effectCount; ++j) {
-                    MobEffect effect = FnCUtil.getRandomElement(random, availableEffects);
+                    MobEffect effect = empty ? MobEffects.REGENERATION : FnCUtil.getRandomElement(random, availableEffects);
                     availableEffects.remove(effect);
                     effects.add(new MobEffectInstance(effect, 1800, generatePotionStrength(effectCount)));
                 }
@@ -319,7 +318,7 @@ public class Jockey extends PathfinderMob implements Npc, Merchant, GeoEntity, R
         offer.increaseUses();
         this.ambientSoundTime = -this.getAmbientSoundInterval();
         if(this.tradingPlayer instanceof ServerPlayer serverPlayer) {
-            FnCTriggers.JOCKEY_TRADE.trigger(serverPlayer, this, offer.getResult());
+            FnCTriggers.JOCKEY_TRADE.trigger(serverPlayer);
         }
     }
 
