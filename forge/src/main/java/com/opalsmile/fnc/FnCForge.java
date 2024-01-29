@@ -13,8 +13,12 @@ import com.opalsmile.fnc.registries.FnCRegistry;
 import com.opalsmile.fnc.registries.FnCTriggers;
 import com.opalsmile.fnc.util.FnCEventHandler;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -30,6 +34,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Supplier;
+
 @Mod(FnCConstants.MOD_ID)
 public class FnCForge {
 
@@ -40,18 +46,35 @@ public class FnCForge {
     public static final RegistryObject<? extends SpearItem> SPEAR = ITEM_REGISTRY.register("spear", () ->
             new ForgeSpearItem(new Item.Properties().stacksTo(1).durability(200)));
 
+
+    public static final RegistryObject<SpawnEggItem> JOCKEY_SPAWN_EGG =
+            createSpawnEgg("jockey", FnCEntities.JOCKEY::get, 0xDBA5FF, 0x493835);
+
+    public static final RegistryObject<SpawnEggItem> BOAR_SPAWN_EGG =
+            createSpawnEgg("boar", FnCEntities.BOAR::get, 0x87784A, 0x44392E);
+
+    public static final RegistryObject<SpawnEggItem> SABERTOOTH_SPAWN_EGG =
+            createSpawnEgg("sabertooth", FnCEntities.SABERTOOTH::get, 0xC59125, 0x7E5C2D);
+
+    public static final RegistryObject<SpawnEggItem> JACKALOPE_SPAWN_EGG =
+            createSpawnEgg("jackalope", FnCEntities.JACKALOPE::get, 0xB3A98D, 0x9D9684);
+
     public FnCForge(){
-        FnCRegistry.initialise();
-        FnCForgeNetworkHelper.register();
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ITEM_REGISTRY.register(modBus);
+        FnCRegistry.initialise();
+
+        FnCForgeNetworkHelper.register();
+
         modBus.addListener(this::createEntityAttributes);
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::configLoad);
         modBus.addListener(this::configReload);
         modBus.addListener(this::setupClient);
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FnCForgeConfigHelper.GENERAL_SPEC);
         MinecraftForge.EVENT_BUS.addListener(this::entityJoinLevel);
-        ITEM_REGISTRY.register(modBus);
+
     }
 
     public void createEntityAttributes(final EntityAttributeCreationEvent event){
@@ -60,6 +83,11 @@ public class FnCForge {
         event.put(FnCEntities.BOAR.get(), Boar.createAttributes().build());
         event.put(FnCEntities.SABERTOOTH.get(), Sabertooth.createAttributes().build());
     }
+
+    private static RegistryObject<SpawnEggItem> createSpawnEgg(String name, Supplier<EntityType<? extends Mob>> type, int backgroundColour, int highlightColour) {
+        return ITEM_REGISTRY.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(type, backgroundColour, highlightColour, new Item.Properties()));
+    }
+
 
     public void setupCommon(final FMLCommonSetupEvent event){
         event.enqueueWork(() -> {

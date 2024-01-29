@@ -3,8 +3,13 @@ package com.opalsmile.fnc.registries;
 import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.item.SpearItem;
 import com.opalsmile.fnc.platform.FnCServices;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import opalsmile.fnc.reg.RegistrationProvider;
@@ -63,6 +68,7 @@ public class FnCItems {
     //public static final RegistryObject<Item> BFS_ATTACK_ITEM = REGISTER.register("bfs_attack_item",
             //() -> new Item(new Item.Properties()));
 
+
     private static Supplier<Item> createItem(){
         return () -> new Item(new Item.Properties());
     }
@@ -87,6 +93,11 @@ public class FnCItems {
                         output.accept(ANTLER.get());
                         output.accept(SPEAR.get());
                         output.accept(DOWSING_ROD.get());
+                        output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("boar_spawn_egg")));
+                        output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("jockey_spawn_egg")));
+                        output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("sabertooth_spawn_egg")));
+                        output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("jackalope_spawn_egg")));
+
                     })
                     .build());
 
