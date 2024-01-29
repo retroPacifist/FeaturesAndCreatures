@@ -97,6 +97,7 @@ public class FnCItems {
                         output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("jockey_spawn_egg")));
                         output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("sabertooth_spawn_egg")));
                         output.accept(BuiltInRegistries.ITEM.get(FnCConstants.resourceLocation("jackalope_spawn_egg")));
+                        output.accept(ANTLER_HEADDRESS.get());
 
                     })
                     .build());
