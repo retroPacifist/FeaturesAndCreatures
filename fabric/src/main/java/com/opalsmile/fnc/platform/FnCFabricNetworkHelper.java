@@ -2,7 +2,7 @@ package com.opalsmile.fnc.platform;
 
 import com.opalsmile.fnc.FnCConstants;
 import com.opalsmile.fnc.platform.services.FnCINetworkHelper;
-import com.opalsmile.fnc.util.FnCAntlerHandler;
+import com.opalsmile.fnc.util.AntlerHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -45,7 +45,7 @@ public class FnCFabricNetworkHelper implements FnCINetworkHelper {
 
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(ANTLER_PACKET, (server, player,
-                handler, buf, responseSender) -> FnCAntlerHandler.handlePacket(player, buf.readBoolean()));
+                handler, buf, responseSender) -> AntlerHandler.handlePacket(player, buf.readBoolean()));
     }
 
 

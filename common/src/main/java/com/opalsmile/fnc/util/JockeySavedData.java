@@ -13,8 +13,7 @@ import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.UUID;
 
-//Only attached to the overworld in theory.
-public class FnCSavedData extends SavedData {
+public class JockeySavedData extends SavedData {
 
     //Used to keep track of the one jockey instance per overworld
     private BlockPos spawnPosition;
@@ -24,13 +23,13 @@ public class FnCSavedData extends SavedData {
 
     private String dimensionId = "";
 
-    public static FnCSavedData get(MinecraftServer server){
+    public static JockeySavedData get(MinecraftServer server){
         return server.overworld().getDataStorage().computeIfAbsent(
-                new SavedData.Factory<>(FnCSavedData::new, FnCSavedData::load, DataFixTypes.SAVED_DATA_MAP_DATA), FnCConstants.MOD_ID);
+                new SavedData.Factory<>(JockeySavedData::new, JockeySavedData::load, DataFixTypes.SAVED_DATA_MAP_DATA), FnCConstants.MOD_ID);
     }
 
-    public static FnCSavedData load(final CompoundTag tag){
-        FnCSavedData savedData = new FnCSavedData();
+    public static JockeySavedData load(final CompoundTag tag){
+        JockeySavedData savedData = new JockeySavedData();
         if(tag.getBoolean("jockey_spawned")) {
             savedData.jockeySpawned = true;
             savedData.jockeyUUID = tag.getUUID("jockey_uuid");
