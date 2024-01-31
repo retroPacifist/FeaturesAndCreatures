@@ -1,6 +1,7 @@
 package com.opalsmile.fnc.entity;
 
 import com.opalsmile.fnc.FnCConstants;
+import com.opalsmile.fnc.entity.goals.BoarMeleeAttackGoal;
 import com.opalsmile.fnc.registries.FnCEntities;
 import com.opalsmile.fnc.registries.FnCSounds;
 import net.minecraft.core.registries.Registries;
@@ -41,6 +42,7 @@ public class Boar extends RideableNeutralMob implements NeutralMob {
     @javax.annotation.Nullable
     private UUID persistentAngerTarget;
     public static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.boar.walk");
+    public static final RawAnimation ATTACK = RawAnimation.begin().thenLoop("animation.boar.attack");
 
     public Boar(EntityType<? extends RideableNeutralMob> entityType, Level level) {
         super(entityType, level);
@@ -62,7 +64,7 @@ public class Boar extends RideableNeutralMob implements NeutralMob {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(6, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, true));
+        this.goalSelector.addGoal(2, new BoarMeleeAttackGoal(this, 1.5, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
@@ -131,7 +133,8 @@ public class Boar extends RideableNeutralMob implements NeutralMob {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar){
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate)
+                .triggerableAnim("attack", ATTACK));
     }
 
     private PlayState predicate(final AnimationState<Boar> event){
