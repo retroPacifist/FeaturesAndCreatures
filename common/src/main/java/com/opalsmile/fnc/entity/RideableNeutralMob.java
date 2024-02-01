@@ -88,7 +88,7 @@ public abstract class RideableNeutralMob extends Animal implements GeoEntity {
                 if (isServerSide) {
                     this.setSaddled(false);
                     this.spawnAtLocation(Items.SADDLE);
-                    player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), FnCSounds.ENTITY_DESADDLE.get(), SoundSource.AMBIENT, 1, 1);
+                    player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), FnCSounds.ENTITY_DESADDLE.get(), SoundSource.NEUTRAL, 1, 1);
                 }
                 return InteractionResult.sidedSuccess(isServerSide);
             }
@@ -103,7 +103,7 @@ public abstract class RideableNeutralMob extends Animal implements GeoEntity {
         else {
             if(player.getItemInHand(hand).is(Items.SADDLE)) {
                 if (isServerSide) {
-                    player.level().playSound(null, this.getX(), this.getY() + 0.33f, this.getZ(), this.getSaddleSound(), SoundSource.AMBIENT, 1, 1);
+                    player.level().playSound(null, this, this.getSaddleSound(), SoundSource.NEUTRAL, 1, 1);
                     this.setSaddled(true);
                     if(!player.getAbilities().instabuild) {
                         player.getItemInHand(hand).shrink(1);

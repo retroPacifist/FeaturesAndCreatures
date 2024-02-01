@@ -53,8 +53,8 @@ public class FnCSounds {
     public static RegistryObject<SoundEvent> DOWSING_ROD_LOCATES = createSound("item.dowsing_rod.locates");
 
     public static RegistryObject<SoundEvent> createSound(String location){
-        return REGISTRAR.register(location.replace('.', '_'),
-                () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(FnCConstants.MOD_ID, location), 1));
+        return REGISTRAR.register(location,
+                () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(FnCConstants.MOD_ID, location)));
     }
 
     public static void init(){
