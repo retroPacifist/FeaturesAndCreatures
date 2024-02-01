@@ -25,7 +25,7 @@ public class AntlerHandler {
     private static final AttributeModifier ANTLER_HEADDRESS_MODIFIER = new AttributeModifier(ANTLER_HEADDRESS_UUID, "Antler Headdress Slow", -0.05, AttributeModifier.Operation.ADDITION);
 
     private static final float MAX_KNOCKBACK = 3;
-    private static final float MAX_CHARGE = 7;
+    private static final float MAX_CHARGE = 4f;
 
     private static final float MAX_DAMAGE = 2.5f;
     private static final int ANTLER_COOLDOWN = (int) (1.5 * 20);
@@ -70,8 +70,8 @@ public class AntlerHandler {
         float forwards = MAX_CHARGE * chargePercentage;
         float knockback = MAX_KNOCKBACK * chargePercentage;
         Vec3 vec = player.getLookAngle();
-        double xForwards = vec.x * forwards;
-        double zForwards = vec.z * forwards;
+        double xForwards = vec.x * forwards + 1 * vec.x;
+        double zForwards = vec.z * forwards + 1 * vec.z;
         playSound(chargePercentage, player);
         player.setDeltaMovement(player.getDeltaMovement().add(xForwards, 0.0, zForwards));
         AABB targetBoundingBox = player.getBoundingBox().expandTowards(xForwards, 0, zForwards);
