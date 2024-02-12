@@ -5,6 +5,7 @@ import com.opalsmile.fnc.entity.Boar;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.entity.Sabertooth;
+import com.opalsmile.fnc.entity.goals.SabertoothFearEventListener;
 import com.opalsmile.fnc.item.*;
 import com.opalsmile.fnc.platform.FnCForgeConfigHelper;
 import com.opalsmile.fnc.platform.FnCForgeNetworkHelper;
@@ -15,6 +16,7 @@ import com.opalsmile.fnc.util.FnCEventHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
@@ -120,6 +122,9 @@ public class FnCForge {
         if (event.getLevel().isClientSide) return;
         if (event.getEntity() instanceof ServerPlayer player) {
             FnCEventHandler.onPlayerJoinLevel(player, player.serverLevel());
+        }
+        else if(event.getEntity() instanceof PathfinderMob mob) {
+            SabertoothFearEventListener.onEntitySpawn(mob);
         }
     }
 
