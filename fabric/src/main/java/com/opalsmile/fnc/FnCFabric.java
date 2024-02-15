@@ -4,6 +4,7 @@ import com.opalsmile.fnc.entity.Boar;
 import com.opalsmile.fnc.entity.Jackalope;
 import com.opalsmile.fnc.entity.Jockey;
 import com.opalsmile.fnc.entity.Sabertooth;
+import com.opalsmile.fnc.entity.goals.SabertoothFearEventListener;
 import com.opalsmile.fnc.item.*;
 import com.opalsmile.fnc.platform.FnCFabricConfigHelper;
 import com.opalsmile.fnc.platform.FnCFabricNetworkHelper;
@@ -20,14 +21,17 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import opalsmile.fnc.reg.RegistryObject;
 
 import java.util.function.Supplier;
@@ -70,13 +74,7 @@ public class FnCFabric implements ModInitializer {
         FnCTriggers.register();
         MidnightConfig.init(FnCConstants.MOD_ID, FnCFabricConfigHelper.class);
 
-        ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
-            if (!(entity instanceof ServerPlayer player)) return;
-            JockeySavedData savedData = JockeySavedData.get(world.getServer());
-            if (savedData.hasJockeySpawned() && savedData.getDimensionId().equals(world.dimension().location())) {
-                FnCServices.NETWORK.notifyPlayerOfJockey(player, savedData.getSpawnPosition());
-            }
-        });
+        ServerEntityEvents.ENTITY_LOAD.register(FnCFabric::handleEntityLoad);
 
         FnCFabricNetworkHelper.register();
     }
@@ -92,5 +90,17 @@ public class FnCFabric implements ModInitializer {
 
     private static SpawnEggItem createSpawnEgg(String name, EntityType<? extends Mob> type, int backgroundColour, int highlightColour) {
         return Registry.register(BuiltInRegistries.ITEM, FnCConstants.resourceLocation(name + "_spawn_egg"), new SpawnEggItem(type, backgroundColour, highlightColour, new Item.Properties()));
+    }
+
+    private static void handleEntityLoad(final Entity entity, final Level level) {
+        if (entity instanceof ServerPlayer player) {
+            JockeySavedData savedData = JockeySavedData.get(level.getServer());
+            if (savedData.hasJockeySpawned() && savedData.getDimensionId().equals(level.dimension().location())) {
+                FnCServices.NETWORK.notifyPlayerOfJockey(player, savedData.getSpawnPosition());
+            }
+        }
+        else if(!level.isClientSide() && entity instanceof PathfinderMob mob) {
+            SabertoothFearEventListener.onEntitySpawn(mob);
+        }
     }
 }
